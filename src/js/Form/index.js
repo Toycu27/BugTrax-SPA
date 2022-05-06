@@ -7,5 +7,6 @@ import ModalBox from './ModalBox';
 import ProjectForm from './ProjectForm';
 import MilestoneForm from './MilestoneForm';
 import BugForm from './BugForm';
+import SearchBar from './SearchBar';
 
-export { InputField, TextareaField, SelectField, CheckboxField, AlertBox, ModalBox, ProjectForm, MilestoneForm, BugForm };
+export { InputField, TextareaField, SelectField, CheckboxField, AlertBox, ModalBox, ProjectForm, MilestoneForm, BugForm, SearchBar };

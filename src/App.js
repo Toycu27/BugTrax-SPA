@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Layout, PageNotFound, Projects, Project, Milestones, Milestone, Bugs, Bug } from './js/View';
-import { useUser, ProtectedRoute as Protected, Login, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
+import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search } from './js/View';
+import { useUser, ProtectedRoute as Protected, Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
 import axios from "axios";
 
 //Axios Settings START
@@ -63,9 +63,10 @@ axios.patchRequest = async (path, body) => {
       });
 }
 
-axios.deleteRequest = async (path) => {
+axios.deleteRequest = async (path, callback = () => {}) => {
   return axios.delete(path)
       .then(function (response) {
+          callback(response);
           return response.data;
       })
       .catch(function (error) {
@@ -90,6 +91,7 @@ export default function App() {
 
           {/* Auth Routes */}
           <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/logout" element={<Logout setUser={setUser} deleteUser={deleteUser} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerfiyResend />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -97,6 +99,7 @@ export default function App() {
           <Route path="/user" element={<Protected><UpdateUser /></Protected>} />
 
           {/* Routes */}
+          <Route path="/search/:input" element={<Protected><Search /></Protected>}/>
           <Route path="/projects" element={<Protected><Projects /></Protected>}/>
           <Route path="/milestones" element={<Protected><Milestones /></Protected>}/>
           <Route path="/bugs" element={<Protected><Bugs /></Protected>}/>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AlertBox, ModalBox, MilestoneForm, SelectField } from "../Form";
 import axios from "axios";
 
-export default function Milestones({user}) {
+export default function Milestones({search, title}) {
     const [ milestones, setMilestones ] = useState();
     const [ projects, setProjects ] = useState();
     const [ pagination, setPagination ] = useState([]);
@@ -12,6 +12,7 @@ export default function Milestones({user}) {
     const getMilestones = (nextPage = false) => {
         let requestUrl = nextPage ? pagination.next_page_url : 'api/milestones?paginate=5&with=project'
         let requestUrlParams = '';
+        if (title && nextPage === false) requestUrlParams += '&title=' + title
         if (!isNaN(selectedProject) && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
             if (nextPage) setMilestones([ ...milestones, ...r.data.data  ])
@@ -37,23 +38,34 @@ export default function Milestones({user}) {
         getProjects();
     }, []);
 
+    useEffect(() => {
+        getMilestones();
+        getProjects();
+    }, [title]);
+
     return (<>
         <div className="row">
             <div className="col-6 text-end"><h2>Milestones</h2></div>
+            { !search ?
             <div className="col-6">
                 <ModalBox id="milestone_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
                     <MilestoneForm afterSubmit={ getMilestones }/>
                 </ModalBox>
             </div>
+            : null }
         </div>
-        <AlertBox />
 
+        { !search ?
         <div className="row">
             <div className="col-4">
                 <SelectField name="selected_project" value={selectedProject} setValue={(e) => {setSelectedProject(e.target.value)}} title="Project" options={projects} />
             </div>
         </div>
+        : null }
 
+        <AlertBox />
+
+        { milestones && milestones.length ?
         <div className="row">
             <table className="table table-hover table-borderless">
                 <thead>
@@ -66,7 +78,7 @@ export default function Milestones({user}) {
                     </tr>
                 </thead>
                 <tbody>
-                    { milestones ? milestones.map(item => 
+                    { milestones.map(item => 
                         <tr key={item.id}>
                             <td>
                                 <ModalBox id={"milestone_form_" + item.id} buttonTitle={ item.title }>
@@ -78,10 +90,11 @@ export default function Milestones({user}) {
                             <td>{new Date(item.start_date).toLocaleDateString()}</td>
                             <td>{new Date(item.end_date).toLocaleDateString()}</td>
                         </tr>
-                    ) : null }
+                    )}
                 </tbody>
             </table>
         </div>
+        : <h4>No Results found...</h4> }
 
         { pagination.next_page_url ? 
             <div className="row justify-content-center">

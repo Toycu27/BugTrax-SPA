@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from '../Auth';
-import { InputField, ModalBox } from ".";
+import { InputField } from ".";
 import axios from "axios";
 import TextareaField from "./TextareaField";
 

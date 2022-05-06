@@ -1,25 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useUser } from './';
+import { useEffect } from "react";
 import axios from "axios";
 
-export default function Logout({ setUser }) {
+export default function Logout({ setUser, deleteUser }) {
     let navigate = useNavigate();
-    const { user, deleteUser } = useUser();
 
-    const handleLogout = async e => {
-        e.preventDefault();
-        const response = await axios.deleteRequest('sanctum/token');
-
-        if (response.errors) {
-            alert(response.message);
-        } else {
+    useEffect(() => {
+        axios.deleteRequest('sanctum/token', (e) => {
             setUser(null);
             deleteUser();
             navigate('/');
-        }
-    }
+        });
+    }, []);
 
-    return <a className="dropdown-item" onClick={handleLogout}>
-        <i className="bi bi-box-arrow-right"></i> Logout
-    </a>;
+    return (<h2>Logging Out...</h2>);
 }

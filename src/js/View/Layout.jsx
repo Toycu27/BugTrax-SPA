@@ -1,11 +1,10 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { useUser, Logout } from '../Auth';
-import { AlertBox } from '../Form';
+import { AlertBox, SearchBar } from '../Form';
 import axios from "axios";
 
 export default function App({user, setUser, deleteUser}) {
-  let links, authLinks;
+  let links, searchBar, authLinks;
 
   if (user) {
       axios.defaults.headers['Authorization'] = 'Bearer ' + user.token;
@@ -21,19 +20,18 @@ export default function App({user, setUser, deleteUser}) {
             <NavLink className="nav-link" to="/bugs">Bugs</NavLink>
         </li>
     </>);
-    authLinks = (
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i className="bi bi-person-circle"></i> { user.name }
-          </a>
-          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><NavLink className="dropdown-item" to="/user"><i className="bi bi-gear"></i> Settings</NavLink></li>
-            <li><Logout setUser={setUser}/></li>
-          </ul>
+    searchBar = (<SearchBar />);
+    authLinks = (<>
+        <li className="nav-item">
+            <NavLink className="nav-link" to="/user"><i className="bi bi-person"></i></NavLink>
         </li>
-    );
+        <li className="nav-item">
+            <NavLink className="nav-link" to="/logout"><i className="bi bi-box-arrow-right"></i></NavLink>
+        </li>
+    </>);
   } else {
     links = (<></>);
+    searchBar = (<></>);
     authLinks = (<>
         <li className="nav-item">
             <NavLink className="nav-link" to="/login">Login</NavLink>
@@ -46,15 +44,17 @@ export default function App({user, setUser, deleteUser}) {
 
   return (<>
       <header>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <nav className="navbar navbar-expand-lg navbar-light">
               <div className="container-fluid col-10">
-                  <Link className="navbar-brand" to="/"><i className="bi bi-bug"></i> BugTrax</Link>
-                  <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <Link className="navbar-brand fs-5" to="/"><i className="bi bi-bug-fill"></i>Bx</Link>
+                  <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span className="navbar-toggler-icon"></span>
                   </button>
                   <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav justify-content-center me-auto">{ links }</ul>
-                    <ul className="navbar-nav">{ authLinks }</ul>
+                    <ul className="navbar-nav justify-content-start me-auto fs-5">{ links }</ul>
+                    <ul className="navbar-nav justify-content-end">{ searchBar }</ul>
+                    <ul className="navbar-nav justify-content-end fs-4">{ authLinks }</ul>
                   </div>
               </div>
           </nav>
