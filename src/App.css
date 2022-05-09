@@ -1,7 +1,157 @@
 body {
-  /* background-color: #6A702C; */
+   background-color: #6A702C; 
+   background-image: url("../public/bg.jpg");
 }
 
+
+/* Navigation */
 .navbar-brand {
+  color: #E46C1C !important;
+}
+
+
+/* Link */
+a {
   color: #E46C1C;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #E46C1C;
+}
+
+.link {
+  color: #E46C1C;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  color: #E46C1C;
+}
+
+.nav-link {
+  letter-spacing: 1px;
+}
+
+.nav-link.hover::before, 
+.nav-link.active::before {
+  position: absolute;
+  content: attr(data-title);
+  border-bottom: 4px solid #E46C1C;
+  color: transparent;
+}
+
+/* Button */
+.btn {
+  border-radius: 0;
+}
+
+.btn-primary {
+  background-color: #E46C1C;
+  border-color: #E46C1C
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+  background-color: #E46C1C;
+  border-color: #E46C1C
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgb(228 108 28 / 50%);
+}
+
+
+/* Form */
+.form-control,
+.form-select {
+  border: none;
+  border-radius: 0;
+  background-color: rgb(242 242 242 / 70%);
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none;
+  background-color: rgb(250 250 250 / 70%);
+}
+
+.modal .form-control,
+.modal .form-select {
+  border: none;
+  border-radius: 0;
+  background-color: rgb(250 250 250);
+}
+
+.modal .form-control:focus,
+.modal .form-select:focus {
+  box-shadow: none;
+  background-color: rgb(242 242 242);
+}
+
+
+/* Modal Box */
+.modal-content {
+  border: 0;
+  border-radius: 0;
+}
+
+
+/* Projects */
+.proj__item {
+  height:126px;
+  background-color: rgb(250 250 250 / 70%);
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+.proj__item .btn-primary {
+}
+
+.proj__label {
+
+}
+
+.projs__value {
+
+}
+
+
+/* Milestones */
+.milestone__item {
+  background-color: rgb(250 250 250 / 70%);
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+.milestone__item .btn-primary {
+}
+
+.milestone__label {
+
+}
+
+.milestone__value {
+
+}
+
+
+/* Bugs */
+.bug__item {
+  background-color: rgb(250 250 250 / 70%);
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+.bug__item .btn-primary {
+}
+
+.bug__label {
+
+}
+
+.bug__value {
+
 }

@@ -48,35 +48,31 @@ export default function Register() {
     return (
         <div className="row justify-content-center">
             <div className="col-sm-6">
-                <div className="card">
-                    <div className="card-header text-center">
-                        <h2>Create an Account</h2>
-                        <p>Please fill the form fields</p>
+                <div className="text-center mb-3">
+                    <h2>Create an Account</h2>
+                    <p>Register to use the BugTrax App</p>
+                </div>
+                <form onSubmit={handleSubmit} className="needs-validation">
+                    <div className="mb-3">
+                        <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required="required" />
                     </div>
-                    <div className="card-body">
-                        <form onSubmit={handleSubmit} className="needs-validation">
-                            <div className="mb-3">
-                                <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required="required" />
-                            </div>
-                            <div className="mb-3">
-                                <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required="required" />
-                            </div>
-                            <div className="mb-3">
-                                <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
-                            </div>
-                            <div className="mb-4">
-                                <InputField type="password" name="password_confirmation" value={values.password_confirmation} errorValue={errors.password_confirmation} setValue={handleChange} title="Retype Password" required="required" />
-                            </div>
+                    <div className="mb-3">
+                        <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required="required" />
+                    </div>
+                    <div className="mb-3">
+                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
+                    </div>
+                    <div className="mb-4">
+                        <InputField type="password" name="password_confirmation" value={values.password_confirmation} errorValue={errors.password_confirmation} setValue={handleChange} title="Retype Password" required="required" />
+                    </div>
 
-                            <div className="d-grid gap-2">
-                                <button className="btn btn-primary btn-lg" type="submit">Sign Up</button>
-                            </div>
-                        </form>
+                    <div className="d-grid gap-2">
+                        <button className="btn btn-primary btn-lg" type="submit">Sign Up</button>
                     </div>
-                    <div className="card-footer text-muted text-center">
-                        <span>Already have an account? </span>
-                        <Link className="" to="/login">Login</Link>
-                    </div>
+                </form>
+                <div className="text-muted text-center mt-2">
+                    <span>Already have an account? </span>
+                    <Link className="" to="/login">Login</Link>
                 </div>
                 <AlertBox />
             </div>

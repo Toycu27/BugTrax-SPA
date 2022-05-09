@@ -48,25 +48,22 @@ export default function ResetPassword() {
     return (
         <div className="row justify-content-md-center">
             <div className="col-sm-6">
-                <div className="card text-center">
-                    <div className="card-header">
-                        <h2>Reset your Password</h2>
-                        <p>Set a new Password for your Account</p>
-                    </div>
-                    <div className="card-body">
-                        <form onSubmit={handleSubmit} className="needs-validation">
-                            <div className="mb-3">
-                                <InputField type="text" name="password_confirmation" value={values.password_confirmation} errorValue={errors.password_confirmation} setValue={handleChange} title="Retype Password" />
-                            </div>
-                            <div className="mb-4">
-                                <InputField type="text" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
-                            </div>
-                            <div className="d-grid gap-2">
-                                <button className="btn btn-primary btn-lg" type="submit">Reset Password</button>
-                            </div>
-                        </form>
-                    </div>
+                <div className="mb-3">
+                    <h2>Reset your Password</h2>
+                    <p>Set a new Password for your Account</p>
                 </div>
+
+                <form onSubmit={handleSubmit} className="needs-validation">
+                    <div className="mb-3">
+                        <InputField type="text" name="password_confirmation" value={values.password_confirmation} errorValue={errors.password_confirmation} setValue={handleChange} title="Retype Password" />
+                    </div>
+                    <div className="mb-4">
+                        <InputField type="text" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
+                    </div>
+                    <div className="d-grid gap-2">
+                        <button className="btn btn-primary btn-lg" type="submit">Reset Password</button>
+                    </div>
+                </form>
                 <AlertBox />
             </div>
         </div>

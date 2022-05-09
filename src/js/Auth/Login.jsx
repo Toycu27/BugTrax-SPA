@@ -50,30 +50,26 @@ export default function Login({ setUser }) {
     return (
         <div className="row justify-content-md-center">
             <div className="col-sm-6">
-                <div className="card">
-                    <div className="card-header text-center">
-                        <h2>Login</h2>
-                        <p>Please login to your account</p>
+                <div className="text-center mb-3">
+                    <h2>Login</h2>
+                    <p>Please login to enter the App</p>
+                </div>
+                <form onSubmit={handleSubmit} className="needs-validation">
+                    <div className="mb-3">
+                        <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required="required" />
                     </div>
-                    <div className="card-body">
-                        <form onSubmit={handleSubmit} className="needs-validation">
-                            <div className="mb-3">
-                                <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required="required" />
-                            </div>
-                            <div className="mb-4">
-                                <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
-                                <Link className="text-right" to="/forgot-password">Forgot Password?</Link>
-                            </div>
+                    <div className="mb-4">
+                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
+                        <Link className="text-right" to="/forgot-password">Forgot Password?</Link>
+                    </div>
 
-                            <div className="d-grid gap-2">
-                                <button className="btn btn-primary btn-lg" type="submit">Login</button>
-                            </div>
-                        </form>
+                    <div className="d-grid gap-2">
+                        <button className="btn btn-primary btn-lg" type="submit">Login</button>
                     </div>
-                    <div className="card-footer text-muted text-center">
-                        <span>Dont have an account? </span>
-                        <Link className="" to="/register">Sign Up</Link>
-                    </div>
+                </form>
+                <div className="text-muted text-center mt-2">
+                    <span>Don't have an account? </span>
+                    <Link className="" to="/register">Sign Up</Link>
                 </div>
                 <AlertBox />
             </div>

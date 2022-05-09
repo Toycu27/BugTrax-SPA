@@ -10,7 +10,7 @@ export default function Milestones({search, title}) {
     const [ selectedProject, setSelectedProject ] = useState();
 
     const getMilestones = (nextPage = false) => {
-        let requestUrl = nextPage ? pagination.next_page_url : 'api/milestones?paginate=5&with=project'
+        let requestUrl = nextPage ? pagination.next_page_url : 'api/milestones?paginate=6&with=project'
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += '&title=' + title
         if (!isNaN(selectedProject) && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
@@ -45,18 +45,18 @@ export default function Milestones({search, title}) {
 
     return (<>
         <div className="row">
-            <div className="col-6 text-end"><h2>Milestones</h2></div>
             { !search ?
-            <div className="col-6">
-                <ModalBox id="milestone_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
+            <div className="col-auto">
+                <ModalBox id="milestone_form_" buttonTitle={<i className="bi bi-plus mx-2 fs-4"></i>}>
                     <MilestoneForm afterSubmit={ getMilestones }/>
                 </ModalBox>
             </div>
             : null }
+            <div className="col-auto"><h2>Milestones</h2></div>
         </div>
 
         { !search ?
-        <div className="row">
+        <div className="row mt-3">
             <div className="col-4">
                 <SelectField name="selected_project" value={selectedProject} setValue={(e) => {setSelectedProject(e.target.value)}} title="Project" options={projects} />
             </div>
@@ -66,40 +66,45 @@ export default function Milestones({search, title}) {
         <AlertBox />
 
         { milestones && milestones.length ?
-        <div className="row">
-            <table className="table table-hover table-borderless">
-                <thead>
-                    <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Project</th>
-                    <th scope="col">Start</th>
-                    <th scope="col">End</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { milestones.map(item => 
-                        <tr key={item.id}>
-                            <td>
-                                <ModalBox id={"milestone_form_" + item.id} buttonTitle={ item.title }>
+        <div className="milestones row mt-3 g-4">
+            { milestones.map(item => 
+            <div key={item.id} className="col-6">
+                <div className="milestone__item px-3 py-2">
+                    <div className="row">
+                        <div className="col-8">
+                            <div className="milestone__label pb-0 text-muted">Milestone</div>
+                            <div className="milestone__value mb-2">
+                                <ModalBox id={"milestone_form_" + item.id} buttonStyle="link" buttonTitle={ item.title }>
                                     <MilestoneForm id={ item.id } milestone={ item } afterSubmit={ getMilestones }/>
                                 </ModalBox>
-                            </td>
-                            <td>{item.desc}</td>
-                            <td>{ item.project.title }</td>
-                            <td>{new Date(item.start_date).toLocaleDateString()}</td>
-                            <td>{new Date(item.end_date).toLocaleDateString()}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                            </div>
+                            <div className="milestone__label pb-0 text-muted">Project</div>
+                            <div className="milestone__value">{ item.project.title }</div>
+                        </div>
+                        <div className="col-2">
+                            <div className="milestone__label pb-0 text-muted">Start</div>
+                            <div className="milestone__value">{new Date(item.start_date).toLocaleDateString()}</div>
+                        </div>
+                        <div className="col-2">
+                            <div className="milestone__label pb-0 text-muted">Due</div>
+                            <div className="milestone__value">{new Date(item.end_date).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            )}
         </div>
-        : <h4>No Results found...</h4> }
+        : <div className="row mt-4">
+            <h4>No Results found...</h4>
+        </div>
+        }
 
         { pagination.next_page_url ? 
-            <div className="row justify-content-center">
+            <div className="row justify-content-center mt-4">
                 <div className="col-4 text-center">
-                    <button type="button" className="btn btn-info" onClick={ handleLoadMore }>Load More</button>
+                    <button type="button" className="btn btn-primary" onClick={ handleLoadMore }>
+                        <i class="bi bi-chevron-compact-down fs-4 mx-5"></i>
+                    </button>
                 </div>
             </div> 
         : null }

@@ -19,7 +19,7 @@ export default function SearchBar () {
     return (
         <form className="d-flex">
                 <input autoFocus value={searchInput} onChange={(e) => setSearchInput(e.target.value)} 
-                className="form-control form-control-sm rounded-pill" type="search" placeholder="Search..." aria-label="Search" />
+                className="form-control rounded-pill" type="search" placeholder="Search..." aria-label="Search" />
         </form>
     );
 }

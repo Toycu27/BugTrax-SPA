@@ -12,7 +12,7 @@ export default function Bugs({search, title}) {
     const [ selectedMilestone, setSelectedMilestone ] = useState();
 
     const getBugs = (nextPage = false) => {
-        let requestUrl = nextPage ? pagination.next_page_url : 'api/bugs?paginate=5&with=project,milestone'
+        let requestUrl = nextPage ? pagination.next_page_url : 'api/bugs?paginate=5&with=project,milestone,assignedTo'
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += '&title=' + title
         if (!isNaN(selectedProject) && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
@@ -56,20 +56,35 @@ export default function Bugs({search, title}) {
         getMilestones();
     }, [title]);
 
+    let statusClassMap = {
+        'New': 'badge rounded-pill bg-secondary',
+        'Progress': 'badge rounded-pill bg-warning',
+        'Freeze': 'badge rounded-pill bg-info',
+        'Testet': 'badge rounded-pill bg-primary',
+        'Solved': 'badge rounded-pill bg-success',
+    };
+
+    let priorityClassMap = {
+        'Immediate': 'badge bg-secondary',
+        'High': 'badge bg-danger',
+        'Normal': 'badge bg-warning',
+        'Low': 'badge bg-primary',
+    };
+
     return (<>
         <div className="row">
-            <div className="col-6 text-end"><h2>Bugs</h2></div>
             { !search ?
-            <div className="col-6">
-                <ModalBox id="bug_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
+            <div className="col-auto">
+                <ModalBox id="bug_form_" buttonTitle={<i className="bi bi-plus mx-2 fs-4"></i>}>
                     <BugForm afterSubmit={ getBugs }/>
                 </ModalBox>
             </div>
             : null }
+            <div className="col-auto"><h2>Bugs</h2></div>
         </div>
 
         { !search ?
-        <div className="row">
+        <div className="row mt-3">
             <div className="col-4">
                 <SelectField name="selected_project" value={selectedProject} setValue={(e) => {setSelectedProject(e.target.value)}} title="Project" options={projects} />
             </div>
@@ -82,46 +97,67 @@ export default function Bugs({search, title}) {
         <AlertBox />
 
         { bugs && bugs.length ?
-        <div className="row">
-            <table className="table table-hover table-borderless">
-                <thead>
-                    <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Project</th>
-                    <th scope="col">Milestone</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Progress</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">DueDate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { bugs.map(item => 
-                        <tr key={item.id}>
-                            <td>
-                                <ModalBox id={"bug_form_" + item.id} buttonTitle={ item.title }>
+        <div className="bugs row mt-4 g-4">
+            { bugs.map(item => 
+                <div key={item.id} className="col-12">
+                <div className="bug__item px-3 py-2">
+                    <div className="row">
+                        <div className="col-4">
+                            <div className="bug__label pb-0 text-muted">Bug</div>
+                            <div className="bug__value mb-2">
+                                <ModalBox id={"bug_form_" + item.id} buttonStyle="link" buttonTitle={ item.title }>
                                     <BugForm id={ item.id } bug={ item } afterSubmit={ getBugs }/>
                                 </ModalBox>
-                            </td>
-                            <td>{ item.project.title }</td>
-                            <td>{ item.milestone.title }</td>
-                            <td>{ item.status }</td>
-                            <td>{ item.priority }</td>
-                            <td>{ item.progress }%</td>
-                            <td>{new Date(item.created_at).toLocaleDateString()}</td>
-                            <td>{new Date(item.end_date).toLocaleDateString()}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                            </div>
+                            <div className="bug__label pb-0 text-muted">Project</div>
+                            <div className="bug__value mb-2">{ item.project.title }</div>
+                            <div className="bug__label pb-0 text-muted">Milestone</div>
+                            <div className="bug__value">{ item.milestone.title }</div>
+                        </div>
+                        <div className="col-1">
+                            <div className="bug__label pb-0 text-muted">Status</div>
+                            <div className={"bug__value mb-2 " + statusClassMap[item.status]}>{ item.status }</div>
+                        </div>
+                        <div className="col-2">
+                            <div className="bug__label pb-0 text-muted">Progress</div>
+                            <div className="bug__value mb-2">
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" style={{width: + (item.progress ? item.progress : 0) + "%"}} 
+                                    role="progressbar" aria-valuenow={ item.progress } aria-valuemin="0" aria-valuemax="100">
+                                        {item.progress > 10 ? item.progress + "%" : null }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-1">
+                            <div className="bug__label pb-0 text-muted">Priority</div>
+                            <div className={"bug__value mb-2 " + priorityClassMap[item.priority]}>{ item.priority }</div>
+                        </div>
+                        <div className="col-2">
+                            <div className="bug__label pb-0 text-muted">Created</div>
+                            <div className="bug__value mb-2">{new Date(item.created_at).toLocaleDateString()}</div>
+                            <div className="bug__label pb-0 text-muted">Due</div>
+                            <div className="bug__value mb-2">{new Date(item.end_date).toLocaleDateString()}</div>
+                        </div>
+                        <div className="col-2">
+                            <div className="bug__label pb-0 text-muted">Assignee</div>
+                            <div className="bug__value mb-2">{ item.assigned_to ? item.assigned_to.name : null }</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            )}
         </div>
-        : <h4>No Results found...</h4> }
+        : <div className="row mt-4">
+            <h4>No Results found...</h4>
+        </div> }
 
         { pagination.next_page_url ? 
-            <div className="row justify-content-center">
+            <div className="row justify-content-center mt-4">
                 <div className="col-4 text-center">
-                    <button type="button" className="btn btn-info" onClick={ handleLoadMore }>Load More</button>
+                    <button type="button" className="btn btn-primary" onClick={ handleLoadMore }>
+                        <i class="bi bi-chevron-compact-down fs-4 mx-5"></i>
+                    </button>
                 </div>
             </div> 
         : null }

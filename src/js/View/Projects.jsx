@@ -8,7 +8,7 @@ export default function Projects({search, title}) {
     const [ pagination, setPagination ] = useState([]);
 
     const getProjects = (nextPage = false) => {
-        let requestUrl = nextPage ? pagination.next_page_url : 'api/projects?paginate=5'
+        let requestUrl = nextPage ? pagination.next_page_url : 'api/projects?paginate=6'
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += '&title=' + title
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
@@ -32,48 +32,44 @@ export default function Projects({search, title}) {
 
     return (<>
         <div className="row">
-            <div className="col-6 text-end"><h2>Projects</h2></div>
             { !search ?
-            <div className="col-6">
-                <ModalBox id="project_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
+            <div className="col-auto">
+                <ModalBox id="project_form_" buttonTitle={<i className="bi bi-plus mx-2 fs-4"></i>}>
                     <ProjectForm afterSubmit={ getProjects }/>
                 </ModalBox>
             </div>
             : null }
+            <div className="col-auto"><h2>Projects</h2></div>
         </div>
 
         <AlertBox />
 
         { projects && projects.length ?
-        <div className="row">
-            <table className="table table-hover table-borderless">
-                <thead>
-                    <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { projects.map(item => 
-                        <tr key={item.id}>
-                            <td>
-                                <ModalBox id={"project_form_" + item.id} buttonTitle={ item.title }>
-                                    <ProjectForm id={ item.id } project={ item } afterSubmit={ getProjects }/>
-                                </ModalBox>
-                            </td>
-                            <td>{item.desc}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-            
+        <div className="projs row mt-3 g-4">
+            { projects.map(item => 
+                <div key={item.id} className="col-4">
+                    <div className="proj__item px-3 py-2">
+                        <div className="proj__label pb-0 text-muted">Project</div>
+                        <div className="proj__value mb-2">
+                            <ModalBox id={"project_form_" + item.id} buttonStyle="link"  buttonTitle={ item.title }>
+                                <ProjectForm id={ item.id } project={ item } afterSubmit={ getProjects }/>
+                            </ModalBox>
+                        </div>
+                        <div className="">{item.desc}</div>
+                    </div>
+                </div>
+            )}
         </div>
-        : <h4>No Results found...</h4> }
+        : <div className="row mt-3">
+            <h4>No Results found...</h4>
+        </div> }
 
         { pagination.next_page_url ? 
-            <div className="row justify-content-center">
+            <div className="row justify-content-center mt-4">
                 <div className="col-4 text-center">
-                    <button type="button" className="btn btn-info" onClick={ handleLoadMore }>Load More</button>
+                    <button type="button" className="btn btn-primary" onClick={ handleLoadMore }>
+                        <i class="bi bi-chevron-compact-down fs-4 mx-5"></i>
+                    </button>
                 </div>
             </div> 
         : null }
