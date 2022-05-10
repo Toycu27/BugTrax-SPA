@@ -1,8 +1,9 @@
 body {
    background-color: #6A702C; 
    background-image: url("../public/bg.jpg");
+   background-repeat: no-repeat;
+   background-attachment: fixed;
 }
-
 
 /* Navigation */
 .navbar-brand {
@@ -17,30 +18,38 @@ a {
 }
 
 a:hover {
-  color: #E46C1C;
+  color: #f87f1c;
 }
 
 .link {
   color: #E46C1C;
   text-decoration: none;
-  font-weight: 500;
 }
 
 .link:hover {
-  color: #E46C1C;
+  color: #f87f1c;
 }
 
 .nav-link {
   letter-spacing: 1px;
 }
 
-.nav-link.hover::before, 
+.nav-link:hover::before, 
 .nav-link.active::before {
   position: absolute;
   content: attr(data-title);
   border-bottom: 4px solid #E46C1C;
   color: transparent;
 }
+
+nav a.active > i {
+  color: #E46C1C;
+}
+
+nav a:hover > i {
+  color: #f87f1c;
+}
+
 
 /* Button */
 .btn {
@@ -55,12 +64,16 @@ a:hover {
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
-  background-color: #E46C1C;
-  border-color: #E46C1C
+  background-color: #f87f1c;
+  border-color: #f87f1c
 }
 
 .btn-primary:focus {
-  box-shadow: 0 0 0 0.25rem rgb(228 108 28 / 50%);
+  box-shadow: 0 0 0 0.25rem rgb(228 108 28 / 50%)!important;
+}
+
+.btn-sm {
+  padding: 0em 1em;
 }
 
 
@@ -98,10 +111,15 @@ a:hover {
   border-radius: 0;
 }
 
+/* Alert Box */
+.alert {
+  border-radius: 0;
+  border: 0;
+}
+
 
 /* Projects */
 .proj__item {
-  height:126px;
   background-color: rgb(250 250 250 / 70%);
   text-overflow: ellipsis;
   overflow: hidden; 
@@ -111,7 +129,7 @@ a:hover {
 }
 
 .proj__label {
-
+  font-size: 0.9em;
 }
 
 .projs__value {
@@ -130,7 +148,7 @@ a:hover {
 }
 
 .milestone__label {
-
+  font-size: 0.9em;
 }
 
 .milestone__value {
@@ -149,7 +167,7 @@ a:hover {
 }
 
 .bug__label {
-
+  font-size: 0.9em;
 }
 
 .bug__value {

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from '../Auth';
-import { InputField } from ".";
+import { InputField, TextareaField } from ".";
 import axios from "axios";
-import TextareaField from "./TextareaField";
 
 export default function ProjectForm ({id, project, afterSubmit }) {
-    const { addMessage } = useUser();
+    const { addMessage, hasRole } = useUser();
     const urlParams = useParams();
 
     const handleChange = e => {
@@ -60,6 +59,22 @@ export default function ProjectForm ({id, project, afterSubmit }) {
         }
     }
 
+    const handleDelete = async e => {
+        e.preventDefault();
+        let response;
+
+        response = await axios.deleteRequest('api/projects/' + id);
+
+        if (response.errors) {
+            setErrors({ ...defaultErrors, ...response.errors });
+        } else {
+            document.getElementById('project_form_' + id + '_close').click();
+
+            await addMessage(response.message);
+            afterSubmit();
+        }
+    }
+
 
     return (
         <form onSubmit={handleSubmit} className="needs-validation">
@@ -69,8 +84,16 @@ export default function ProjectForm ({id, project, afterSubmit }) {
             <div className="mb-3">
                 <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
             </div>
-            <div className="d-grid gap-2">
-                <button className="btn btn-primary btn-lg" type="submit">{ id ? "Edit Project" : "Create Project"}</button>
+            <div className="row">
+                <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
+                    <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update Project" : "Create Project"}</button>
+                </div>
+                { id ? 
+                <div className="col-4 d-grid gap-2">
+                    <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button" 
+                    disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete Project</button>
+                </div>
+                : null }
             </div>
         </form>
     );

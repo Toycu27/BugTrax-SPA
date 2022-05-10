@@ -6,7 +6,7 @@ import axios from "axios";
 import TextareaField from "./TextareaField";
 
 export default function MilestoneForm ({id, milestone, afterSubmit }) {
-    const { addMessage } = useUser();
+    const { addMessage, hasRole } = useUser();
     const urlParams = useParams();
 
     const handleChange = e => {
@@ -71,6 +71,22 @@ export default function MilestoneForm ({id, milestone, afterSubmit }) {
         }
     }
 
+    const handleDelete = async e => {
+        e.preventDefault();
+        let response;
+
+        response = await axios.deleteRequest('api/milestones/' + id);
+
+        if (response.errors) {
+            setErrors({ ...defaultErrors, ...response.errors });
+        } else {
+            document.getElementById('milestone_form_' + id + '_close').click();
+
+            await addMessage(response.message);
+            afterSubmit();
+        }
+    }
+
 
     if (projects) {
         return (
@@ -93,10 +109,18 @@ export default function MilestoneForm ({id, milestone, afterSubmit }) {
                         <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Due Date" />
                     </div>
                 </div>
-
-                <div className="d-grid gap-2">
-                    <button className="btn btn-primary btn-lg" type="submit">{ id ? "Edit Milestone" : "Create Milestone"}</button>
+                <div className="row">
+                    <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
+                        <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update Milestone" : "Create Milestone"}</button>
+                    </div>
+                    { id ? 
+                    <div className="col-4 d-grid gap-2">
+                        <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button" 
+                        disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete Milestone</button>
+                    </div>
+                    : null }
                 </div>
+
             </form>
         );
     } else {

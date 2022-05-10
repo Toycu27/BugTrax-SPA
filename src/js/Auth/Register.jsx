@@ -48,9 +48,12 @@ export default function Register() {
     return (
         <div className="row justify-content-center">
             <div className="col-sm-6">
-                <div className="text-center mb-3">
+                <div className="text-center mb-4">
                     <h2>Create an Account</h2>
-                    <p>Register to use the BugTrax App</p>
+                    <div className="text-muted text-center mt-2">
+                        <span>Already have an account? </span>
+                        <Link className="" to="/login">Login</Link>
+                    </div>
                 </div>
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="mb-3">
@@ -70,10 +73,6 @@ export default function Register() {
                         <button className="btn btn-primary btn-lg" type="submit">Sign Up</button>
                     </div>
                 </form>
-                <div className="text-muted text-center mt-2">
-                    <span>Already have an account? </span>
-                    <Link className="" to="/login">Login</Link>
-                </div>
                 <AlertBox />
             </div>
         </div>

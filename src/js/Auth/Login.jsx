@@ -50,9 +50,12 @@ export default function Login({ setUser }) {
     return (
         <div className="row justify-content-md-center">
             <div className="col-sm-6">
-                <div className="text-center mb-3">
+                <div className="text-center mb-4">
                     <h2>Login</h2>
-                    <p>Please login to enter the App</p>
+                    <div className="text-muted text-center mt-2">
+                        <span>Don't have an account? </span>
+                        <Link className="" to="/register">Sign Up</Link>
+                    </div>
                 </div>
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="mb-3">
@@ -67,10 +70,6 @@ export default function Login({ setUser }) {
                         <button className="btn btn-primary btn-lg" type="submit">Login</button>
                     </div>
                 </form>
-                <div className="text-muted text-center mt-2">
-                    <span>Don't have an account? </span>
-                    <Link className="" to="/register">Sign Up</Link>
-                </div>
                 <AlertBox />
             </div>
         </div>

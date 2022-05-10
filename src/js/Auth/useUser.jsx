@@ -18,6 +18,10 @@ export default function useUser() {
         setUser(null);
     }
 
+    const hasRole = (roles = []) => {
+        return roles.includes(user.role);
+    }
+
     //Form Message Functions
     const addMessage = async (message) => {
         let messages = localStorage.getItem('formMessages');
@@ -58,6 +62,7 @@ export default function useUser() {
         setUser: saveUser,
         user: user,
         deleteUser: deleteUser,
+        hasRole: hasRole,
         addMessage: addMessage,
         getMessage: getMessage,
         setLastLocation: setLastLocation,

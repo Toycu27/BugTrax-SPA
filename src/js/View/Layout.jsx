@@ -53,7 +53,7 @@ export default function App({user, setUser, deleteUser}) {
                   </button>
                   <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav justify-content-start me-auto fs-6">{ links }</ul>
-                    <ul className="navbar-nav justify-content-end">{ searchBar }</ul>
+                    <ul className="navbar-nav justify-content-end mx-3">{ searchBar }</ul>
                     <ul className="navbar-nav justify-content-end fs-4">{ authLinks }</ul>
                   </div>
               </div>

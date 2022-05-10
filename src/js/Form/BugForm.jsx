@@ -5,7 +5,7 @@ import { InputField, TextareaField, SelectField } from ".";
 import axios from "axios";
 
 export default function BugForm ({id, bug, afterSubmit }) {
-    const { addMessage } = useUser();
+    const { addMessage, hasRole } = useUser();
     const urlParams = useParams();
 
     const handleChange = e => {
@@ -20,8 +20,7 @@ export default function BugForm ({id, bug, afterSubmit }) {
     const [ milestones, setMilestones ] = useState();
     const [ users, setUsers ] = useState();
     const statusOpts = ['New', 'Progress', 'Freeze', 'Testet', 'Solved'];
-    const priorityOpts = ['Immediate', 'High', 'Normal', 'Low'];
-    const progressOpts = {0: '0%', 10: '10%', 20: '20%', 30: '30%', 40: '40%', 50: '50%', 60: '60%', 70: '70%', 80: '80%', 90: '90%', 100: '100%'};
+    const priorityOpts = ['Low', 'Normal', 'High', 'Immediate'];
     const deviceTypeOpts = ['Desktop', 'Tablet', 'Mobile'];
     const deviceOsOpts = ['Windows', 'Mac', 'Linux'];
     const difficultyOpts = ['Easy', 'Normal', 'Hard', 'Unknown'];
@@ -33,7 +32,6 @@ export default function BugForm ({id, bug, afterSubmit }) {
         assigned_to: '',
         status: 'New',
         priority: '',
-        progress: 0,
         difficulty: '',
         title: '',
         desc: '',
@@ -50,7 +48,6 @@ export default function BugForm ({id, bug, afterSubmit }) {
         assigned_to: null,
         status: null,
         priority: null,
-        progress: null,
         difficulty: null,
         title: null,
         desc: null,
@@ -101,6 +98,22 @@ export default function BugForm ({id, bug, afterSubmit }) {
         }
     }
 
+    const handleDelete = async e => {
+        e.preventDefault();
+        let response;
+
+        response = await axios.deleteRequest('api/bugs/' + id);
+
+        if (response.errors) {
+            setErrors({ ...defaultErrors, ...response.errors });
+        } else {
+            document.getElementById('bug_form_' + id + '_close').click();
+
+            await addMessage(response.message);
+            afterSubmit();
+        }
+    }
+
 
     if (projects && milestones && users) {
         return (
@@ -110,6 +123,9 @@ export default function BugForm ({id, bug, afterSubmit }) {
                 </div>
                 <div className="mb-3">
                     <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
+                </div>
+                <div className="mb-5">
+                    <TextareaField type="text" name="solution_desc" value={values.solution_desc} errorValue={errors.solution_desc} setValue={handleChange} title="Solution" />
                 </div>
                 <div className="row mb-3">
                     <div className="col-4">
@@ -122,22 +138,13 @@ export default function BugForm ({id, bug, afterSubmit }) {
                         <SelectField name="assigned_to" value={values.assigned_to} errorValue={errors.assigned_to} setValue={handleChange} options={users} title="Assignee" />
                     </div>
                 </div>
-                <div className="row mb-3">
+                <div className="row mb-5">
                     <div className="col-4">
                         <SelectField name="status" value={values.status} errorValue={errors.status} setValue={handleChange} options={statusOpts} title="Status" required="required" />
                     </div>
                     <div className="col-4">
                         <SelectField name="priority" value={values.priority} errorValue={errors.priority} setValue={handleChange} options={priorityOpts} title="Priority" required="required" />
                     </div>
-                    <div className="col-4">
-                        <SelectField name="progress" value={values.progress} errorValue={errors.progress} setValue={handleChange} options={progressOpts} title="Progress" required="required" />
-                    </div>
-                </div>
-                <div className="mb-3">
-                    <InputField type="text" name="url" value={values.url} errorValue={errors.url} setValue={handleChange} title="URL" />
-                </div>
-                <div className="mb-3">
-                    <TextareaField type="text" name="solution_desc" value={values.solution_desc} errorValue={errors.solution_desc} setValue={handleChange} title="Solution Description" />
                 </div>
                 <div className="row mb-3">
                     <div className="col-4">
@@ -147,20 +154,32 @@ export default function BugForm ({id, bug, afterSubmit }) {
                         <SelectField name="device_os" value={values.device_os} errorValue={errors.device_os} setValue={handleChange} options={deviceOsOpts} title="Device OS" />
                     </div>
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
+                    <InputField type="text" name="url" value={values.url} errorValue={errors.url} setValue={handleChange} title="URL" />
+                </div>
+                <div className="mb-5">
                     <TextareaField type="text" name="browser_info" value={values.browser_info} errorValue={errors.browser_info} setValue={handleChange} title="Browser Information" />
                 </div>
-                <div className="row mb-3">
-                <div className="col-4">
+                <div className="row mb-5">
+                    <div className="col-4">
                         <SelectField name="difficulty" value={values.difficulty} errorValue={errors.difficulty} setValue={handleChange} options={difficultyOpts} title="Difficulty" required="required" />
                     </div>
                     <div className="col-4">
                         <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Due Date" />
                     </div>
                 </div>
-                <div className="d-grid gap-2">
-                    <button className="btn btn-primary btn-lg" type="submit">{ id ? "Edit Bug" : "Create Bug"}</button>
+                <div className="row">
+                    <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
+                        <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update Bug" : "Create Bug"}</button>
+                    </div>
+                    { id ? 
+                    <div className="col-4 d-grid gap-2">
+                        <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button" 
+                        disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete Bug</button>
+                    </div>
+                    : null }
                 </div>
+
             </form>
         );
     } else {

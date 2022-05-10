@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { AlertBox, ModalBox, BugForm, SelectField } from "../Form";
 import axios from "axios";
 
 export default function Bugs({search, title}) {
+    const [ searchParams, setSearchParams ] = useSearchParams();
+
+    const updateSearchParams = () => {
+        setSearchParams({ project: selectedProject, milestone: selectedMilestone, assignee: selectedAssignee  })
+    }
+
     const [ bugs, setBugs ] = useState();
     const [ projects, setProjects ] = useState();
     const [ milestones, setMilestones ] = useState();
+    const [ users, setUsers ] = useState();
     const [ pagination, setPagination ] = useState([]);
-    const [ selectedProject, setSelectedProject ] = useState();
-    const [ selectedMilestone, setSelectedMilestone ] = useState();
+    const [ selectedProject, setSelectedProject ] = useState(searchParams.get('project'));
+    const [ selectedMilestone, setSelectedMilestone ] = useState(searchParams.get('milestone'));
+    const [ selectedAssignee, setSelectedAssignee ] = useState(searchParams.get('assignee'));
 
     const getBugs = (nextPage = false) => {
         let requestUrl = nextPage ? pagination.next_page_url : 'api/bugs?paginate=5&with=project,milestone,assignedTo'
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += '&title=' + title
-        if (!isNaN(selectedProject) && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
-        if (!isNaN(selectedMilestone) && nextPage === false) requestUrlParams += '&milestone_id=' + selectedMilestone
+        if (selectedProject > 0 && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
+        if (selectedMilestone > 0 && nextPage === false) requestUrlParams += '&milestone_id=' + selectedMilestone
+        if (selectedAssignee > 0 && nextPage === false) requestUrlParams += '&assigned_to=' + selectedAssignee
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
             if (nextPage) setBugs([ ...bugs, ...r.data.data  ])
             else setBugs([ ...r.data.data ])
@@ -36,46 +45,58 @@ export default function Bugs({search, title}) {
         axios.getRequest('api/milestones', (r) => { setMilestones(r.data.data) });
     }
 
-    useEffect(() => {
-        if (selectedProject) getBugs();
-    }, [selectedProject]);
+    const getUsers = () => {
+        axios.getRequest('api/users', (r) => { setUsers(r.data.data) });
+    }
 
     useEffect(() => {
-        if (selectedMilestone) getBugs();
-    }, [selectedMilestone]);
+        if (selectedProject || selectedMilestone || selectedAssignee) {
+            getBugs();
+            updateSearchParams();
+        }
+    }, [selectedProject, selectedMilestone, selectedAssignee]);
 
     useEffect(() => {
         getBugs();
         getProjects();
         getMilestones();
+        getUsers();
     }, []);
 
     useEffect(() => {
         getBugs();
         getProjects();
         getMilestones();
+        getUsers();
     }, [title]);
 
     let statusClassMap = {
-        'New': 'badge rounded-pill bg-secondary',
+        'New': 'badge rounded-pill bg-primary',
         'Progress': 'badge rounded-pill bg-warning',
-        'Freeze': 'badge rounded-pill bg-info',
-        'Testet': 'badge rounded-pill bg-primary',
+        'Freeze': 'badge rounded-pill bg-dark',
+        'Testet': 'badge rounded-pill bg-info',
         'Solved': 'badge rounded-pill bg-success',
     };
 
     let priorityClassMap = {
-        'Immediate': 'badge bg-secondary',
-        'High': 'badge bg-danger',
-        'Normal': 'badge bg-warning',
         'Low': 'badge bg-primary',
+        'Normal': 'badge bg-warning',
+        'High': 'badge bg-danger',
+        'Immediate': 'badge bg-secondary',
+    };
+
+    let difficultyClassMap = {
+        'Easy': 'badge rounded-pill bg-primary',
+        'Normal': 'badge rounded-pill bg-warning',
+        'Hard': 'badge rounded-pill bg-danger',
+        'Unknown': 'badge rounded-pill bg-secondary',
     };
 
     return (<>
-        <div className="row">
+        <div className="row mb-4 mt-1">
             { !search ?
             <div className="col-auto">
-                <ModalBox id="bug_form_" buttonTitle={<i className="bi bi-plus mx-2 fs-4"></i>}>
+                <ModalBox id="bug_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
                     <BugForm afterSubmit={ getBugs }/>
                 </ModalBox>
             </div>
@@ -84,12 +105,15 @@ export default function Bugs({search, title}) {
         </div>
 
         { !search ?
-        <div className="row mt-3">
+        <div className="row mb-5">
             <div className="col-4">
                 <SelectField name="selected_project" value={selectedProject} setValue={(e) => {setSelectedProject(e.target.value)}} title="Project" options={projects} />
             </div>
             <div className="col-4">
                 <SelectField name="selected_milestone" value={selectedMilestone} setValue={(e) => {setSelectedMilestone(e.target.value)}} title="Milestone" options={milestones} />
+            </div>
+            <div className="col-4">
+                <SelectField name="selected_assignee" value={selectedAssignee} setValue={(e) => {setSelectedAssignee(e.target.value)}} title="Assignee" options={users} />
             </div>
         </div>
         : null }
@@ -97,7 +121,7 @@ export default function Bugs({search, title}) {
         <AlertBox />
 
         { bugs && bugs.length ?
-        <div className="bugs row mt-4 g-4">
+        <div className="bugs row mb-4 g-4">
             { bugs.map(item => 
                 <div key={item.id} className="col-12">
                 <div className="bug__item px-3 py-2">
@@ -110,32 +134,27 @@ export default function Bugs({search, title}) {
                                 </ModalBox>
                             </div>
                             <div className="bug__label pb-0 text-muted">Project</div>
-                            <div className="bug__value mb-2">{ item.project.title }</div>
+                            <div className="bug__value mb-2">{ item.project ? item.project.title : "Not Selected" }</div>
                             <div className="bug__label pb-0 text-muted">Milestone</div>
-                            <div className="bug__value">{ item.milestone.title }</div>
+                            <div className="bug__value">{ item.milestone ? item.milestone.title : "Not Selected" }</div>
                         </div>
                         <div className="col-1">
                             <div className="bug__label pb-0 text-muted">Status</div>
-                            <div className={"bug__value mb-2 " + statusClassMap[item.status]}>{ item.status }</div>
-                        </div>
-                        <div className="col-2">
-                            <div className="bug__label pb-0 text-muted">Progress</div>
-                            <div className="bug__value mb-2">
-                                <div class="progress">
-                                    <div class="progress-bar bg-info" style={{width: + (item.progress ? item.progress : 0) + "%"}} 
-                                    role="progressbar" aria-valuenow={ item.progress } aria-valuemin="0" aria-valuemax="100">
-                                        {item.progress > 10 ? item.progress + "%" : null }
-                                    </div>
-                                </div>
-                            </div>
+                            <div className={"bug__value fw-normal fs-6 mb-2 " + statusClassMap[item.status]}>{ item.status }</div>
                         </div>
                         <div className="col-1">
+                            <div className="bug__label pb-0 text-muted">Difficulty</div>
+                            <div className={"bug__value fw-normal fs-6 mb-2 " + difficultyClassMap[item.difficulty]}>{ item.difficulty }</div>
+                        </div>
+                        <div className="col-2">
                             <div className="bug__label pb-0 text-muted">Priority</div>
-                            <div className={"bug__value mb-2 " + priorityClassMap[item.priority]}>{ item.priority }</div>
+                            <div className={"bug__value fw-normal fs-6 mb-2 " + priorityClassMap[item.priority]}>{ item.priority }</div>
                         </div>
                         <div className="col-2">
                             <div className="bug__label pb-0 text-muted">Created</div>
                             <div className="bug__value mb-2">{new Date(item.created_at).toLocaleDateString()}</div>
+                            <div className="bug__label pb-0 text-muted">Modified</div>
+                            <div className="bug__value mb-2">{new Date(item.updated_at).toLocaleDateString()}</div>
                             <div className="bug__label pb-0 text-muted">Due</div>
                             <div className="bug__value mb-2">{new Date(item.end_date).toLocaleDateString()}</div>
                         </div>
@@ -148,12 +167,12 @@ export default function Bugs({search, title}) {
                 </div>
             )}
         </div>
-        : <div className="row mt-4">
+        : <div className="row mb-4">
             <h4>No Results found...</h4>
         </div> }
 
         { pagination.next_page_url ? 
-            <div className="row justify-content-center mt-4">
+            <div className="row justify-content-center">
                 <div className="col-4 text-center">
                     <button type="button" className="btn btn-primary" onClick={ handleLoadMore }>
                         <i class="bi bi-chevron-compact-down fs-4 mx-5"></i>
