@@ -1,4 +1,4 @@
-export default function InputField({name, value = "", setValue, errorValue = "", title, options, type = 'text', required = ''}) {
+export default function InputField({name, value = "", setValue, errorValue = "", title, options, type = 'text', required = '', disabled = ''}) {
     let feedbackId = name + '_feedback';
     let inputId = name + '_id';
 
@@ -13,6 +13,7 @@ export default function InputField({name, value = "", setValue, errorValue = "",
             onChange={setValue}
             aria-describedby={feedbackId}
             required={ required ? true : false }
+            disabled={ disabled ? true : false }
         />
         <div id={feedbackId} className="invalid-feedback">
             {errorValue}

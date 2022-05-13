@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { AlertBox, ModalBox, ProjectForm } from "../Form";
+import { Link } from "react-router-dom";
+import { AlertBox } from "../Form";
 import axios from "axios";
 
 export default function Projects({search, title}) {
@@ -33,9 +34,16 @@ export default function Projects({search, title}) {
         <div className="row mb-4 mt-1">
             { !search ?
             <div className="col-auto">
+                {/*
                 <ModalBox id="project_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
                     <ProjectForm afterSubmit={ getProjects }/>
                 </ModalBox>
+                */}
+                <Link to="/project">
+                    <button type="button" className="btn btn-primary btn-sm">
+                        <i className="bi bi-plus fs-4"></i>
+                    </button>
+                </Link>
             </div>
             : null }
             <div className="col-auto"><h2>Projects</h2></div>
@@ -52,9 +60,12 @@ export default function Projects({search, title}) {
                             <div className="col-6">
                                 <div className="proj__label pb-0 text-muted">Project</div>
                                 <div className="proj__value mb-2">
+                                    {/*
                                     <ModalBox id={"project_form_" + item.id} buttonStyle="link" buttonTitle={ item.title }>
                                         <ProjectForm id={ item.id } project={ item } afterSubmit={ getProjects }/>
                                     </ModalBox>
+                                    */}
+                                    <Link to={"/project/" + item.id}>{ item.title }</Link>
                                 </div>
                             </div>
                             <div className="col-3">
@@ -84,7 +95,7 @@ export default function Projects({search, title}) {
             <div className="row justify-content-center">
                 <div className="col-4 text-center">
                     <button type="button" className="btn btn-primary" onClick={ handleLoadMore }>
-                        <i class="bi bi-chevron-compact-down fs-4 mx-5"></i>
+                        <i className="bi bi-chevron-compact-down fs-4 mx-5"></i>
                     </button>
                 </div>
             </div> 

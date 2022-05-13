@@ -3,6 +3,7 @@ import { useState } from 'react';
 export default function useUser() {
     //User Functions
     const saveUser = user => {
+        if (user == null) user = null;
         localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
     }
@@ -23,12 +24,13 @@ export default function useUser() {
     }
 
     //Form Message Functions
-    const addMessage = async (message) => {
+    const addMessage = async (message, type = "success") => {
         let messages = localStorage.getItem('formMessages');
+        if (messages == '') messages = 'null';
         messages = JSON.parse(messages);
-        if (messages == null) messages = [];
+        if (messages === null) messages = [];
 
-        messages.push(message);
+        messages.push({message: message, type: type});
 
         localStorage.setItem('formMessages', JSON.stringify(messages));
     }

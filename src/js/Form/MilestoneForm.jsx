@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUser } from '../Auth';
-import { InputField, SelectField } from ".";
+import { InputField, SelectField, AlertBox } from ".";
 import axios from "axios";
 import TextareaField from "./TextareaField";
 
-export default function MilestoneForm ({id, milestone, afterSubmit }) {
+export default function MilestoneForm ({id, milestone }) {
     const { addMessage, hasRole } = useUser();
     const urlParams = useParams();
+    if (urlParams.id) id = urlParams.id;
 
     const handleChange = e => {
         setValues(oldValues => ({
@@ -40,7 +41,7 @@ export default function MilestoneForm ({id, milestone, afterSubmit }) {
 
     useEffect(() => {
         if (id && !milestone) axios.getRequest('api/milestones/' + urlParams.id, (r) => {
-            setValues({ ...r.data });
+            setValues({ ...r.data.data });
         });
         else if (milestone) setValues(milestone);
         
@@ -56,18 +57,16 @@ export default function MilestoneForm ({id, milestone, afterSubmit }) {
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
+            addMessage(response.message, "danger");
         } else {
             setErrors({ ...defaultErrors });
             if (id) {
                 setValues({ ...defaultValues, ...response.data });
-                document.getElementById('milestone_form_' + id + '_close').click();
             } else {
                 setValues({ ...defaultValues });
-                document.getElementById('milestone_form__close').click();
             }
             
             await addMessage(response.message);
-            afterSubmit();
         }
     }
 
@@ -79,17 +78,26 @@ export default function MilestoneForm ({id, milestone, afterSubmit }) {
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
+            addMessage(response.message, "danger");
         } else {
-            document.getElementById('milestone_form_' + id + '_close').click();
-
             await addMessage(response.message);
-            afterSubmit();
         }
     }
 
 
     if (projects) {
-        return (
+        return (<>
+            <div className="row mb-4 mt-1">
+                <div className="col-auto">
+                    <Link to="/milestones">
+                        <button type="button" className="btn btn-primary btn-sm">
+                            <i className="bi bi-arrow-left fs-4"></i>
+                        </button>
+                    </Link>
+                </div>
+                <div className="col-auto"><h2>Milestone</h2></div>
+            </div>
+            <AlertBox />
             <form onSubmit={handleSubmit} className="needs-validation">
                 <div className="mb-3">
                     <SelectField name="project_id" value={values.project_id} errorValue={errors.project_id} setValue={handleChange} options={projects} title="Project" required="required" />
@@ -111,18 +119,18 @@ export default function MilestoneForm ({id, milestone, afterSubmit }) {
                 </div>
                 <div className="row">
                     <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
-                        <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update Milestone" : "Create Milestone"}</button>
+                        <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update" : "Create"}</button>
                     </div>
                     { id ? 
                     <div className="col-4 d-grid gap-2">
                         <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button" 
-                        disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete Milestone</button>
+                        disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete</button>
                     </div>
                     : null }
                 </div>
 
             </form>
-        );
+        </>);
     } else {
         return ("Loading Button");
     }

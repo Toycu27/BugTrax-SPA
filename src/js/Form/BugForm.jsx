@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUser } from '../Auth';
-import { InputField, TextareaField, SelectField } from ".";
+import { InputField, TextareaField, SelectField, AlertBox } from ".";
 import axios from "axios";
 
-export default function BugForm ({id, bug, afterSubmit }) {
+export default function BugForm ({id, bug }) {
     const { addMessage, hasRole } = useUser();
     const urlParams = useParams();
+    if (urlParams.id) id = urlParams.id;
 
     const handleChange = e => {
         setValues(oldValues => ({
@@ -64,7 +65,7 @@ export default function BugForm ({id, bug, afterSubmit }) {
 
     useEffect(() => {
         if (id && !bug) axios.getRequest('api/bugs/' + urlParams.id, (r) => {
-            setValues({ ...r.data });
+            setValues({ ...r.data.data });
         });
         else if (bug) setValues(bug);
         
@@ -82,19 +83,18 @@ export default function BugForm ({id, bug, afterSubmit }) {
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
+            addMessage(response.message, "danger");
         } else {
             setErrors({ ...defaultErrors });
             if (id) {
                 setValues({ ...defaultValues, ...response.data });
-                document.getElementById('bug_form_' + id + '_close').click();
             }
             else {
                 setValues({ ...defaultValues });
-                document.getElementById('bug_form__close').click();
             }
             
-            await addMessage(response.message);
-            afterSubmit();
+            addMessage(response.message);
+            window.scrollTo(0, 0);
         }
     }
 
@@ -106,17 +106,28 @@ export default function BugForm ({id, bug, afterSubmit }) {
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
+            addMessage(response.message, "danger");
         } else {
-            document.getElementById('bug_form_' + id + '_close').click();
-
-            await addMessage(response.message);
-            afterSubmit();
+            addMessage(response.message);
         }
+
+        window.scrollTo(0, 0);
     }
 
 
     if (projects && milestones && users) {
-        return (
+        return (<>
+            <div className="row mb-4 mt-1">
+                <div className="col-auto">
+                    <Link to="/bugs">
+                        <button type="button" className="btn btn-primary btn-sm">
+                            <i className="bi bi-arrow-left fs-4"></i>
+                        </button>
+                    </Link>
+                </div>
+                <div className="col-auto"><h2>Bug</h2></div>
+            </div>
+            <AlertBox />
             <form onSubmit={handleSubmit} className="needs-validation">
                 <div className="mb-3">
                     <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required="required" />
@@ -145,8 +156,14 @@ export default function BugForm ({id, bug, afterSubmit }) {
                     <div className="col-4">
                         <SelectField name="priority" value={values.priority} errorValue={errors.priority} setValue={handleChange} options={priorityOpts} title="Priority" required="required" />
                     </div>
+                    <div className="col-4">
+                        <SelectField name="difficulty" value={values.difficulty} errorValue={errors.difficulty} setValue={handleChange} options={difficultyOpts} title="Difficulty" required="required" />
+                    </div>
                 </div>
                 <div className="row mb-3">
+                    <div className="col-4">
+                        <InputField type="text" name="url" value={values.url} errorValue={errors.url} setValue={handleChange} title="URL" />
+                    </div>
                     <div className="col-4">
                         <SelectField name="device_type" value={values.device_type} errorValue={errors.device_type} setValue={handleChange} options={deviceTypeOpts} title="Device Type" />
                     </div>
@@ -154,34 +171,34 @@ export default function BugForm ({id, bug, afterSubmit }) {
                         <SelectField name="device_os" value={values.device_os} errorValue={errors.device_os} setValue={handleChange} options={deviceOsOpts} title="Device OS" />
                     </div>
                 </div>
-                <div className="mb-4">
-                    <InputField type="text" name="url" value={values.url} errorValue={errors.url} setValue={handleChange} title="URL" />
-                </div>
-                <div className="mb-5">
+                <div className="mb-3">
                     <TextareaField type="text" name="browser_info" value={values.browser_info} errorValue={errors.browser_info} setValue={handleChange} title="Browser Information" />
                 </div>
                 <div className="row mb-5">
                     <div className="col-4">
-                        <SelectField name="difficulty" value={values.difficulty} errorValue={errors.difficulty} setValue={handleChange} options={difficultyOpts} title="Difficulty" required="required" />
+                        <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Due Date" />
                     </div>
                     <div className="col-4">
-                        <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Due Date" />
+                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled="true" />
+                    </div>
+                    <div className="col-4">
+                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled="true" />
                     </div>
                 </div>
                 <div className="row">
                     <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
-                        <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update Bug" : "Create Bug"}</button>
+                        <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update" : "Create"}</button>
                     </div>
                     { id ? 
                     <div className="col-4 d-grid gap-2">
                         <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button" 
-                        disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete Bug</button>
+                        disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete</button>
                     </div>
                     : null }
                 </div>
 
             </form>
-        );
+        </>);
     } else {
         return ("Loading Button");
     }

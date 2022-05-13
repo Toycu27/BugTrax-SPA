@@ -37,6 +37,7 @@ export default function Register() {
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
+            addMessage(response.message, "danger");
         } else {
             setErrors({ ...defaultErrors });
             setValues({ ...defaultValues });

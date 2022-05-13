@@ -39,6 +39,7 @@ export default function ResetPassword() {
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
+            addMessage(response.message, "danger");
         } else {
             addMessage('Your Password has been reset.');
             navigate('/login');

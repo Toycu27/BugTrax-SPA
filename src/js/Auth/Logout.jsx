@@ -7,7 +7,6 @@ export default function Logout({ setUser, deleteUser }) {
 
     useEffect(() => {
         axios.deleteRequest('sanctum/token', (e) => {
-            setUser(null);
             deleteUser();
             navigate('/');
         });

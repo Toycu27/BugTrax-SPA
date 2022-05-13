@@ -1,11 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search } from './js/View';
+import { BugForm, MilestoneForm, ProjectForm } from "./js/Form";
 import { useUser, ProtectedRoute as Protected, Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
 import axios from "axios";
 
+
+//Settings
+export const backendPath = 'http://localhost:8000/';
+export const fileStoragePath = backendPath + 'storage/';
+
+
 //Axios Settings START
-axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.baseURL = backendPath;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfCookieName = 'XSRF-TOKEN';
 axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
@@ -18,12 +25,11 @@ axios.defaults.headers = {
 };
 axios.interceptors.request.use(function (config) {
   if (
-    //config.method == 'PATCH'
-    config.url == 'sanctum/token' 
-    || config.url == 'forgot-password' 
-    || config.url == 'reset-password' 
-    || config.url == 'register'
-    || config.url == 'email/verification-notification'
+    config.url === 'sanctum/token' 
+    || config.url === 'forgot-password' 
+    || config.url === 'reset-password' 
+    || config.url === 'register'
+    || config.url === 'email/verification-notification'
   ) {
     return axios.get('sanctum/csrf-cookie').then(response => config);
   }
@@ -36,9 +42,11 @@ axios.getRequest = async (path, callback = () => {}) => {
   return axios.get(path)
       .then(function (response) {
           callback(response);
+          response.data.success = true;
           return response.data;
       })
       .catch(function (error) {
+        error.response.data.success = false;
           return error.response.data;
       });
 }
@@ -46,19 +54,41 @@ axios.getRequest = async (path, callback = () => {}) => {
 axios.postRequest = async (path, body) => {
   return axios.post(path, JSON.stringify(body))
       .then(function (response) {
+          response.data.success = true;
           return response.data;
       })
       .catch(function (error) {
+          error.response.data.success = false;
           return error.response.data;
       });
+}
+
+axios.postRequestWithFile = async (path, file) => {
+  let settings = { ...axios.defaults }
+  settings.headers = {
+    ...axios.defaults.headers,
+    'Content-Type': 'multipart/form-data'
+  }
+  
+  return axios.post(path, file, settings)
+    .then(function (response) {
+        response.data.success = true;
+        return response.data;
+    })
+    .catch(function (error) {
+        error.response.data.success = false;
+        return error.response.data;
+    });
 }
 
 axios.patchRequest = async (path, body) => {
   return axios.patch(path, JSON.stringify(body))
       .then(function (response) {
+          response.data.success = true;
           return response.data;
       })
       .catch(function (error) {
+          error.response.data.success = false;
           return error.response.data;
       });
 }
@@ -67,13 +97,16 @@ axios.deleteRequest = async (path, callback = () => {}) => {
   return axios.delete(path)
       .then(function (response) {
           callback(response);
+          response.data.success = true;
           return response.data;
       })
       .catch(function (error) {
+          error.response.data.success = false;
           return error.response.data;
       });
 }
 //Axios Settings END
+
 
 export default function App() {
   const { user, setUser, deleteUser } = useUser();
@@ -103,6 +136,12 @@ export default function App() {
           <Route path="/projects" element={<Protected><Projects /></Protected>}/>
           <Route path="/milestones" element={<Protected><Milestones /></Protected>}/>
           <Route path="/bugs" element={<Protected><Bugs /></Protected>}/>
+          <Route path="/project" element={<Protected><ProjectForm /></Protected>}/>
+          <Route path="/project/:id" element={<Protected><ProjectForm /></Protected>}/>
+          <Route path="/milestone" element={<Protected><MilestoneForm /></Protected>}/>
+          <Route path="/milestone/:id" element={<Protected><MilestoneForm /></Protected>}/>
+          <Route path="/bug" element={<Protected><BugForm /></Protected>}/>
+          <Route path="/bug/:id" element={<Protected><BugForm /></Protected>}/>
 
           {/* 404 Route */}
           <Route path="*" element={<PageNotFound />} />

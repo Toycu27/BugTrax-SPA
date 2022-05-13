@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { AlertBox, ModalBox, BugForm, SelectField } from "../Form";
+import { Link, useSearchParams } from "react-router-dom";
+import { AlertBox, SelectField } from "../Form";
 import axios from "axios";
 
 export default function Bugs({search, title}) {
@@ -96,9 +96,11 @@ export default function Bugs({search, title}) {
         <div className="row mb-4 mt-1">
             { !search ?
             <div className="col-auto">
-                <ModalBox id="bug_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
-                    <BugForm afterSubmit={ getBugs }/>
-                </ModalBox>
+                <Link to="/bug">
+                    <button type="button" className="btn btn-primary btn-sm">
+                        <i className="bi bi-plus fs-4"></i>
+                    </button>
+                </Link>
             </div>
             : null }
             <div className="col-auto"><h2>Bugs</h2></div>
@@ -129,9 +131,7 @@ export default function Bugs({search, title}) {
                         <div className="col-4">
                             <div className="bug__label pb-0 text-muted">Bug</div>
                             <div className="bug__value mb-2">
-                                <ModalBox id={"bug_form_" + item.id} buttonStyle="link" buttonTitle={ item.title }>
-                                    <BugForm id={ item.id } bug={ item } afterSubmit={ getBugs }/>
-                                </ModalBox>
+                                <Link to={"/bug/" + item.id}>{ item.title }</Link>
                             </div>
                             <div className="bug__label pb-0 text-muted">Project</div>
                             <div className="bug__value mb-2">{ item.project ? item.project.title : "Not Selected" }</div>
@@ -175,7 +175,7 @@ export default function Bugs({search, title}) {
             <div className="row justify-content-center">
                 <div className="col-4 text-center">
                     <button type="button" className="btn btn-primary" onClick={ handleLoadMore }>
-                        <i class="bi bi-chevron-compact-down fs-4 mx-5"></i>
+                        <i className="bi bi-chevron-compact-down fs-4 mx-5"></i>
                     </button>
                 </div>
             </div> 

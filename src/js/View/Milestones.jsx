@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { AlertBox, ModalBox, MilestoneForm, SelectField } from "../Form";
+import { Link, useSearchParams } from "react-router-dom";
+import { AlertBox, SelectField } from "../Form";
 import axios from "axios";
 
 export default function Milestones({search, title}) {
@@ -56,9 +56,11 @@ export default function Milestones({search, title}) {
         <div className="row mb-4 mt-1">
             { !search ?
             <div className="col-auto">
-                <ModalBox id="milestone_form_" buttonTitle={<i className="bi bi-plus fs-4"></i>}>
-                    <MilestoneForm afterSubmit={ getMilestones }/>
-                </ModalBox>
+                <Link to="/milestone">
+                    <button type="button" className="btn btn-primary btn-sm">
+                        <i className="bi bi-plus fs-4"></i>
+                    </button>
+                </Link>
             </div>
             : null }
             <div className="col-auto"><h2>Milestones</h2></div>
@@ -83,9 +85,7 @@ export default function Milestones({search, title}) {
                         <div className="col-4">
                             <div className="milestone__label pb-0 text-muted">Milestone</div>
                             <div className="milestone__value mb-2">
-                                <ModalBox id={"milestone_form_" + item.id} buttonStyle="link" buttonTitle={ item.title }>
-                                    <MilestoneForm id={ item.id } milestone={ item } afterSubmit={ getMilestones }/>
-                                </ModalBox>
+                                <Link to={"/milestone/" + item.id}>{ item.title }</Link>
                             </div>
                             <div className="milestone__label pb-0 text-muted">Project</div>
                             <div className="milestone__value">{ item.project ? item.project.title : "Not Selected"}</div>
@@ -120,7 +120,7 @@ export default function Milestones({search, title}) {
             <div className="row justify-content-center">
                 <div className="col-4 text-center">
                     <button type="button" className="btn btn-primary" onClick={ handleLoadMore }>
-                        <i class="bi bi-chevron-compact-down fs-4 mx-5"></i>
+                        <i className="bi bi-chevron-compact-down fs-4 mx-5"></i>
                     </button>
                 </div>
             </div> 

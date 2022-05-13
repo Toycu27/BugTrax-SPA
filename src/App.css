@@ -1,4 +1,4 @@
-body {
+body, nav {
    background-color: #6A702C; 
    background-image: url("../public/bg.jpg");
    background-repeat: no-repeat;
@@ -104,6 +104,14 @@ nav a:hover > i {
   background-color: rgb(242 242 242);
 }
 
+textarea {
+  min-height: 100px!important;
+}
+
+textarea:focus {
+  min-height: 200px!important;
+}
+
 
 /* Modal Box */
 .modal-content {
@@ -117,6 +125,10 @@ nav a:hover > i {
   border: 0;
 }
 
+/* Spacing */
+.mb-6 {
+  margin-bottom: 5rem !important;
+}
 
 /* Projects */
 .proj__item {

@@ -10,7 +10,7 @@ export default function Verfiy() {
         const response = await axios.postRequest('email/verification-notification');
 
         if (response.errors) {
-            alert(response.message);
+            addMessage(response.message, "danger");
         } else {
             addMessage(response.message);
         }
@@ -22,13 +22,15 @@ export default function Verfiy() {
                 <div className="mb-3">
                     <h2>E-Mail Verification</h2>
                 </div>
-                <div className="">
+                <div className="row">
                     <p className="mb-4">
                         Please Verify your E-Mail Adress by clicking the Link we send to your E-Mail.
                     </p>
-                    <button onClick={handleClick} className="btn btn-primary btn-lg">Resend Verification</button>
+                    <AlertBox />
+                    <div className="d-grid">
+                        <button onClick={handleClick} className="btn btn-primary btn-lg">Resend Verification</button>
+                    </div>
                 </div>
-                <AlertBox />
             </div>
         </div>
     );

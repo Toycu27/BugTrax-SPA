@@ -43,8 +43,8 @@ export default function App({user, setUser, deleteUser}) {
   }
 
   return (<>
-      <header>
-          <nav className="navbar navbar-expand-lg navbar-light">
+      <header className="mb-6">
+          <nav className="navbar navbar-expand-lg navbar-light fixed-top">
               <div className="container-fluid col-10">
                   <Link className="navbar-brand fs-3" to="/"><i className="bi bi-bug-fill"></i>Bx</Link>
                   <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
@@ -62,17 +62,12 @@ export default function App({user, setUser, deleteUser}) {
 
       <main>
           <div className="container col-8 py-5 pb-5">
-              <Outlet />
-            <div className="row justify-content-md-center">
-                <div className="col-sm-6">
-                    <AlertBox />
-                </div>
-            </div>
+            <Outlet />
         </div>
       </main>
 
-      <footer className="fixed-bottom py-2 bg-light text-secondary">
-          <div className="container-fluid col-10">
+      <footer className="row justify-content-center p-2">
+          <div className="col-6 text-dark text-center">
               <span>© 2022 Onur Toycu Development & Design</span>
           </div>
       </footer>
