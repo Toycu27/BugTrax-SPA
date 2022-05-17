@@ -1,5 +1,5 @@
 import { fileStoragePath } from '../../App.js';
-import React, { useState } from "react";
+import { useState } from "react";
 import { useUser } from './';
 import { AlertBox } from "../Form";
 import axios from "axios";
@@ -53,23 +53,22 @@ export default function UpdateUserAvatar() {
             <div className="col-12">
                 <AlertBox />
                 <form onSubmit={handleSubmit} className="needs-validation">
-                    <div className="row">
-                        <div className="col-2">
-                            <img height="100px" width="100px" src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + values.id * 2} />
+                    <div className="row align-items-center">
+                        <div className="col-md-auto">
+                            <img className="rounded-circle border border-2" height="100px" width="100px" src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + values.id} />
                         </div>
-                        <div className="col-10">
-                            <div className="mb-3">
+                        <div className="col-md-auto">
+                            <div className="">
                                 <input aria-describedby="userAvatarFile" className={"form-control " + (errors.avatar ? "is-invalid" : "")}
                                 onChange={handleChange} name="avatar" type="file" accept="image/*" />
                                 <div id="userAvatarFile" className="invalid-feedback">
                                     {errors.avatar}
                                 </div>
                             </div>
-                            <div className="d-grid gap-2">
-                                <button className="btn btn-primary" type="submit">Upload Avatar</button>
-                            </div>
                         </div>
-
+                        <div className="col-md-auto">
+                            <button className="btn btn-primary" type="submit" disabled={values.avatar ? false : true}>Upload</button>
+                        </div>
                     </div>
                 </form>
             </div>

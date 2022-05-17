@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useUser } from '../Auth';
-import { InputField, TextareaField, SelectField, AlertBox } from ".";
+import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from ".";
 import axios from "axios";
 
 export default function BugForm ({id, bug }) {
@@ -64,7 +64,7 @@ export default function BugForm ({id, bug }) {
 
 
     useEffect(() => {
-        if (id && !bug) axios.getRequest('api/bugs/' + urlParams.id, (r) => {
+        if (id && !bug) axios.getRequest('api/bugs/' + urlParams.id + '', (r) => {
             setValues({ ...r.data.data });
         });
         else if (bug) setValues(bug);
@@ -196,8 +196,10 @@ export default function BugForm ({id, bug }) {
                     </div>
                     : null }
                 </div>
-
             </form>
+            { id && 
+                <CommentForm bug_id={id} />
+            }
         </>);
     } else {
         return ("Loading Button");

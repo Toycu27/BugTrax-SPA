@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { fileStoragePath } from '../../App.js';
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AlertBox, SelectField } from "../Form";
 import axios from "axios";
@@ -160,7 +161,17 @@ export default function Bugs({search, title}) {
                         </div>
                         <div className="col-2">
                             <div className="bug__label pb-0 text-muted">Assignee</div>
-                            <div className="bug__value mb-2">{ item.assigned_to ? item.assigned_to.name : null }</div>
+                            <div className="bug__value mb-2">
+                                { item.assigned_to && 
+                                <div className="">
+                                    <div className="">
+                                        <img className="rounded-circle border border-1" height="50px" width="50px" 
+                                        src={item.assigned_to.avatar_path ? fileStoragePath + item.assigned_to.avatar_path : "https://i.pravatar.cc/50?img=" + item.assigned_to.id} />
+                                    </div>
+                                    <div className="">{ item.assigned_to.name }</div>
+                                </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

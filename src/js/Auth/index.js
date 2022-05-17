@@ -9,4 +9,15 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import VerfiyResend from './VerfiyResend';
 
-export { useUser, ProtectedRoute, Login, Logout, Register, UpdateUser, UpdateUserAvatar, ForgotPassword, ResetPassword, VerfiyResend };
+export { 
+    useUser, 
+    ProtectedRoute, 
+    Login, 
+    Logout, 
+    Register, 
+    UpdateUser, 
+    UpdateUserAvatar, 
+    ForgotPassword, 
+    ResetPassword, 
+    VerfiyResend 
+};

@@ -79,12 +79,27 @@ export default function ProjectForm ({id, project }) {
         </div>
         <AlertBox />
         <form onSubmit={handleSubmit} className="needs-validation">
-            <div className="mb-3">
-                <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required="required" />
+            <div className="row mb-3">
+                <div className="col-12">
+                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required="required" />
+                </div>
             </div>
-            <div className="mb-3">
-                <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
+
+            <div className="row mb-3">
+                <div className="col-12">
+                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
+                </div>
             </div>
+
+            <div className="row mb-5">
+                <div className="col-4">
+                    <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled="true" />
+                </div>
+                <div className="col-4">
+                    <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled="true" />
+                </div>
+            </div>
+
             <div className="row">
                 <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
                     <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update" : "Create"}</button>

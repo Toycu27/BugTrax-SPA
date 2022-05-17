@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search } from './js/View';
+import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search, Statistics, Board } from './js/View';
 import { BugForm, MilestoneForm, ProjectForm } from "./js/Form";
 import { useUser, ProtectedRoute as Protected, Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
 import axios from "axios";
@@ -136,12 +136,16 @@ export default function App() {
           <Route path="/projects" element={<Protected><Projects /></Protected>}/>
           <Route path="/milestones" element={<Protected><Milestones /></Protected>}/>
           <Route path="/bugs" element={<Protected><Bugs /></Protected>}/>
+          <Route path="/board" element={<Protected><Board /></Protected>}/>
+          <Route path="/statistics" element={<Protected><Statistics /></Protected>}/>
+          
           <Route path="/project" element={<Protected><ProjectForm /></Protected>}/>
           <Route path="/project/:id" element={<Protected><ProjectForm /></Protected>}/>
           <Route path="/milestone" element={<Protected><MilestoneForm /></Protected>}/>
           <Route path="/milestone/:id" element={<Protected><MilestoneForm /></Protected>}/>
           <Route path="/bug" element={<Protected><BugForm /></Protected>}/>
           <Route path="/bug/:id" element={<Protected><BugForm /></Protected>}/>
+
 
           {/* 404 Route */}
           <Route path="*" element={<PageNotFound />} />

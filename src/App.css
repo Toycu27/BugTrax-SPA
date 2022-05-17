@@ -10,7 +10,6 @@ body, nav {
   color: #E46C1C !important;
 }
 
-
 /* Link */
 a {
   color: #E46C1C;
@@ -72,6 +71,12 @@ nav a:hover > i {
   box-shadow: 0 0 0 0.25rem rgb(228 108 28 / 50%)!important;
 }
 
+.btn-primary:disabled, 
+.btn-primary.disabled {
+  background-color: grey;
+  border-color: grey;
+}
+
 .btn-sm {
   padding: 0em 1em;
 }
@@ -104,11 +109,11 @@ nav a:hover > i {
   background-color: rgb(242 242 242);
 }
 
-textarea {
+.expand {
   min-height: 100px!important;
 }
 
-textarea:focus {
+.expand:focus {
   min-height: 200px!important;
 }
 
@@ -130,6 +135,17 @@ textarea:focus {
   margin-bottom: 5rem !important;
 }
 
+.mt-6 {
+  margin-top: 5rem !important;
+}
+
+/* Blockquote */
+.blockquote-footer {
+  margin-top: 0;
+  margin-bottom:0.5rem;
+}
+
+
 /* Projects */
 .proj__item {
   background-color: rgb(250 250 250 / 70%);
@@ -137,17 +153,9 @@ textarea:focus {
   overflow: hidden; 
 }
 
-.proj__item .btn-primary {
-}
-
 .proj__label {
   font-size: 0.9em;
 }
-
-.projs__value {
-
-}
-
 
 /* Milestones */
 .milestone__item {
@@ -156,17 +164,9 @@ textarea:focus {
   overflow: hidden; 
 }
 
-.milestone__item .btn-primary {
-}
-
 .milestone__label {
   font-size: 0.9em;
 }
-
-.milestone__value {
-
-}
-
 
 /* Bugs */
 .bug__item {
@@ -175,13 +175,6 @@ textarea:focus {
   overflow: hidden; 
 }
 
-.bug__item .btn-primary {
-}
-
 .bug__label {
   font-size: 0.9em;
-}
-
-.bug__value {
-
 }

@@ -109,12 +109,18 @@ export default function MilestoneForm ({id, milestone }) {
                     <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
                 </div>
 
-                <div className="row mb-3">
-                    <div className="col-6">
+                <div className="row mb-5">
+                    <div className="col-3">
                         <InputField type="datetime-local" name="start_date" value={values.start_date} errorValue={errors.start_date} setValue={handleChange} title="Start Date" />
                     </div>
-                    <div className="col-6">
+                    <div className="col-3">
                         <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Due Date" />
+                    </div>
+                    <div className="col-3">
+                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled="true" />
+                    </div>
+                    <div className="col-3">
+                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled="true" />
                     </div>
                 </div>
                 <div className="row">

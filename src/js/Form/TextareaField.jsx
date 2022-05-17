@@ -1,11 +1,11 @@
-export default function TextareaField({name, value, setValue, errorValue, title, required = ''}) {
+export default function TextareaField({name, value, setValue, errorValue, title, required = '', expand = false}) {
     let feedbackId = name + '_feedback';
     let inputId = name + '_id';
 
     return (<div className="form-floating">
         <textarea 
             id={inputId}
-            className={"form-control " + (errorValue ? "is-invalid" : "")}
+            className={"form-control " + (expand ? "expand " : "") + (errorValue ? "is-invalid " : "")}
             placeholder={title}
             name={ name }
             value={ value }

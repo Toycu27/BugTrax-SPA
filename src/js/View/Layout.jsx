@@ -19,6 +19,12 @@ export default function App({user, setUser, deleteUser}) {
         <li className="nav-item">
             <NavLink className="nav-link text-uppercase" data-title="Bugs" to="/bugs">Bugs</NavLink>
         </li>
+        <li className="nav-item">
+            <NavLink className="nav-link text-uppercase" data-title="Statistics" to="/statistics">Statistics</NavLink>
+        </li>
+        <li className="nav-item">
+            <NavLink className="nav-link text-uppercase" data-title="Board" to="/board">Board</NavLink>
+        </li>
     </>);
     searchBar = (<SearchBar />);
     authLinks = (<>
