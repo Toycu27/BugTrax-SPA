@@ -1,7 +1,3 @@
-import { fileStoragePath } from '../../App.js';
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { AlertBox, SelectField } from "../Form";
 import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -9,7 +5,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 export default function Statistics() {
     ChartJS.register(ArcElement, Tooltip, Legend);
-    
+
     const data = {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [
