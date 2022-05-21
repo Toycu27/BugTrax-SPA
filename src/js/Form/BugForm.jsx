@@ -20,7 +20,7 @@ export default function BugForm ({id, bug }) {
     const [ projects, setProjects ] = useState();
     const [ milestones, setMilestones ] = useState();
     const [ users, setUsers ] = useState();
-    const statusOpts = ['New', 'Progress', 'Freeze', 'Testet', 'Solved'];
+    const statusOpts = ['New', 'Progress', 'Freeze', 'Testing', 'Solved'];
     const priorityOpts = ['Low', 'Normal', 'High', 'Immediate'];
     const deviceTypeOpts = ['Desktop', 'Tablet', 'Mobile'];
     const deviceOsOpts = ['Windows', 'Mac', 'Linux'];

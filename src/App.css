@@ -5,6 +5,23 @@ body, nav {
    background-attachment: fixed;
 }
 
+/* Spacing */
+.mb-6 {
+  margin-bottom: 5rem !important;
+}
+
+.mt-6 {
+  margin-top: 5rem !important;
+}
+
+.x-expand {
+  height: 100%;
+}
+
+.y-expand {
+  width: 100%;
+}
+
 /* Navigation */
 .navbar-brand {
   color: #E46C1C !important;
@@ -128,15 +145,6 @@ nav a:hover > i {
 .alert {
   border-radius: 0;
   border: 0;
-}
-
-/* Spacing */
-.mb-6 {
-  margin-bottom: 5rem !important;
-}
-
-.mt-6 {
-  margin-top: 5rem !important;
 }
 
 /* Blockquote */

@@ -103,7 +103,7 @@ export default function Milestones({search, title}) {
                             <div className="milestone__value">{new Date(item.start_date).toLocaleDateString()}</div>
                         </div>
                         <div className="col-2">
-                            <div className="milestone__label pb-0 text-muted">Due</div>
+                            <div className="milestone__label pb-0 text-muted">Deadline</div>
                             <div className="milestone__value">{new Date(item.end_date).toLocaleDateString()}</div>
                         </div>
                     </div>

@@ -55,7 +55,7 @@ export default function Projects({search, title}) {
         <div className="projs row mb-4 g-4">
             { projects.map(item => 
                 <div key={item.id} className="col-6">
-                    <div className="proj__item px-3 py-2">
+                    <div className="proj__item px-3 py-2 x-expand">
                         <div className="row">
                             <div className="col-6">
                                 <div className="proj__label pb-0 text-muted">Project</div>

@@ -75,7 +75,7 @@ export default function Bugs({search, title}) {
         'New': 'badge rounded-pill bg-primary',
         'Progress': 'badge rounded-pill bg-warning',
         'Freeze': 'badge rounded-pill bg-dark',
-        'Testet': 'badge rounded-pill bg-info',
+        'Testing': 'badge rounded-pill bg-info',
         'Solved': 'badge rounded-pill bg-success',
     };
 
@@ -156,7 +156,7 @@ export default function Bugs({search, title}) {
                             <div className="bug__value mb-2">{new Date(item.created_at).toLocaleDateString()}</div>
                             <div className="bug__label pb-0 text-muted">Modified</div>
                             <div className="bug__value mb-2">{new Date(item.updated_at).toLocaleDateString()}</div>
-                            <div className="bug__label pb-0 text-muted">Due</div>
+                            <div className="bug__label pb-0 text-muted">Deadline</div>
                             <div className="bug__value mb-2">{new Date(item.end_date).toLocaleDateString()}</div>
                         </div>
                         <div className="col-2">
