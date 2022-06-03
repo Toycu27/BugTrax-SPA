@@ -207,3 +207,22 @@ nav a:hover > i {
 .board__bug:hover {
   background-color: rgba(var(--bs-light-rgb), 0.85) !important;
 }
+
+/* Carousel */
+.carousel-control-prev, 
+.carousel-control-next {
+  width: 5%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.carousel-caption {
+  background-color: rgb(250 250 250 / 70%);
+  width:100%;
+  left: 0;
+  right: 0;
+}
