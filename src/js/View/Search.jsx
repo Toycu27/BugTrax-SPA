@@ -5,7 +5,7 @@ import { Projects, Milestones, Bugs } from "./";
 export default function Search() {
     let urlParams = useParams();
 
-    return (<>
+    return (<div className="container">
         <div className="">
             <Projects search={true} title={urlParams.input} />
         </div>
@@ -15,5 +15,5 @@ export default function Search() {
         <div className="mt-5">
             <Bugs search={true} title={urlParams.input} />
         </div>
-    </>);
+    </div>);
 }

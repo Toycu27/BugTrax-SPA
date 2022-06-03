@@ -10,8 +10,8 @@ export default function Register() {
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.value
+            ...oldValues,
+            [e.target.name]: e.target.value
         }));
     }
 
@@ -46,9 +46,9 @@ export default function Register() {
         }
     }
 
-    return (
+    return (<div className="container">
         <div className="row justify-content-center">
-            <div className="col-sm-6">
+            <div className="col-12 col-lg-6">
                 <div className="text-center mb-4">
                     <h2>Create an Account</h2>
                     <div className="text-muted text-center mt-2">
@@ -77,5 +77,5 @@ export default function Register() {
                 <AlertBox />
             </div>
         </div>
-    );
+    </div>);
 }

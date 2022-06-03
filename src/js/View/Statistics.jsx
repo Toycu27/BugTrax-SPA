@@ -1,20 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Doughnut, Line, Bar } from 'react-chartjs-2';
-import { 
+import {
     Chart as ChartJS, Title, Tooltip, Legend, Filler, ArcElement, LinearScale,
     RadialLinearScale, PointElement, LineElement, CategoryScale, BarElement,
 } from 'chart.js';
 
 export default function Statistics() {
-    const [ bugs, setBugs ] = useState();
-    const [ data1a, setData1a ] = useState([]);
-    const [ data1b, setData1b ] = useState([]);
-    const [ data2, setData2 ] = useState([]);
-    const [ data3, setData3 ] = useState([]);
+    const [bugs, setBugs] = useState();
+    const [data1a, setData1a] = useState([]);
+    const [data1b, setData1b] = useState([]);
+    const [data2, setData2] = useState([]);
+    const [data3, setData3] = useState([]);
 
     const getBugs = () => {
-        axios.getRequest('api/bugs', (r) => {setBugs(r.data.data)});
+        axios.getRequest('api/bugs', (r) => { setBugs(r.data.data) });
     }
 
     useEffect(() => {
@@ -78,11 +78,14 @@ export default function Statistics() {
         RadialLinearScale, PointElement, LineElement, CategoryScale, BarElement,
     );
 
-    return (<>
+    return (<div className="container">
+        <div className="row mb-4 mt-1">
+            <div className="col-auto"><h2>Statistics</h2></div>
+        </div>
         <div className="row g-4 mb-4">
-            <div className="col-8">
+            <div className="col-12 col-lg-8">
                 <div className="p-3 bg-opacity-50 bg-light x-expand">
-                    <h5 className="mb-4">Bugs per Priority and Difficulty</h5>
+                    <h5 className="fw-normal mb-4">Bugs per Priority and Difficulty</h5>
                     <Line data={
                         {
                             labels: ['Low/Easy', 'Normal', 'High/Hard', 'Immediate/Unknown'],
@@ -115,9 +118,9 @@ export default function Statistics() {
                 </div>
             </div>
 
-            <div className="col-4">
+            <div className="col-8 col-lg-4">
                 <div className="p-3 bg-opacity-50 bg-light x-expand">
-                    <h5 className="mb-4">Bugs per Status</h5>
+                    <h5 className="fw-normal mb-4">Bugs per Status</h5>
                     <Doughnut data={
                         {
                             labels: ['New', 'Progress', 'Freeze', 'Testing', 'Solved'],
@@ -142,9 +145,9 @@ export default function Statistics() {
         </div>
 
         <div className="row g-4 mb-4">
-            <div className="col-8">
+            <div className="col-12 col-lg-8">
                 <div className="p-3 bg-opacity-50 bg-light x-expand">
-                    <h5 className="mb-4">Client Device and Bugs</h5>
+                    <h5 className="fw-normal mb-4">Client Device and Bugs</h5>
                     <Bar data={
                         {
                             labels: ['Desktop', 'Tablet', 'Mobile', 'Windows', 'MacOS', 'Linux'],
@@ -177,5 +180,5 @@ export default function Statistics() {
                 </div>
             </div>
         </div>
-    </>)
+    </div>)
 }

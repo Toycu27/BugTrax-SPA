@@ -10,8 +10,8 @@ export default function Login({ setUser }) {
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.value
+            ...oldValues,
+            [e.target.name]: e.target.value
         }));
     }
 
@@ -31,7 +31,7 @@ export default function Login({ setUser }) {
     const handleSubmit = async e => {
         e.preventDefault();
         let response = await axios.postRequest('sanctum/token', {
-            ...values, 
+            ...values,
             "device_name": 'SPA',
         });
         if (response.errors) {
@@ -47,9 +47,9 @@ export default function Login({ setUser }) {
     }
 
 
-    return (
-        <div className="row justify-content-md-center">
-            <div className="col-sm-6">
+    return (<div className="container">
+        <div className="row justify-content-center">
+            <div className="col-12 col-lg-6">
                 <div className="text-center mb-4">
                     <h2>Login</h2>
                     <div className="text-muted text-center mt-2">
@@ -73,5 +73,5 @@ export default function Login({ setUser }) {
                 <AlertBox />
             </div>
         </div>
-    );
+    </div>);
 }

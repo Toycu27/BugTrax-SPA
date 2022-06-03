@@ -5,20 +5,20 @@ import { InputField, SelectField, AlertBox } from ".";
 import axios from "axios";
 import TextareaField from "./TextareaField";
 
-export default function MilestoneForm ({id, milestone }) {
+export default function MilestoneForm({ id, milestone }) {
     const { addMessage, hasRole } = useUser();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.value
+            ...oldValues,
+            [e.target.name]: e.target.value
         }));
     }
 
     //Select options
-    const [ projects, setProjects ] = useState();
+    const [projects, setProjects] = useState();
 
     //Form values
     const defaultValues = {
@@ -44,8 +44,8 @@ export default function MilestoneForm ({id, milestone }) {
             setValues({ ...r.data.data });
         });
         else if (milestone) setValues(milestone);
-        
-        axios.getRequest('api/projects', (r) => {setProjects(r.data.data)});
+
+        axios.getRequest('api/projects', (r) => { setProjects(r.data.data) });
     }, []);
 
     const handleSubmit = async e => {
@@ -65,7 +65,7 @@ export default function MilestoneForm ({id, milestone }) {
             } else {
                 setValues({ ...defaultValues });
             }
-            
+
             await addMessage(response.message);
         }
     }
@@ -86,7 +86,7 @@ export default function MilestoneForm ({id, milestone }) {
 
 
     if (projects) {
-        return (<>
+        return (<div className="container">
             <div className="row mb-4 mt-1">
                 <div className="col-auto">
                     <Link to="/milestones">
@@ -109,35 +109,37 @@ export default function MilestoneForm ({id, milestone }) {
                     <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
                 </div>
 
-                <div className="row mb-5">
-                    <div className="col-3">
+                <div className="row mb-5 g-3">
+                    <div className="col-6 col-lg-3">
                         <InputField type="datetime-local" name="start_date" value={values.start_date} errorValue={errors.start_date} setValue={handleChange} title="Start Date" />
                     </div>
-                    <div className="col-3">
-                        <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Due Date" />
+                    <div className="col-6 col-lg-3">
+                        <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Deadline" />
                     </div>
-                    <div className="col-3">
+                    <div className="col-6 col-lg-3">
                         <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled="true" />
                     </div>
-                    <div className="col-3">
+                    <div className="col-6 col-lg-3">
                         <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled="true" />
                     </div>
                 </div>
                 <div className="row">
                     <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
-                        <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update" : "Create"}</button>
+                        <button className="btn btn-primary btn-lg" type="submit">{id ? "Update" : "Create"}</button>
                     </div>
-                    { id ? 
-                    <div className="col-4 d-grid gap-2">
-                        <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button" 
-                        disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete</button>
-                    </div>
-                    : null }
+                    {id ?
+                        <div className="col-4 d-grid gap-2">
+                            <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button"
+                                disabled={hasRole(['Admin', 'Manager']) ? false : true}>Delete</button>
+                        </div>
+                        : null}
                 </div>
 
             </form>
-        </>);
+        </div>);
     } else {
-        return ("Loading Button");
+        return (<div className="container">
+            Loading Button
+        </div>);
     }
 }

@@ -5,7 +5,7 @@ import { TextareaField } from ".";
 import axios from "axios";
 
 export default function CommentForm ({bug_id}) {
-    const { user, addMessage } = useUser();
+    const { user } = useUser();
 
     const handleChange = e => {
         setValues(oldValues => ({
@@ -55,7 +55,7 @@ export default function CommentForm ({bug_id}) {
 
     return (
     <div className="row">
-        <div className="col-6">
+        <div className="col-12 col-lg-6">
             <div className="row mb-4 mt-6">
                 <div className="col-auto">
                     <button type="button" className="btn btn-primary btn-sm" onClick={() => {setOpenCommentForm(true)}}>
@@ -68,13 +68,13 @@ export default function CommentForm ({bug_id}) {
             { openCommentForm ?
             <form onSubmit={handleSubmit} className="needs-validation mb-4">
                 <div className="row align-items-end">
-                    <div className="col-md-auto">
+                    <div className="col-auto">
                         <img className="rounded-circle border border-2" height="100px" width="100px" src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + values.id} />
                     </div>
                     <div className="col px-2">
                         <TextareaField type="text" name="message" value={values.message} errorValue={errors.message} setValue={handleChange} title="Your Message to this Topic!" expand={false} />
                     </div>
-                    <div className="col-md-auto">
+                    <div className="col-auto">
                         <button className="btn btn-primary btn-lg" type="submit">Submit</button>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ export default function CommentForm ({bug_id}) {
                 <div className="row">
                     { comments.map(item => 
                         <div className="row pe-0 mb-4">
-                            <div className="col-md-auto">
+                            <div className="col-auto">
                                 <img className="rounded-circle border border-2" height="100px" width="100px" src={item.user.avatar_path ? fileStoragePath + item.user.avatar_path : "https://i.pravatar.cc/100?img=" + item.user.id } />
                             </div>
                             <div className="col ms-2 pt-2 bg-light bg-opacity-50">

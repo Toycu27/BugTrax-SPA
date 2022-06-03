@@ -12,5 +12,7 @@ export default function Logout({ setUser, deleteUser }) {
         });
     }, []);
 
-    return (<h2>Logging Out...</h2>);
+    return (<div className="container">
+        <h2>Logging Out...</h2>
+    </div>);
 }

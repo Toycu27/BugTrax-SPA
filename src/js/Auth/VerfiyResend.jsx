@@ -16,9 +16,9 @@ export default function Verfiy() {
         }
     }
 
-    return (
-        <div className="row justify-content-md-center">
-            <div className="col-sm-6">
+    return (<div className="container">
+        <div className="row justify-content-center">
+            <div className="col-12 col-lg-6">
                 <div className="mb-3">
                     <h2>E-Mail Verification</h2>
                 </div>
@@ -33,5 +33,5 @@ export default function Verfiy() {
                 </div>
             </div>
         </div>
-    );
+    </div>);
 }

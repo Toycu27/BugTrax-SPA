@@ -12,8 +12,8 @@ export default function ResetPassword() {
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.value
+            ...oldValues,
+            [e.target.name]: e.target.value
         }));
     }
 
@@ -46,9 +46,9 @@ export default function ResetPassword() {
         }
     }
 
-    return (
-        <div className="row justify-content-md-center">
-            <div className="col-sm-6">
+    return (<div className="container">
+        <div className="row justify-content-center">
+            <div className="col-12 col-lg-6">
                 <div className="mb-3">
                     <h2>Reset your Password</h2>
                     <p>Set a new Password for your Account</p>
@@ -68,5 +68,5 @@ export default function ResetPassword() {
                 <AlertBox />
             </div>
         </div>
-    );
+    </div>);
 }

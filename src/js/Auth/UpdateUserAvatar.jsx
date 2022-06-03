@@ -48,8 +48,7 @@ export default function UpdateUserAvatar() {
         }
     }
 
-    return (
-        <div className="row">
+    return (<div className="row">
             <div className="col-12">
                 <AlertBox />
                 <form onSubmit={handleSubmit} className="needs-validation">
@@ -58,20 +57,15 @@ export default function UpdateUserAvatar() {
                             <img className="rounded-circle border border-2" height="100px" width="100px" src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + values.id} />
                         </div>
                         <div className="col-md-auto">
-                            <div className="">
                                 <input aria-describedby="userAvatarFile" className={"form-control " + (errors.avatar ? "is-invalid" : "")}
                                 onChange={handleChange} name="avatar" type="file" accept="image/*" />
+                                <button className="btn btn-primary" type="submit" disabled={values.avatar ? false : true}>Upload</button>
                                 <div id="userAvatarFile" className="invalid-feedback">
                                     {errors.avatar}
                                 </div>
-                            </div>
-                        </div>
-                        <div className="col-md-auto">
-                            <button className="btn btn-primary" type="submit" disabled={values.avatar ? false : true}>Upload</button>
                         </div>
                     </div>
                 </form>
             </div>
-        </div>
-    );
+    </div>);
 }

@@ -8,8 +8,8 @@ export default function UpdateUser() {
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.value
+            ...oldValues,
+            [e.target.name]: e.target.value
         }));
     }
 
@@ -35,7 +35,7 @@ export default function UpdateUser() {
         e.preventDefault();
 
         const response = await axios.patchRequest(
-            'api/users/' + user.id, 
+            'api/users/' + user.id,
             { ...values }
         );
 
@@ -44,15 +44,15 @@ export default function UpdateUser() {
             addMessage(response.message, "danger");
         } else {
             setErrors({ ...defaultErrors });
-            setValues({...defaultValues, name: values.name});
+            setValues({ ...defaultValues, name: values.name });
             setUser(response.data);
             addMessage(response.message);
         }
     }
 
-    return (
-        <div className="row justify-content-md-center">
-            <div className="col-sm-6">
+    return (<div className="container">
+        <div className="row justify-content-center">
+            <div className="col-12 col-lg-6">
 
                 <div className="text-center mb-4">
                     <h2>Account Information</h2>
@@ -70,7 +70,7 @@ export default function UpdateUser() {
                         <InputField type="password" name="password_current" value={values.password_current} errorValue={errors.password_current} setValue={handleChange} title="Current Password" required="required" />
                     </div>
                     <div className="mb-3">
-                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="New Password" />                                
+                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="New Password" />
                     </div>
                     <div className="mb-4">
                         <InputField type="password" name="password_confirm" value={values.password_confirm} errorValue={errors.password_confirm} setValue={handleChange} title="Retype Password" />
@@ -83,5 +83,5 @@ export default function UpdateUser() {
 
             </div>
         </div>
-    );
+    </div>);
 }

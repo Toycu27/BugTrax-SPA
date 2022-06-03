@@ -6,6 +6,7 @@ import Projects from './Projects';
 import Milestones from './Milestones';
 import Bugs from './Bugs';
 import Board from './Board';
+import BoardBug from './BoardBug';
 import Statistics from './Statistics';
 
 export { 
@@ -17,5 +18,6 @@ export {
     Milestones, 
     Bugs,
     Board,
+    BoardBug,
     Statistics,
 };

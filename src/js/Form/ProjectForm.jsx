@@ -4,15 +4,15 @@ import { useUser } from '../Auth';
 import { InputField, TextareaField, AlertBox } from ".";
 import axios from "axios";
 
-export default function ProjectForm ({id, project }) {
+export default function ProjectForm({ id, project }) {
     const { addMessage, hasRole } = useUser();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.value
+            ...oldValues,
+            [e.target.name]: e.target.value
         }));
     }
 
@@ -49,7 +49,7 @@ export default function ProjectForm ({id, project }) {
             setErrors({ ...defaultErrors });
             if (id) setValues({ ...defaultValues, ...response.data });
             else setValues({ ...defaultValues });
-            
+
             addMessage(response.message);
         }
     }
@@ -66,7 +66,7 @@ export default function ProjectForm ({id, project }) {
     }
 
 
-    return (<>
+    return (<div className="container">
         <div className="row mb-4 mt-1">
             <div className="col-auto">
                 <Link to="/projects">
@@ -102,15 +102,15 @@ export default function ProjectForm ({id, project }) {
 
             <div className="row">
                 <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
-                    <button className="btn btn-primary btn-lg" type="submit">{ id ? "Update" : "Create"}</button>
+                    <button className="btn btn-primary btn-lg" type="submit">{id ? "Update" : "Create"}</button>
                 </div>
-                { id ? 
-                <div className="col-4 d-grid gap-2">
-                    <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button" 
-                    disabled={ hasRole(['Admin', 'Manager']) ? false : true }>Delete</button>
-                </div>
-                : null }
+                {id ?
+                    <div className="col-4 d-grid gap-2">
+                        <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button"
+                            disabled={hasRole(['Admin', 'Manager']) ? false : true}>Delete</button>
+                    </div>
+                    : null}
             </div>
         </form>
-    </>);
+    </div>);
 }

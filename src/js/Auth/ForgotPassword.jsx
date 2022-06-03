@@ -8,8 +8,8 @@ export default function ForgotPassword() {
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.value
+            ...oldValues,
+            [e.target.name]: e.target.value
         }));
     }
 
@@ -38,13 +38,13 @@ export default function ForgotPassword() {
         }
     }
 
-    return (
-        <div className="row justify-content-md-center">
-            <div className="col-sm-6">
+    return (<div className="container">
+        <div className="row justify-content-center">
+            <div className="col-12 col-lg-6">
                 <div className="text-center">
                     <div className="mb-3">
                         <h2>Forgot your Password?</h2>
-                        <p>We will send a Password reset link to your Email</p>
+                        <p className="text-muted">We will send a Password reset link to your Email</p>
                     </div>
                     <form onSubmit={handleSubmit} className="needs-validation">
                         <div className="mb-4">
@@ -59,5 +59,5 @@ export default function ForgotPassword() {
                 <AlertBox />
             </div>
         </div>
-    );
+    </div>);
 }
