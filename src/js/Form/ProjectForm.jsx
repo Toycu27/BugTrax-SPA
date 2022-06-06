@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useUser } from '../Auth';
-import { InputField, TextareaField, AlertBox } from ".";
+import { CommentForm, InputField, TextareaField, AlertBox } from ".";
 import axios from "axios";
 
 export default function ProjectForm({ id, project }) {
@@ -112,5 +112,8 @@ export default function ProjectForm({ id, project }) {
                     : null}
             </div>
         </form>
+        {id &&
+                <CommentForm project_id={id} />
+        }
     </div>);
 }

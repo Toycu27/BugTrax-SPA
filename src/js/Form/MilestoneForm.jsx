@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useUser } from '../Auth';
-import { InputField, SelectField, AlertBox } from ".";
+import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from ".";
 import axios from "axios";
-import TextareaField from "./TextareaField";
 
 export default function MilestoneForm({ id, milestone }) {
     const { addMessage, hasRole } = useUser();
@@ -136,6 +135,9 @@ export default function MilestoneForm({ id, milestone }) {
                 </div>
 
             </form>
+            {id &&
+                <CommentForm milestone_id={id} />
+            }
         </div>);
     } else {
         return (<div className="container">

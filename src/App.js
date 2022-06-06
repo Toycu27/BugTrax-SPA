@@ -7,7 +7,9 @@ import axios from "axios";
 
 
 //Settings
-export const backendPath = 'http://localhost:8000/';
+export const backendPathDev = 'http://localhost:8000/';
+export const backendPathProd = 'http://www.bugtrax.de/';
+export const backendPath = backendPathDev;
 export const fileStoragePath = backendPath + 'storage/';
 
 
