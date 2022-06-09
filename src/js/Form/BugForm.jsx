@@ -21,20 +21,20 @@ export default function BugForm({ id, bug }) {
     const [projects, setProjects] = useState();
     const [milestones, setMilestones] = useState();
     const [users, setUsers] = useState();
-    const statusOpts = ['New', 'Progress', 'Freeze', 'Testing', 'Solved'];
-    const priorityOpts = ['Low', 'Normal', 'High', 'Immediate'];
+    const statusOpts = {1: 'New', 2: 'Progress', 3: 'Review', 4: 'Done'};
+    const priorityOpts = {1: 'Low', 2: 'Normal', 3: 'High'};
+    const difficultyOpts = {1: 'Easy', 2: 'Medium', 3: 'Hard'};
     const deviceTypeOpts = ['Desktop', 'Tablet', 'Mobile'];
     const deviceOsOpts = ['Windows', 'Mac', 'Linux'];
-    const difficultyOpts = ['Easy', 'Normal', 'Hard', 'Unknown'];
 
     //Form values
     const defaultValues = {
         project_id: '',
         milestone_id: '',
         assigned_to: '',
-        status: 'New',
-        priority: '',
-        difficulty: '',
+        status_id: 'New',
+        priority_id: '',
+        difficulty_id: '',
         title: '',
         desc: '',
         solution_desc: '',
@@ -48,9 +48,9 @@ export default function BugForm({ id, bug }) {
         project_id: null,
         milestone_id: null,
         assigned_to: null,
-        status: null,
-        priority: null,
-        difficulty: null,
+        status_id: null,
+        priority_id: null,
+        difficulty_id: null,
         title: null,
         desc: null,
         solution_desc: null,
@@ -150,13 +150,13 @@ export default function BugForm({ id, bug }) {
                 </div>
                 <div className="row mb-5">
                     <div className="col-4">
-                        <SelectField name="status" value={values.status} errorValue={errors.status} setValue={handleChange} options={statusOpts} title="Status" required="required" />
+                        <SelectField name="status_id" value={values.status_id} errorValue={errors.status_id} setValue={handleChange} options={statusOpts} title="Status" required="required" />
                     </div>
                     <div className="col-4">
-                        <SelectField name="priority" value={values.priority} errorValue={errors.priority} setValue={handleChange} options={priorityOpts} title="Priority" required="required" />
+                        <SelectField name="priority_id" value={values.priority_id} errorValue={errors.priority_id} setValue={handleChange} options={priorityOpts} title="Priority" required="required" />
                     </div>
                     <div className="col-4">
-                        <SelectField name="difficulty" value={values.difficulty} errorValue={errors.difficulty} setValue={handleChange} options={difficultyOpts} title="Difficulty" required="required" />
+                        <SelectField name="difficulty_id" value={values.difficulty_id} errorValue={errors.difficulty_id} setValue={handleChange} options={difficultyOpts} title="Difficulty" required="required" />
                     </div>
                 </div>
                 <div className="row mb-3">

@@ -7,7 +7,9 @@ export default function Milestones({ search, title }) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const updateSearchParams = () => {
-        setSearchParams({ project: selectedProject })
+        let tmpSearchParams = {};
+        if (selectedProject > 0) tmpSearchParams.project = selectedProject;
+        setSearchParams(tmpSearchParams);
     }
 
     const [milestones, setMilestones] = useState();
@@ -16,7 +18,7 @@ export default function Milestones({ search, title }) {
     const [selectedProject, setSelectedProject] = useState(searchParams.get('project'));
 
     const getMilestones = (nextPage = false) => {
-        let requestUrl = nextPage ? pagination.next_page_url : 'api/milestones?paginate=6&with=project'
+        let requestUrl = nextPage ? pagination.next_page_url : 'api/milestones?paginate=6&with=project';
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += '&title=' + title
         if (selectedProject > 0 && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
@@ -41,11 +43,6 @@ export default function Milestones({ search, title }) {
             updateSearchParams();
         }
     }, [selectedProject]);
-
-    useEffect(() => {
-        getMilestones();
-        getProjects();
-    }, []);
 
     useEffect(() => {
         getMilestones();

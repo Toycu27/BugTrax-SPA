@@ -1,5 +1,5 @@
 import { fileStoragePath } from '../../App.js';
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AlertBox, SelectField } from "../Form";
 import axios from "axios";
@@ -8,20 +8,25 @@ export default function Bugs({ search, title }) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const updateSearchParams = () => {
-        setSearchParams({ project: selectedProject, milestone: selectedMilestone, assignee: selectedAssignee })
+        let tmpSearchParams = {};
+        if (selectedProject > 0) tmpSearchParams.project = selectedProject;
+        if (selectedMilestone > 0) tmpSearchParams.milestone = selectedMilestone;
+        if (selectedAssignee > 0) tmpSearchParams.assignee = selectedAssignee;
+        setSearchParams(tmpSearchParams);
     }
 
-    const [bugs, setBugs] = useState();
-    const [projects, setProjects] = useState();
-    const [milestones, setMilestones] = useState();
-    const [users, setUsers] = useState();
+    const [bugs, setBugs] = useState([]);
+    const [projects, setProjects] = useState([]);
+    const [milestones, setMilestones] = useState([]);
+    const [users, setUsers] = useState([]);
     const [pagination, setPagination] = useState([]);
     const [selectedProject, setSelectedProject] = useState(searchParams.get('project'));
     const [selectedMilestone, setSelectedMilestone] = useState(searchParams.get('milestone'));
     const [selectedAssignee, setSelectedAssignee] = useState(searchParams.get('assignee'));
 
     const getBugs = (nextPage = false) => {
-        let requestUrl = nextPage ? pagination.next_page_url : 'api/bugs?paginate=5&with=project,milestone,assignedTo'
+        let requestUrl = nextPage ? pagination.next_page_url 
+        : 'api/bugs?paginate=5&with=project,milestone,status,priority,difficulty,assignedTo';
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += '&title=' + title
         if (selectedProject > 0 && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
@@ -55,14 +60,8 @@ export default function Bugs({ search, title }) {
             getBugs();
             updateSearchParams();
         }
-    }, [selectedProject, selectedMilestone, selectedAssignee]);
 
-    useEffect(() => {
-        getBugs();
-        getProjects();
-        getMilestones();
-        getUsers();
-    }, []);
+    }, [selectedProject, selectedMilestone, selectedAssignee]);
 
     useEffect(() => {
         getBugs();
@@ -71,26 +70,39 @@ export default function Bugs({ search, title }) {
         getUsers();
     }, [title]);
 
+    const selectableMilestones = useMemo(() => {
+        let filteredMilestones = [];
+
+        if (milestones.length > 0 && selectedProject > 0) {
+            milestones.forEach(milestone => {
+                if (milestone.project_id == selectedProject) {
+                    filteredMilestones.push(milestone);
+                }
+            });
+        } else {
+            return milestones;
+        }
+
+        return filteredMilestones;
+    }, [selectedProject, projects, milestones]);
+
     let statusClassMap = {
-        'New': 'badge rounded-pill bg-primary',
-        'Progress': 'badge rounded-pill bg-warning',
-        'Freeze': 'badge rounded-pill bg-dark',
-        'Testing': 'badge rounded-pill bg-info',
-        'Solved': 'badge rounded-pill bg-success',
+        1: 'badge rounded-pill bg-primary',
+        2: 'badge rounded-pill bg-warning',
+        3: 'badge rounded-pill bg-info',
+        4: 'badge rounded-pill bg-success',
     };
 
     let priorityClassMap = {
-        'Low': 'badge bg-primary',
-        'Normal': 'badge bg-warning',
-        'High': 'badge bg-danger',
-        'Immediate': 'badge bg-secondary',
+        1: 'badge bg-primary',
+        2: 'badge bg-warning',
+        3: 'badge bg-danger',
     };
 
     let difficultyClassMap = {
-        'Easy': 'badge rounded-pill bg-primary',
-        'Normal': 'badge rounded-pill bg-warning',
-        'Hard': 'badge rounded-pill bg-danger',
-        'Unknown': 'badge rounded-pill bg-secondary',
+        1: 'badge rounded-pill bg-primary',
+        2: 'badge rounded-pill bg-warning',
+        3: 'badge rounded-pill bg-danger',
     };
 
     return (<div className="container">
@@ -110,10 +122,10 @@ export default function Bugs({ search, title }) {
         {!search ?
             <div className="row mb-5 gy-2">
                 <div className="col-12 col-sm-4 col-lg-4">
-                    <SelectField name="selected_project" value={selectedProject} setValue={(e) => { setSelectedProject(e.target.value) }} title="Project" options={projects} />
+                    <SelectField name="selected_project" value={selectedProject} setValue={(e) => { setSelectedProject(e.target.value); setSelectedMilestone(null) }} title="Project" options={projects} />
                 </div>
                 <div className="col-12 col-sm-4 col-lg-4">
-                    <SelectField name="selected_milestone" value={selectedMilestone} setValue={(e) => { setSelectedMilestone(e.target.value) }} title="Milestone" options={milestones} />
+                    <SelectField name="selected_milestone" value={selectedMilestone} setValue={(e) => { setSelectedMilestone(e.target.value) }} title="Milestone" options={selectableMilestones} />
                 </div>
                 <div className="col-12 col-sm-4 col-lg-4">
                     <SelectField name="selected_assignee" value={selectedAssignee} setValue={(e) => { setSelectedAssignee(e.target.value) }} title="Assignee" options={users} />
@@ -143,15 +155,15 @@ export default function Bugs({ search, title }) {
                                     <div className="row row-cols-1 row-cols-lg-3">
                                         <div className="col">
                                             <div className="bug__label pb-0 text-muted">Status</div>
-                                            <div className={"bug__value fw-normal fs-6 mb-2 " + statusClassMap[item.status]}>{item.status}</div>
+                                            {item.status && <div className={"bug__value fw-normal fs-6 mb-2 " + statusClassMap[item.status_id]}>{item.status.title}</div> }
                                         </div>
                                         <div className="col">
-                                            <div className="bug__label pb-0 text-muted">Difficulty</div>
-                                            <div className={"bug__value fw-normal fs-6 mb-2 " + difficultyClassMap[item.difficulty]}>{item.difficulty}</div>
+                                            <div className="bug__lyabel pb-0 text-muted">Difficulty</div>
+                                            {item.difficulty && <div className={"bug__value fw-normal fs-6 mb-2 " + difficultyClassMap[item.difficulty_id]}>{item.difficulty.title}</div> }
                                         </div>
                                         <div className="col">
                                             <div className="bug__label pb-0 text-muted">Priority</div>
-                                            <div className={"bug__value fw-normal fs-6 mb-2 " + priorityClassMap[item.priority]}>{item.priority}</div>
+                                            {item.priority && <div className={"bug__value fw-normal fs-6 mb-2 " + priorityClassMap[item.priority_id]}>{item.priority.title}</div> }
                                         </div>
                                     </div>
                                 </div>

@@ -23,34 +23,16 @@ export default function Statistics() {
 
     useEffect(() => {
         if (bugs) {
-            let bugsPerPriority = [0, 0, 0, 0];
-            let bugsPerDifficulty = [0, 0, 0, 0];
-            let bugsPerStatus = [0, 0, 0, 0, 0];
+            let bugsPerPriority = [0, 0, 0];
+            let bugsPerDifficulty = [0, 0, 0];
+            let bugsPerStatus = [0, 0, 0, 0];
             let bugsPerDevice = [0, 0, 0];
             let bugsPerOs = [0, 0, 0];
 
             bugs.map(bug => {
-                switch (bug.priority) {
-                    case 'Low': bugsPerPriority[0]++; break;
-                    case 'Normal': bugsPerPriority[1]++; break;
-                    case 'High': bugsPerPriority[2]++; break;
-                    case 'Immediate': bugsPerPriority[2]++; break;
-                }
-
-                switch (bug.difficulty) {
-                    case 'Easy': bugsPerDifficulty[0]++; break;
-                    case 'Normal': bugsPerDifficulty[1]++; break;
-                    case 'Hard': bugsPerDifficulty[2]++; break;
-                    case 'Unknown': bugsPerDifficulty[2]++; break;
-                }
-
-                switch (bug.status) {
-                    case 'New': bugsPerStatus[0]++; break;
-                    case 'Progress': bugsPerStatus[1]++; break;
-                    case 'Freeze': bugsPerStatus[2]++; break;
-                    case 'Testing': bugsPerStatus[3]++; break;
-                    case 'Solved': bugsPerStatus[4]++; break;
-                }
+                bugsPerPriority[bug.priority_id - 1]++;
+                bugsPerDifficulty[bug.difficulty_id - 1]++;
+                bugsPerStatus[bug.status_id - 1]++;
 
                 switch (bug.device_type) {
                     case 'Desktop': bugsPerDevice[0]++; break;
@@ -88,7 +70,7 @@ export default function Statistics() {
                     <h5 className="fw-normal mb-4">Bugs per Priority and Difficulty</h5>
                     <Line data={
                         {
-                            labels: ['Low/Easy', 'Normal', 'High/Hard', 'Immediate/Unknown'],
+                            labels: ['Low/Easy', 'Medium/Normal', 'High/Hard'],
                             datasets: [
                                 {
                                     label: 'Priority',
@@ -123,7 +105,7 @@ export default function Statistics() {
                     <h5 className="fw-normal mb-4">Bugs per Status</h5>
                     <Doughnut data={
                         {
-                            labels: ['New', 'Progress', 'Freeze', 'Testing', 'Solved'],
+                            labels: ['New', 'Progress', 'Review', 'Done'],
                             datasets: [
                                 {
                                     label: '%',

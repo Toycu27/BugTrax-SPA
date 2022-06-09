@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 export default function BoardBug({bug}) {
 
     let difficultyIconMap = {
-        'Easy': 'bi bi-chevron-compact-down text-primary fs-4',
-        'Normal': 'bi bi-dash-lg text-warning fs-4',
-        'Hard': 'bi bi-chevron-compact-up text-danger fs-4',
-        'Unknown': 'bi bi-question text-secondary fs-4',
+        1: 'bi bi-arrow-down-right text-primary fs-4',
+        2: 'bi bi-arrow-right text-warning fs-4',
+        3: 'bi bi-arrow-up-right text-danger fs-4',
+    };
+
+    let priorityIconMap = {
+        1: 'bi bi-chevron-compact-down text-primary fs-4',
+        2: 'bi bi-dash-lg text-warning fs-4',
+        3: 'bi bi-chevron-compact-up text-danger fs-4',
     };
 
     return (
@@ -19,8 +24,11 @@ export default function BoardBug({bug}) {
                 <div className="col text-end pt-1">
                     <div className="bug__value">{new Date(bug.end_date).toLocaleDateString()}</div>
                 </div>
-                <div className="col-auto text-end">
-                    <div className="bug__value"><i className={difficultyIconMap[bug.difficulty]}></i></div>
+                <div className="col-auto text-end ms-1">
+                    <div className="bug__value"><i className={priorityIconMap[bug.priority_id]}></i></div>
+                </div>
+                <div className="col-auto text-end ms-1">
+                    <div className="bug__value"><i className={difficultyIconMap[bug.difficulty_id]}></i></div>
                 </div>
             </div>
             <div className="row">

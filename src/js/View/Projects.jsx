@@ -24,10 +24,6 @@ export default function Projects({ search, title }) {
 
     useEffect(() => {
         getProjects();
-    }, []);
-
-    useEffect(() => {
-        getProjects();
     }, [title]);
 
     return (<div className="container">
