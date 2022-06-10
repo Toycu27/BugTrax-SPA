@@ -120,11 +120,11 @@ export default function BugForm({ id, bug }) {
         return (<div className="container">
             <div className="row mb-4 mt-1">
                 <div className="col-auto">
-                    <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm">
+                    <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
                         <i className="bi bi-arrow-left fs-4"></i>
                     </button>
                 </div>
-                <div className="col-auto"><h2>Bug</h2></div>
+                <div className="col-auto"><h1>Bug</h1></div>
             </div>
             <AlertBox />
             <form onSubmit={handleSubmit} className="needs-validation">
@@ -188,12 +188,12 @@ export default function BugForm({ id, bug }) {
                     <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
                         <button className="btn btn-primary btn-lg" type="submit">{id ? "Update" : "Create"}</button>
                     </div>
-                    {id ?
+                    {id &&
                         <div className="col-4 d-grid gap-2">
                             <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button"
                                 disabled={hasRole(['Admin', 'Manager']) ? false : true}>Delete</button>
                         </div>
-                        : null}
+                    }
                 </div>
             </form>
             {id &&

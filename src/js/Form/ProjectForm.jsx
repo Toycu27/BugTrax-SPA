@@ -70,12 +70,12 @@ export default function ProjectForm({ id, project }) {
         <div className="row mb-4 mt-1">
             <div className="col-auto">
                 <Link to="/projects">
-                    <button type="button" className="btn btn-primary btn-sm">
+                    <button type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
                         <i className="bi bi-arrow-left fs-4"></i>
                     </button>
                 </Link>
             </div>
-            <div className="col-auto"><h2>Project</h2></div>
+            <div className="col-auto"><h1>Project</h1></div>
         </div>
         <AlertBox />
         <form onSubmit={handleSubmit} className="needs-validation">
@@ -104,12 +104,12 @@ export default function ProjectForm({ id, project }) {
                 <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
                     <button className="btn btn-primary btn-lg" type="submit">{id ? "Update" : "Create"}</button>
                 </div>
-                {id ?
+                {id &&
                     <div className="col-4 d-grid gap-2">
                         <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button"
                             disabled={hasRole(['Admin', 'Manager']) ? false : true}>Delete</button>
                     </div>
-                    : null}
+                }
             </div>
         </form>
         {id &&

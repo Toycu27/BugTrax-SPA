@@ -62,12 +62,12 @@ export default function Statistics() {
 
     return (<div className="container">
         <div className="row mb-4 mt-1">
-            <div className="col-auto"><h2>Statistics</h2></div>
+            <div className="col-auto"><h1>Statistics</h1></div>
         </div>
         <div className="row g-4 mb-4">
             <div className="col-12 col-lg-8">
                 <div className="p-3 bg-opacity-50 bg-light x-expand">
-                    <h5 className="fw-normal mb-4">Bugs per Priority and Difficulty</h5>
+                    <span className="fw-normal mb-4 fs-5">Bugs per Priority and Difficulty</span>
                     <Line data={
                         {
                             labels: ['Low/Easy', 'Medium/Normal', 'High/Hard'],
@@ -102,7 +102,7 @@ export default function Statistics() {
 
             <div className="col-8 col-lg-4">
                 <div className="p-3 bg-opacity-50 bg-light x-expand">
-                    <h5 className="fw-normal mb-4">Bugs per Status</h5>
+                    <span className="fw-normal mb-4 fs-5">Bugs per Status</span>
                     <Doughnut data={
                         {
                             labels: ['New', 'Progress', 'Review', 'Done'],
@@ -129,7 +129,7 @@ export default function Statistics() {
         <div className="row g-4 mb-4">
             <div className="col-12 col-lg-8">
                 <div className="p-3 bg-opacity-50 bg-light x-expand">
-                    <h5 className="fw-normal mb-4">Client Device and Bugs</h5>
+                    <span className="fw-normal mb-4 fs-5">Client Device and Bugs</span>
                     <Bar data={
                         {
                             labels: ['Desktop', 'Tablet', 'Mobile', 'Windows', 'MacOS', 'Linux'],

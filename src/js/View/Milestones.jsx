@@ -9,12 +9,26 @@ export default function Milestones({ search, title }) {
     const updateSearchParams = () => {
         let tmpSearchParams = {};
         if (selectedProject > 0) tmpSearchParams.project = selectedProject;
+        if (selectedFilter != 'null') tmpSearchParams.sort = selectedFilter;
         setSearchParams(tmpSearchParams);
     }
 
     const [milestones, setMilestones] = useState();
     const [projects, setProjects] = useState();
     const [pagination, setPagination] = useState([]);
+    const [selectedFilter, setSelectedFilter] = useState('');
+    const filterOpts = {
+        'start_asc': 'Start ASC',
+        'start_desc': 'Start DESC',
+        'end_asc': 'End ASC',
+        'end_desc': 'End DESC',
+    };
+    const filterQuerys = {
+        'start_asc': '&sort[start_date]=ASC',
+        'start_desc': '&sort[start_date]=DESC',
+        'end_asc': '&sort[end_date]=ASC',
+        'end_desc': '&sort[end_date]=DESC',
+    }
     const [selectedProject, setSelectedProject] = useState(searchParams.get('project'));
 
     const getMilestones = (nextPage = false) => {
@@ -22,6 +36,7 @@ export default function Milestones({ search, title }) {
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += '&title=' + title
         if (selectedProject > 0 && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
+        if (selectedFilter.length > 4) requestUrlParams += filterQuerys[selectedFilter];
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
             if (nextPage) setMilestones([...milestones, ...r.data.data])
             else setMilestones([...r.data.data])
@@ -38,11 +53,11 @@ export default function Milestones({ search, title }) {
     }
 
     useEffect(() => {
-        if (selectedProject) {
+        if (selectedProject || selectedFilter) {
             getMilestones();
             updateSearchParams();
         }
-    }, [selectedProject]);
+    }, [selectedProject, selectedFilter]);
 
     useEffect(() => {
         getMilestones();
@@ -51,25 +66,28 @@ export default function Milestones({ search, title }) {
 
     return (<div className="container">
         <div className="row mb-4 mt-1">
-            {!search ?
+            {!search &&
                 <div className="col-auto">
                     <Link to="/milestone">
-                        <button type="button" className="btn btn-primary btn-sm">
+                        <button type="button" className="btn btn-primary btn-sm" aria-label="Open Milestone Form">
                             <i className="bi bi-plus fs-4"></i>
                         </button>
                     </Link>
                 </div>
-                : null}
+            }
             <div className="col-auto"><h2>Milestones</h2></div>
         </div>
 
-        {!search ?
-            <div className="row mb-5">
+        {!search &&
+            <div className="row mb-5 g-3">
                 <div className="col-12 col-sm-6 col-lg-4">
                     <SelectField name="selected_project" value={selectedProject} setValue={(e) => { setSelectedProject(e.target.value) }} title="Project" options={projects} />
                 </div>
+                <div className="col-12 col-sm-6 col-lg-4">
+                    <SelectField name="selected_filter" value={selectedFilter} setValue={(e) => { setSelectedFilter(e.target.value) }} title="Filter" options={filterOpts} />
+                </div>
             </div>
-            : null}
+        }
 
         <AlertBox />
 
@@ -121,14 +139,14 @@ export default function Milestones({ search, title }) {
             </div>
         }
 
-        {pagination.next_page_url ?
+        {pagination.next_page_url &&
             <div className="row justify-content-center">
                 <div className="col text-center">
-                    <button type="button" className="btn btn-primary" onClick={handleLoadMore}>
+                    <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more milestones">
                         <i className="bi bi-chevron-compact-down fs-4 mx-5"></i>
                     </button>
                 </div>
             </div>
-            : null}
+        }
     </div>);
 }

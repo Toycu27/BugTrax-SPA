@@ -69,18 +69,20 @@ export default function CommentForm ({bug_id, milestone_id, project_id}) {
         <div className="col-12 col-lg-6">
             <div className="row mb-4 mt-6">
                 <div className="col-auto">
-                    <button type="button" className="btn btn-primary btn-sm" onClick={() => {setOpenCommentForm(true)}}>
+                    <button type="button" className="btn btn-primary btn-sm" onClick={() => {setOpenCommentForm(true)}} aria-label="Show Comment Form">
                         <i className="bi bi-plus fs-4"></i>
                     </button>
                 </div>
-                <div className="col-auto"><h3>Comments</h3></div>
+                <div className="col-auto"><h2>Comments</h2></div>
             </div>
 
-            { openCommentForm ?
+            { openCommentForm &&
             <form onSubmit={handleSubmit} className="needs-validation mb-4">
                 <div className="row align-items-end">
                     <div className="col-auto">
-                        <img className="rounded-circle border border-2" height="100px" width="100px" src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + user.id} />
+                        <img className="rounded-circle border border-2" height="100px" width="100px" 
+                        src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + user.id} 
+                        alt={"Profile picture of " + user.name} />
                     </div>
                     <div className="col px-2 pe-0">
                         <TextareaField type="text" name="message" value={values.message} errorValue={errors.message} setValue={handleChange} title="Your Message to this Topic!" expand={false} />
@@ -90,37 +92,37 @@ export default function CommentForm ({bug_id, milestone_id, project_id}) {
                     </div>
                 </div>
             </form>
-            : null }
+            }
 
-            { comments ?? comments.length ?
+            { (comments ?? comments.length) &&
                 <div className="row">
                     { comments.map(item => 
                         <div className="row pe-0 mb-4 align-items-end">
                             <div className="col-auto">
-                                <img className="rounded-circle border border-2" height="100px" width="100px" src={item.user.avatar_path ? fileStoragePath + item.user.avatar_path : "https://i.pravatar.cc/100?img=" + item.user_id } />
+                                <img className="rounded-circle border border-2" height="100px" width="100px" 
+                                src={item.user.avatar_path ? fileStoragePath + item.user.avatar_path : "https://i.pravatar.cc/100?img=" + item.user_id } 
+                                alt={"Profile picture of " + item.user.name} />
                             </div>
                             <div className="col ms-2 pt-2 bg-light bg-opacity-50 x-expand">
                                 <figure>
-                                    <figcaption class="blockquote-footer text-dark">
+                                    <figcaption className="blockquote-footer text-dark">
                                         {new Date(item.created_at).toLocaleDateString()} { item.user.name }
                                     </figcaption>
-                                    <blockquote class="blockquote fs-6">
+                                    <blockquote className="blockquote fs-6">
                                         <p>{ item.message }</p>
                                     </blockquote>
                                 </figure>
                             </div>
-                            { item.user_id === user.id ?
+                            { item.user_id === user.id &&
                             <div className="col-auto pe-0">
-                                <button className="btn btn-danger btn-lg" onClick={() => {handleDelete(item.id)}}><i class="bi bi-x-lg"></i></button>
+                                <button className="btn btn-danger btn-lg" onClick={() => {handleDelete(item.id)}} aria-label="Delete Comment">
+                                    <i className="bi bi-x-lg"></i>
+                                </button>
                             </div>
-                            : null }
+                            }
                         </div>    
                     )}
                 </div>
-            :
-                <div className="row">
-                    <h5>No Comments for this Topic yet...</h5>
-                </div> 
             }
 
         </div>

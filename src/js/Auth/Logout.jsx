@@ -13,6 +13,6 @@ export default function Logout({ setUser, deleteUser }) {
     }, []);
 
     return (<div className="container">
-        <h2>Logging Out...</h2>
+        <h1>Logging Out...</h1>
     </div>);
 }

@@ -54,7 +54,9 @@ export default function UpdateUserAvatar() {
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="row align-items-center">
                         <div className="col-md-auto">
-                            <img className="rounded-circle border border-2" height="100px" width="100px" src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + values.id} />
+                            <img className="rounded-circle border border-2" height="100px" width="100px" 
+                            src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + values.id} 
+                            alt={"Profile picture of " + user.name} />
                         </div>
                         <div className="col-md-auto">
                                 <input aria-describedby="userAvatarFile" className={"form-control " + (errors.avatar ? "is-invalid" : "")}

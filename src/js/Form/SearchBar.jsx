@@ -4,11 +4,11 @@ import { InputField, AlertBox } from "../Form";
 
 export default function SearchBar () {
     const navigate = useNavigate();
-    const [ searchInput, setSearchInput ] = useState(null);
+    const [ searchInput, setSearchInput ] = useState('');
 
     useEffect(() => {
         const DelayDebounce = setTimeout(() => {
-            if (searchInput) {
+            if (searchInput.length > 2) {
                 navigate('search/' + searchInput);
             }
         }, 2000);

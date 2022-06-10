@@ -99,9 +99,9 @@ export default function Board() {
         return (<>
             <div className="container">
                 <div className="row mb-4 mt-1">
-                    <div className="col-auto"><h2>Board</h2></div>
+                    <div className="col-auto"><h1>Board</h1></div>
                 </div>
-                <div className="row mb-5 gy-2">
+                <div className="row mb-5 g-3">
                     <div className="col-12 col-sm-4 col-lg-4">
                         <SelectField name="selected_project" value={selectedProject} setValue={(e) => { setSelectedProject(e.target.value); setSelectedMilestone(null) }} title="Project" options={projects} />
                     </div>
@@ -128,10 +128,10 @@ export default function Board() {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{bugsMatrix[1].map(bug => <BoardBug bug={bug} />)}</td>
-                                    <td>{bugsMatrix[2].map(bug => <BoardBug bug={bug} />)}</td>
-                                    <td>{bugsMatrix[3].map(bug => <BoardBug bug={bug} />)}</td>
-                                    <td>{bugsMatrix[4].map(bug => <BoardBug bug={bug} />)}</td>
+                                    <td>{bugsMatrix[1].map(bug => <BoardBug key={bug.id} bug={bug} />)}</td>
+                                    <td>{bugsMatrix[2].map(bug => <BoardBug key={bug.id} bug={bug} />)}</td>
+                                    <td>{bugsMatrix[3].map(bug => <BoardBug key={bug.id} bug={bug} />)}</td>
+                                    <td>{bugsMatrix[4].map(bug => <BoardBug key={bug.id} bug={bug} />)}</td>
                                 </tr>
                             </tbody>
                         </table>

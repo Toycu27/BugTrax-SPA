@@ -12,6 +12,7 @@ export default function Bugs({ search, title }) {
         if (selectedProject > 0) tmpSearchParams.project = selectedProject;
         if (selectedMilestone > 0) tmpSearchParams.milestone = selectedMilestone;
         if (selectedAssignee > 0) tmpSearchParams.assignee = selectedAssignee;
+        if (selectedFilter != 'null') tmpSearchParams.sort = selectedFilter;
         setSearchParams(tmpSearchParams);
     }
 
@@ -20,6 +21,23 @@ export default function Bugs({ search, title }) {
     const [milestones, setMilestones] = useState([]);
     const [users, setUsers] = useState([]);
     const [pagination, setPagination] = useState([]);
+    const [selectedFilter, setSelectedFilter] = useState('');
+    const filterOpts = {
+        'created_asc': 'Created ASC',
+        'created_desc': 'Created DESC',
+        'end_asc': 'End ASC',
+        'end_desc': 'End DESC',
+        'modified_asc': 'Modified ASC',
+        'modified_desc': 'Modified DESC',
+    };
+    const filterQuerys = {
+        'created_asc': '&sort[created_at]=ASC',
+        'created_desc': '&sort[created_at]=DESC',
+        'end_asc': '&sort[end_date]=ASC',
+        'end_desc': '&sort[end_date]=DESC',
+        'modified_asc': '&sort[updated_at]=ASC',
+        'modified_desc': '&sort[updated_at]=DESC',
+    }
     const [selectedProject, setSelectedProject] = useState(searchParams.get('project'));
     const [selectedMilestone, setSelectedMilestone] = useState(searchParams.get('milestone'));
     const [selectedAssignee, setSelectedAssignee] = useState(searchParams.get('assignee'));
@@ -32,6 +50,7 @@ export default function Bugs({ search, title }) {
         if (selectedProject > 0 && nextPage === false) requestUrlParams += '&project_id=' + selectedProject
         if (selectedMilestone > 0 && nextPage === false) requestUrlParams += '&milestone_id=' + selectedMilestone
         if (selectedAssignee > 0 && nextPage === false) requestUrlParams += '&assigned_to=' + selectedAssignee
+        if (selectedFilter.length > 4) requestUrlParams += filterQuerys[selectedFilter];
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
             if (nextPage) setBugs([...bugs, ...r.data.data])
             else setBugs([...r.data.data])
@@ -56,12 +75,12 @@ export default function Bugs({ search, title }) {
     }
 
     useEffect(() => {
-        if (selectedProject || selectedMilestone || selectedAssignee) {
+        if (selectedProject || selectedMilestone || selectedAssignee || selectedFilter) {
             getBugs();
             updateSearchParams();
         }
 
-    }, [selectedProject, selectedMilestone, selectedAssignee]);
+    }, [selectedProject, selectedMilestone, selectedAssignee, selectedFilter]);
 
     useEffect(() => {
         getBugs();
@@ -107,31 +126,34 @@ export default function Bugs({ search, title }) {
 
     return (<div className="container">
         <div className="row mb-4 mt-1">
-            {!search ?
+            {!search &&
                 <div className="col-auto">
                     <Link to="/bug">
-                        <button type="button" className="btn btn-primary btn-sm">
+                        <button type="button" className="btn btn-primary btn-sm" aria-label="Open Bug Form">
                             <i className="bi bi-plus fs-4"></i>
                         </button>
                     </Link>
                 </div>
-                : null}
-            <div className="col-auto"><h2>Bugs</h2></div>
+            }
+            <div className="col-auto"><h1>Bugs</h1></div>
         </div>
 
-        {!search ?
-            <div className="row mb-5 gy-2">
-                <div className="col-12 col-sm-4 col-lg-4">
+        {!search &&
+            <div className="row mb-5 g-3">
+                <div className="col-12 col-sm-4 col-lg-3">
                     <SelectField name="selected_project" value={selectedProject} setValue={(e) => { setSelectedProject(e.target.value); setSelectedMilestone(null) }} title="Project" options={projects} />
                 </div>
-                <div className="col-12 col-sm-4 col-lg-4">
+                <div className="col-12 col-sm-4 col-lg-3">
                     <SelectField name="selected_milestone" value={selectedMilestone} setValue={(e) => { setSelectedMilestone(e.target.value) }} title="Milestone" options={selectableMilestones} />
                 </div>
-                <div className="col-12 col-sm-4 col-lg-4">
+                <div className="col-12 col-sm-4 col-lg-3">
                     <SelectField name="selected_assignee" value={selectedAssignee} setValue={(e) => { setSelectedAssignee(e.target.value) }} title="Assignee" options={users} />
                 </div>
+                <div className="col-12 col-sm-4 col-lg-3">
+                    <SelectField name="selected_filter" value={selectedFilter} setValue={(e) => { setSelectedFilter(e.target.value) }} title="Filter" options={filterOpts} />
+                </div>
             </div>
-            : null}
+        }
 
         <AlertBox />
 
@@ -183,7 +205,8 @@ export default function Bugs({ search, title }) {
                                             <div className="">
                                                 <div className="">
                                                     <img className="rounded-circle border border-1" height="50px" width="50px"
-                                                        src={item.assigned_to.avatar_path ? fileStoragePath + item.assigned_to.avatar_path : "https://i.pravatar.cc/50?img=" + item.assigned_to.id} />
+                                                        src={item.assigned_to.avatar_path ? fileStoragePath + item.assigned_to.avatar_path : "https://i.pravatar.cc/50?img=" + item.assigned_to.id} 
+                                                        alt={"Profile picture of " + item.assigned_to.name} />
                                                 </div>
                                                 <div className="">{item.assigned_to.name}</div>
                                             </div>
@@ -199,14 +222,14 @@ export default function Bugs({ search, title }) {
                 <p>No Results found...</p>
             </div>}
 
-        {pagination.next_page_url ?
+        {pagination.next_page_url &&
             <div className="row justify-content-center">
                 <div className="col-4 text-center">
-                    <button type="button" className="btn btn-primary" onClick={handleLoadMore}>
+                    <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more bugs">
                         <i className="bi bi-chevron-compact-down fs-4 mx-5"></i>
                     </button>
                 </div>
             </div>
-            : null}
+        }
     </div>);
 }

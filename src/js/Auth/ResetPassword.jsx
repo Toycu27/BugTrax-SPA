@@ -50,7 +50,7 @@ export default function ResetPassword() {
         <div className="row justify-content-center">
             <div className="col-12 col-lg-6">
                 <div className="mb-3">
-                    <h2>Reset your Password</h2>
+                    <h1>Reset your Password</h1>
                     <p>Set a new Password for your Account</p>
                 </div>
 

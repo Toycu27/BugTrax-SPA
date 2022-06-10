@@ -2,12 +2,12 @@ export default function Home() {
 
   return (<div className="container">
     <div className="row mb-4 mt-1">
-      <div className="col-auto"><h2>Home</h2></div>
+      <div className="col-auto"><h1>Home</h1></div>
     </div>
 
     <div className="row g-4 mb-4">
-      <h4 className="fw-normal mb-0">Feature List</h4>
-      <ul class="list-unstyled">
+      <h2 className="fw-normal mb-0">Feature List</h2>
+      <ul className="list-unstyled">
         <li>Overview Pages with Filters for Projects, Milestones and Bugs.</li>
         <li>Comment Function for Bug Entitys</li>
         <li>Bug Statistics Page</li>
@@ -25,7 +25,7 @@ export default function Home() {
     </div>
 
     <div className="row g-4 mb-4">
-      <h4 className="fw-normal mb-0">Preview Screenshots</h4>
+      <h2 className="fw-normal mb-0">Preview Screenshots</h2>
       <div className="col-12 col-lg-10 p-1 bg-opacity-75 bg-dark">
         <div id="carouselCaptions" className="carousel carousel-fade carousel-dark slide" data-bs-ride="carousel">
           <div className="carousel-indicators">
@@ -38,22 +38,22 @@ export default function Home() {
           </div>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src="/screenshot_01.png" className="d-block w-100" alt="..." />
+              <img src="/screenshot_01.webp" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">
-              <img src="/screenshot_02.png" className="d-block w-100" alt="..." />
+              <img src="/screenshot_02.webp" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">
-              <img src="/screenshot_03.png" className="d-block w-100" alt="..." />
+              <img src="/screenshot_03.webp" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">
-              <img src="/screenshot_04.png" className="d-block w-100" alt="..." />
+              <img src="/screenshot_04.webp" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">
-              <img src="/screenshot_05.png" className="d-block w-100" alt="..." />
+              <img src="/screenshot_05.webp" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">
-              <img src="/screenshot_06.png" className="d-block w-100" alt="..." />
+              <img src="/screenshot_06.webp" className="d-block w-100" alt="..." />
             </div>
           </div>
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">

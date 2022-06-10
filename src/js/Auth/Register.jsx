@@ -50,7 +50,7 @@ export default function Register() {
         <div className="row justify-content-center">
             <div className="col-12 col-lg-6">
                 <div className="text-center mb-4">
-                    <h2>Create an Account</h2>
+                    <h1>Create an Account</h1>
                     <div className="text-muted text-center mt-2">
                         <span>Already have an account? </span>
                         <Link className="" to="/login">Login</Link>

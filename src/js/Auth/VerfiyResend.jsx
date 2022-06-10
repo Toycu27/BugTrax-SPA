@@ -20,7 +20,7 @@ export default function Verfiy() {
         <div className="row justify-content-center">
             <div className="col-12 col-lg-6">
                 <div className="mb-3">
-                    <h2>E-Mail Verification</h2>
+                    <h1>E-Mail Verification</h1>
                 </div>
                 <div className="row">
                     <p className="mb-4">

@@ -51,7 +51,7 @@ export default function Login({ setUser }) {
         <div className="row justify-content-center">
             <div className="col-12 col-lg-6">
                 <div className="text-center mb-4">
-                    <h2>Login</h2>
+                    <h1>Login</h1>
                     <div className="text-muted text-center mt-2">
                         <span>Don't have an account? </span>
                         <Link className="" to="/register">Sign Up</Link>

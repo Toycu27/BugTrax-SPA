@@ -3,6 +3,7 @@ export default function SelectField({name, value = "", setValue, errorValue = ""
     let feedbackId = name + '_feedback';
     let inputId = name + '_id';
     let optionsHTML = [];
+    if (value === null) value = '';
     
     if (Array.isArray(options)) {
         options.map(item => 
@@ -27,11 +28,11 @@ export default function SelectField({name, value = "", setValue, errorValue = ""
             <option key="null" value="null"></option>
             { optionsHTML }
         </select>
-        { errorValue ?
+        { errorValue &&
         <div id={ feedbackId } className="invalid-feedback">
             { errorValue }
         </div>
-        : null }
+        }
         <label className="text-muted" htmlFor={inputId}>{title}</label>
     </div>);
 }

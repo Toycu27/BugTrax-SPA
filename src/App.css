@@ -1,8 +1,22 @@
 body, nav {
+  position: relative; 
    background-color: #6A702C; 
    background-image: url("../public/bg.jpg");
+    background-image: image-set(
+      url("../public/bg.webp") type("image/webp"),
+      url("../public/bg.jpg") type("image/jpeg")
+    );
    background-repeat: no-repeat;
    background-attachment: fixed;
+}
+
+/* Heading */
+h1 {
+  font-size: 2.25rem;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 /* Spacing */

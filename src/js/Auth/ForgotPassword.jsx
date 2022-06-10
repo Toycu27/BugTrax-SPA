@@ -43,7 +43,7 @@ export default function ForgotPassword() {
             <div className="col-12 col-lg-6">
                 <div className="text-center">
                     <div className="mb-3">
-                        <h2>Forgot your Password?</h2>
+                        <h1>Forgot your Password?</h1>
                         <p className="text-muted">We will send a Password reset link to your Email</p>
                     </div>
                     <form onSubmit={handleSubmit} className="needs-validation">

@@ -55,7 +55,7 @@ export default function UpdateUser() {
             <div className="col-12 col-lg-6">
 
                 <div className="text-center mb-4">
-                    <h2>Account Information</h2>
+                    <h1>Account Information</h1>
                     <p>You can change your Account Information</p>
                 </div>
                 <AlertBox />

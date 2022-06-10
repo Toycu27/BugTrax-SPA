@@ -28,16 +28,16 @@ export default function Projects({ search, title }) {
 
     return (<div className="container">
         <div className="row mb-4 mt-1">
-            {!search ?
+            {!search &&
                 <div className="col-auto">
                     <Link to="/project">
-                        <button type="button" className="btn btn-primary btn-sm">
+                        <button type="button" className="btn btn-primary btn-sm" aria-label="Open Project Form">
                             <i className="bi bi-plus fs-4"></i>
                         </button>
                     </Link>
                 </div>
-                : null}
-            <div className="col-auto"><h2>Projects</h2></div>
+            }
+            <div className="col-auto"><h1>Projects</h1></div>
         </div>
 
         <AlertBox />
@@ -77,14 +77,14 @@ export default function Projects({ search, title }) {
                 <p>No Results found...</p>
             </div>}
 
-        {pagination.next_page_url ?
+        { pagination.next_page_url &&
             <div className="row justify-content-center">
                 <div className="col text-center">
-                    <button type="button" className="btn btn-primary" onClick={handleLoadMore}>
+                    <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more projects">
                         <i className="bi bi-chevron-compact-down fs-4 mx-5"></i>
                     </button>
                 </div>
             </div>
-            : null}
+        }
     </div>);
 }

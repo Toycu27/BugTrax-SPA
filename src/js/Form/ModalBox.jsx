@@ -10,7 +10,7 @@ export default function ModalBox ({ children, id, buttonStyle, buttonIcon, butto
     return (<>
         { buttonStyle === "link" ? 
             <div type="button" className="link" onClick={handleButtonClick} data-bs-toggle="modal" data-bs-target={ "#" + id }>
-                { buttonIcon ? <i className={"bi bi-" + buttonIcon}></i> : null } { buttonTitle }
+                { buttonIcon && <i className={"bi bi-" + buttonIcon}></i> } { buttonTitle }
             </div>
         :
             <button type="button" className="btn btn-primary btn-sm" onClick={handleButtonClick} data-bs-toggle="modal" data-bs-target={ "#" + id }>
