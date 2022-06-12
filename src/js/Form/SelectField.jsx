@@ -1,5 +1,5 @@
 
-export default function SelectField({name, value = "", setValue, errorValue = "", title, options, required = ''}) {
+export default function SelectField({name, value = "", setValue, errorValue = "", title, options, required = '', disabled}) {
     let feedbackId = name + '_feedback';
     let inputId = name + '_id';
     let optionsHTML = [];
@@ -24,6 +24,7 @@ export default function SelectField({name, value = "", setValue, errorValue = ""
             value={ value }
             aria-describedby={ feedbackId } 
             required={ required ? true : false }
+            disabled={ disabled }
         >
             <option key="null" value="null"></option>
             { optionsHTML }

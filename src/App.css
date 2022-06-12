@@ -213,6 +213,21 @@ nav a:hover > i {
   font-size: 0.9em;
 }
 
+/* Users */
+.user__item {
+  background-color: rgb(250 250 250 / 70%);
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+.user__item:hover {
+  background-color: rgba(var(--bs-light-rgb), 0.85) !important;
+}
+
+.user__label {
+  font-size: 0.9em;
+}
+
 /* Board */
 #board th {
   width: 200px;

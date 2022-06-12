@@ -1,14 +1,14 @@
-import React, { useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { InputField, AlertBox } from "../Form";
+import { useState } from "react";
 import { useUser } from '../Auth';
+import { InputField, AlertBox } from "../Form";
 import axios from "axios";
 
 export default function ResetPassword() {
     const { addMessage } = useUser();
     let navigate = useNavigate();
     let urlParams = useParams();
-    let [searchParams, setSearchParams] = useSearchParams();
+    let [searchParams] = useSearchParams();
 
     const handleChange = e => {
         setValues(oldValues => ({

@@ -5,6 +5,7 @@ import Logout from './Logout';
 import Register from './Register';
 import UpdateUser from './UpdateUser';
 import UpdateUserAvatar from './UpdateUserAvatar';
+import UpdateUserRole from './UpdateUserRole';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import VerfiyResend from './VerfiyResend';
@@ -17,6 +18,7 @@ export {
     Register, 
     UpdateUser, 
     UpdateUserAvatar, 
+    UpdateUserRole, 
     ForgotPassword, 
     ResetPassword, 
     VerfiyResend 

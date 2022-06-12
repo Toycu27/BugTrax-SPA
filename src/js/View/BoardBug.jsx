@@ -1,5 +1,5 @@
-import { fileStoragePath } from '../../App.js';
 import { Link } from "react-router-dom";
+import { Avatar } from "../View";
 
 export default function BoardBug({bug}) {
 
@@ -41,9 +41,7 @@ export default function BoardBug({bug}) {
                 <div className="col-auto">
                     <div className="bug__value">
                         {bug.assigned_to &&
-                            <img className="rounded-circle border border-1" height="50px" width="50px"
-                                src={bug.assigned_to.avatar_path ? fileStoragePath + bug.assigned_to.avatar_path : "https://i.pravatar.cc/50?img=" + bug.assigned_to.id} 
-                                alt={"Profile picture of " + bug.assigned_to.name} />
+                            <Avatar user={bug.assigned_to} size="50" />
                         }
                     </div>
                 </div>

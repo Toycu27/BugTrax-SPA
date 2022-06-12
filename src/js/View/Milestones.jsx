@@ -80,11 +80,11 @@ export default function Milestones({ search, title }) {
 
         {!search &&
             <div className="row mb-5 g-3">
-                <div className="col-12 col-sm-6 col-lg-4">
+                <div className="col-12 col-sm-6 col-lg-3">
                     <SelectField name="selected_project" value={selectedProject} setValue={(e) => { setSelectedProject(e.target.value) }} title="Project" options={projects} />
                 </div>
-                <div className="col-12 col-sm-6 col-lg-4">
-                    <SelectField name="selected_filter" value={selectedFilter} setValue={(e) => { setSelectedFilter(e.target.value) }} title="Filter" options={filterOpts} />
+                <div className="col-12 col-sm-6 col-lg-3">
+                    <SelectField name="selected_filter" value={selectedFilter} setValue={(e) => { setSelectedFilter(e.target.value) }} title="Sort" options={filterOpts} />
                 </div>
             </div>
         }

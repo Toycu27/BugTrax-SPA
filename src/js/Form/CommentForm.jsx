@@ -1,6 +1,6 @@
-import { fileStoragePath } from '../../App.js';
 import { useState, useEffect } from "react";
 import { useUser } from '../Auth';
+import { Avatar } from "../View";
 import { TextareaField } from ".";
 import axios from "axios";
 
@@ -80,9 +80,7 @@ export default function CommentForm ({bug_id, milestone_id, project_id}) {
             <form onSubmit={handleSubmit} className="needs-validation mb-4">
                 <div className="row align-items-end">
                     <div className="col-auto">
-                        <img className="rounded-circle border border-2" height="100px" width="100px" 
-                        src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + user.id} 
-                        alt={"Profile picture of " + user.name} />
+                        <Avatar user={user} size="100" />
                     </div>
                     <div className="col px-2 pe-0">
                         <TextareaField type="text" name="message" value={values.message} errorValue={errors.message} setValue={handleChange} title="Your Message to this Topic!" expand={false} />
@@ -99,9 +97,7 @@ export default function CommentForm ({bug_id, milestone_id, project_id}) {
                     { comments.map(item => 
                         <div className="row pe-0 mb-4 align-items-end">
                             <div className="col-auto">
-                                <img className="rounded-circle border border-2" height="100px" width="100px" 
-                                src={item.user.avatar_path ? fileStoragePath + item.user.avatar_path : "https://i.pravatar.cc/100?img=" + item.user_id } 
-                                alt={"Profile picture of " + item.user.name} />
+                                <Avatar user={item.user} size="100" />
                             </div>
                             <div className="col ms-2 pt-2 bg-light bg-opacity-50 x-expand">
                                 <figure>

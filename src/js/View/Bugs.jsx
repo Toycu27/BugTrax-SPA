@@ -1,7 +1,7 @@
-import { fileStoragePath } from '../../App.js';
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AlertBox, SelectField } from "../Form";
+import { Avatar } from "../View";
 import axios from "axios";
 
 export default function Bugs({ search, title }) {
@@ -150,7 +150,7 @@ export default function Bugs({ search, title }) {
                     <SelectField name="selected_assignee" value={selectedAssignee} setValue={(e) => { setSelectedAssignee(e.target.value) }} title="Assignee" options={users} />
                 </div>
                 <div className="col-12 col-sm-4 col-lg-3">
-                    <SelectField name="selected_filter" value={selectedFilter} setValue={(e) => { setSelectedFilter(e.target.value) }} title="Filter" options={filterOpts} />
+                    <SelectField name="selected_filter" value={selectedFilter} setValue={(e) => { setSelectedFilter(e.target.value) }} title="Sort" options={filterOpts} />
                 </div>
             </div>
         }
@@ -204,9 +204,7 @@ export default function Bugs({ search, title }) {
                                         {item.assigned_to &&
                                             <div className="">
                                                 <div className="">
-                                                    <img className="rounded-circle border border-1" height="50px" width="50px"
-                                                        src={item.assigned_to.avatar_path ? fileStoragePath + item.assigned_to.avatar_path : "https://i.pravatar.cc/50?img=" + item.assigned_to.id} 
-                                                        alt={"Profile picture of " + item.assigned_to.name} />
+                                                    <Avatar user={item.assigned_to} size="50" />
                                                 </div>
                                                 <div className="">{item.assigned_to.name}</div>
                                             </div>

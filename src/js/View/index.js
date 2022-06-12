@@ -8,6 +8,8 @@ import Bugs from './Bugs';
 import Board from './Board';
 import BoardBug from './BoardBug';
 import Statistics from './Statistics';
+import Users from './Users';
+import Avatar from './Avatar';
 
 export { 
     Home, 
@@ -20,4 +22,6 @@ export {
     Board,
     BoardBug,
     Statistics,
+    Users,
+    Avatar,
 };

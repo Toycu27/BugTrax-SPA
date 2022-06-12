@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search, Statistics, Board } from './js/View';
-import { BugForm, MilestoneForm, ProjectForm } from "./js/Form";
 import { useUser, ProtectedRoute as Protected, Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
+import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search, Statistics, Board, Users } from './js/View';
+import { BugForm, MilestoneForm, ProjectForm } from "./js/Form";
 import axios from "axios";
 
 
@@ -103,6 +103,7 @@ axios.deleteRequest = async (path, callback = () => {}) => {
           return response.data;
       })
       .catch(function (error) {
+          callback(error);
           error.response.data.success = false;
           return error.response.data;
       });
@@ -126,7 +127,7 @@ export default function App() {
 
           {/* Auth Routes */}
           <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/logout" element={<Logout setUser={setUser} deleteUser={deleteUser} />} />
+          <Route path="/logout" element={<Logout deleteUser={deleteUser} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerfiyResend />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -134,19 +135,20 @@ export default function App() {
           <Route path="/user" element={<Protected><UpdateUser /></Protected>} />
 
           {/* Routes */}
-          <Route path="/search/:input" element={<Protected><Search /></Protected>}/>
-          <Route path="/projects" element={<Protected><Projects /></Protected>}/>
-          <Route path="/milestones" element={<Protected><Milestones /></Protected>}/>
-          <Route path="/bugs" element={<Protected><Bugs /></Protected>}/>
-          <Route path="/board" element={<Protected><Board /></Protected>}/>
-          <Route path="/statistics" element={<Protected><Statistics /></Protected>}/>
+          <Route path="/search/:input" element={<Protected><Search /></Protected>} />
+          <Route path="/projects" element={<Protected><Projects /></Protected>} />
+          <Route path="/milestones" element={<Protected><Milestones /></Protected>} />
+          <Route path="/bugs" element={<Protected><Bugs /></Protected>} />
+          <Route path="/statistics" element={<Protected><Statistics /></Protected>} />
+          <Route path="/board" element={<Protected><Board /></Protected>} />
+          <Route path="/users" element={<Protected><Users /></Protected>} />
           
-          <Route path="/project" element={<Protected><ProjectForm /></Protected>}/>
-          <Route path="/project/:id" element={<Protected><ProjectForm /></Protected>}/>
-          <Route path="/milestone" element={<Protected><MilestoneForm /></Protected>}/>
-          <Route path="/milestone/:id" element={<Protected><MilestoneForm /></Protected>}/>
-          <Route path="/bug" element={<Protected><BugForm /></Protected>}/>
-          <Route path="/bug/:id" element={<Protected><BugForm /></Protected>}/>
+          <Route path="/project" element={<Protected><ProjectForm /></Protected>} />
+          <Route path="/project/:id" element={<Protected><ProjectForm /></Protected>} />
+          <Route path="/milestone" element={<Protected><MilestoneForm /></Protected>} />
+          <Route path="/milestone/:id" element={<Protected><MilestoneForm /></Protected>} />
+          <Route path="/bug" element={<Protected><BugForm /></Protected>} />
+          <Route path="/bug/:id" element={<Protected><BugForm /></Protected>} />
 
 
           {/* 404 Route */}

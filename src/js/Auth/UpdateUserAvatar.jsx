@@ -1,7 +1,7 @@
-import { fileStoragePath } from '../../App.js';
 import { useState } from "react";
-import { useUser } from './';
+import { useUser } from '../Auth';
 import { AlertBox } from "../Form";
+import { Avatar } from "../View";
 import axios from "axios";
 
 export default function UpdateUserAvatar() {
@@ -54,9 +54,7 @@ export default function UpdateUserAvatar() {
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="row align-items-center">
                         <div className="col-md-auto">
-                            <img className="rounded-circle border border-2" height="100px" width="100px" 
-                            src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/100?img=" + values.id} 
-                            alt={"Profile picture of " + user.name} />
+                            <Avatar user={user} size="100" />
                         </div>
                         <div className="col-md-auto">
                                 <input aria-describedby="userAvatarFile" className={"form-control " + (errors.avatar ? "is-invalid" : "")}

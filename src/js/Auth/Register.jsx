@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useUser } from '../Auth';
-import axios from "axios";
 import { AlertBox, InputField } from "../Form";
+import axios from "axios";
 
 export default function Register() {
     const { addMessage } = useUser();
@@ -17,12 +17,14 @@ export default function Register() {
 
     //Form values
     const defaultValues = {
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
     };
     const defaultErrors = {
+        timezone: null,
         name: null,
         email: null,
         password: null,
@@ -57,6 +59,7 @@ export default function Register() {
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className="needs-validation">
+                    <InputField type="hidden" name="timezone" value={values.timezone} errorValue={errors.timezone} setValue={handleChange} title="Timezone" required="required" />
                     <div className="mb-3">
                         <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required="required" />
                     </div>

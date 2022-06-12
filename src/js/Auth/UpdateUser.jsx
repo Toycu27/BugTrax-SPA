@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useUser, UpdateUserAvatar } from './';
-import { InputField, AlertBox } from "../Form";
+import { useState } from "react";
+import { useUser, UpdateUserAvatar } from '../Auth';
+import { InputField, AlertBox, SelectField } from "../Form";
 import axios from "axios";
 
 export default function UpdateUser() {
@@ -14,13 +14,15 @@ export default function UpdateUser() {
     }
 
     const defaultValues = {
-        name: '',
+        timezone: user.timezone,
+        name: user.name,
         password_current: '',
         password: '',
         password_confirm: '',
         avatar: '',
     };
     const defaultErrors = {
+        timezone: null,
         name: null,
         password_current: null,
         password: null,
@@ -44,7 +46,7 @@ export default function UpdateUser() {
             addMessage(response.message, "danger");
         } else {
             setErrors({ ...defaultErrors });
-            setValues({ ...defaultValues, name: values.name });
+            setValues({ ...defaultValues, timezone: values.timezone, name: values.name });
             setUser(response.data);
             addMessage(response.message);
         }
@@ -63,6 +65,9 @@ export default function UpdateUser() {
                     <UpdateUserAvatar />
                 </div>
                 <form onSubmit={handleSubmit} className="needs-validation">
+                    <div className="mb-3">
+                        <SelectField name="timezone" value={values.timezone} errorValue={errors.timezone} setValue={handleChange} options={Intl.supportedValuesOf('timeZone')} title="Timezone" required="required" />
+                    </div>
                     <div className="mb-3">
                         <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required="required" />
                     </div>

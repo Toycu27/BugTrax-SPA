@@ -25,6 +25,9 @@ export default function App({ user }) {
             <li className="nav-item">
                 <NavLink className="nav-link text-uppercase" data-title="Board" to="/board">Board</NavLink>
             </li>
+            <li className="nav-item">
+                <NavLink className="nav-link text-uppercase" data-title="Users" to="/users">Users</NavLink>
+            </li>
         </>);
         searchBar = (<li><SearchBar /></li>);
         authLinks = (<>

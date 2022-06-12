@@ -1,4 +1,4 @@
-export default function InputField({name, value = "", setValue, errorValue = "", title, options, type = 'text', required = '', disabled = ''}) {
+export default function InputField({name, value = "", setValue, errorValue = "", title, type = 'text', required = '', disabled = ''}) {
     let feedbackId = name + '_feedback';
     let inputId = name + '_id';
 

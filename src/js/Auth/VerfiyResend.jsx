@@ -1,6 +1,6 @@
 import { useUser } from '../Auth';
-import axios from "axios";
 import { AlertBox } from '../Form';
+import axios from "axios";
 
 export default function Verfiy() {
     const { addMessage } = useUser();

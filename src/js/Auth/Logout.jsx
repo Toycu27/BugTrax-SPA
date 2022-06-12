@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 
-export default function Logout({ setUser, deleteUser }) {
+export default function Logout({ deleteUser }) {
     let navigate = useNavigate();
 
     useEffect(() => {

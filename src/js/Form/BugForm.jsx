@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useUser } from '../Auth';
-import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from ".";
+import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from "../Form";
 import axios from "axios";
 
 export default function BugForm({ id, bug }) {
