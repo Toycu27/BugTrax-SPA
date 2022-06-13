@@ -1,6 +1,5 @@
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useUser, ProtectedRoute as Protected, Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
+import { useGlobals, GlobalContext, ProtectedRoute as Protected, Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
 import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search, Statistics, Board, Users } from './js/View';
 import { BugForm, MilestoneForm, ProjectForm } from "./js/Form";
 import axios from "axios";
@@ -112,22 +111,22 @@ axios.deleteRequest = async (path, callback = () => {}) => {
 
 
 export default function App() {
-  const { user, setUser, deleteUser } = useUser();
+  const GLOBALS = useGlobals();
 
-  if (user) {
-      axios.defaults.headers['Authorization'] = 'Bearer ' + user.token;
+  if (GLOBALS.user) {
+      axios.defaults.headers['Authorization'] = 'Bearer ' + GLOBALS.user.token;
   }
 
-  return (
+  return (<GlobalContext.Provider value={GLOBALS}>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout user={user} setUser={setUser} deleteUser={deleteUser}/>}>
+        <Route path="/" element={<Layout />}>
           {/* Default Route */}
           <Route index element={<Home />} />
 
           {/* Auth Routes */}
-          <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/logout" element={<Logout deleteUser={deleteUser} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerfiyResend />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -156,5 +155,5 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  );
+  </GlobalContext.Provider>);
 }

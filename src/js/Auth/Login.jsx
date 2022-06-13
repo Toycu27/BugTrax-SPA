@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useUser } from '..Auth/';
+import { useState, useContext } from "react";
+import { GlobalContext } from '../Auth';
 import { InputField, AlertBox } from "../Form";
 import axios from "axios";
 
-export default function Login({ setUser }) {
-    const { getLastLocation } = useUser();
+export default function Login() {
+    const { setUser, getLastLocation } = useContext(GlobalContext);
     let navigate = useNavigate();
 
     const handleChange = e => {
@@ -59,10 +59,10 @@ export default function Login({ setUser }) {
                 </div>
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="mb-3">
-                        <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required="required" />
+                        <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required={true} />
                     </div>
                     <div className="mb-4">
-                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
+                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required={true} />
                         <Link className="text-right" to="/forgot-password">Forgot Password?</Link>
                     </div>
 

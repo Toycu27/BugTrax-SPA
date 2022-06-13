@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, urlParams, useNavigate } from "react-router-dom";
-import { InputField, AlertBox } from "../Form";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function SearchBar () {
     const navigate = useNavigate();

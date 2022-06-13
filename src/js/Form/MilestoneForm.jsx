@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useUser } from '../Auth';
-import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from ".";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { GlobalContext } from '../Auth';
+import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from "../Form";
 import axios from "axios";
 
 export default function MilestoneForm({ id, milestone }) {
-    const { addMessage, hasRole } = useUser();
+    const { addMessage, hasRole } = useContext(GlobalContext);
+
+    const navigate = useNavigate();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
 
@@ -79,7 +81,8 @@ export default function MilestoneForm({ id, milestone }) {
             setErrors({ ...defaultErrors, ...response.errors });
             addMessage(response.message, "danger");
         } else {
-            await addMessage(response.message);
+            addMessage(response.message);
+            navigate(-1);
         }
     }
 
@@ -88,24 +91,22 @@ export default function MilestoneForm({ id, milestone }) {
         return (<div className="container">
             <div className="row mb-4 mt-1">
                 <div className="col-auto">
-                    <Link to="/milestones">
-                        <button type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
-                            <i className="bi bi-arrow-left fs-4"></i>
-                        </button>
-                    </Link>
+                    <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
+                        <i className="bi bi-arrow-left fs-4"></i>
+                    </button>
                 </div>
                 <div className="col-auto"><h1>Milestone</h1></div>
             </div>
             <AlertBox />
             <form onSubmit={handleSubmit} className="needs-validation">
                 <div className="mb-3">
-                    <SelectField name="project_id" value={values.project_id} errorValue={errors.project_id} setValue={handleChange} options={projects} title="Project" required="required" />
+                    <SelectField name="project_id" value={values.project_id} errorValue={errors.project_id} setValue={handleChange} options={projects} title="Project" required={true} />
                 </div>
                 <div className="mb-3">
-                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required="required" />
+                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required={true} />
                 </div>
                 <div className="mb-3">
-                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
+                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required={true} />
                 </div>
 
                 <div className="row mb-5 g-3">
@@ -116,10 +117,10 @@ export default function MilestoneForm({ id, milestone }) {
                         <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Deadline" />
                     </div>
                     <div className="col-6 col-lg-3">
-                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled="true" />
+                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled={true} />
                     </div>
                     <div className="col-6 col-lg-3">
-                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled="true" />
+                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled={true} />
                     </div>
                 </div>
                 <div className="row">

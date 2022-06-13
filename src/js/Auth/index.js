@@ -1,4 +1,5 @@
-import useUser from './useUser';
+import GlobalContext from './GlobalContext';
+import useGlobals from './useGlobals';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Logout from './Logout';
@@ -11,7 +12,8 @@ import ResetPassword from './ResetPassword';
 import VerfiyResend from './VerfiyResend';
 
 export { 
-    useUser, 
+    GlobalContext,
+    useGlobals, 
     ProtectedRoute, 
     Login, 
     Logout, 

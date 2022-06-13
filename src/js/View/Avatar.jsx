@@ -1,7 +1,6 @@
 import { fileStoragePath } from '../../App.js';
 
 export default function Avatar ({user, size}) {
-
     return (
         <img 
             className="rounded-circle border border-1"

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useUser } from '../Auth';
-import { CommentForm, InputField, TextareaField, AlertBox } from ".";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { GlobalContext } from '../Auth';
+import { CommentForm, InputField, TextareaField, AlertBox } from "../Form";
 import axios from "axios";
 
 export default function ProjectForm({ id, project }) {
-    const { addMessage, hasRole } = useUser();
+    const { addMessage, hasRole } = useContext(GlobalContext);
+
+    const navigate = useNavigate();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
 
@@ -61,19 +63,19 @@ export default function ProjectForm({ id, project }) {
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
             addMessage(response.message, "danger");
+        } else {
+            addMessage(response.message);
+            navigate(-1);
         }
-        else addMessage(response.message);
     }
 
 
     return (<div className="container">
         <div className="row mb-4 mt-1">
             <div className="col-auto">
-                <Link to="/projects">
-                    <button type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
+                    <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
                         <i className="bi bi-arrow-left fs-4"></i>
                     </button>
-                </Link>
             </div>
             <div className="col-auto"><h1>Project</h1></div>
         </div>
@@ -81,22 +83,22 @@ export default function ProjectForm({ id, project }) {
         <form onSubmit={handleSubmit} className="needs-validation">
             <div className="row mb-3">
                 <div className="col-12">
-                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required="required" />
+                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required={true} />
                 </div>
             </div>
 
             <div className="row mb-3">
                 <div className="col-12">
-                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
+                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required={true} />
                 </div>
             </div>
 
             <div className="row mb-5">
                 <div className="col-4">
-                    <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled="true" />
+                    <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled={true} />
                 </div>
                 <div className="col-4">
-                    <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled="true" />
+                    <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled={true} />
                 </div>
             </div>
 
@@ -113,7 +115,7 @@ export default function ProjectForm({ id, project }) {
             </div>
         </form>
         {id &&
-                <CommentForm project_id={id} />
+            <CommentForm project_id={id} />
         }
     </div>);
 }

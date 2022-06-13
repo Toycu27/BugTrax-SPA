@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useUser } from '../Auth';
+import { useState, useContext } from "react";
+import { GlobalContext } from '../Auth';
 import { InputField, AlertBox } from "../Form";
 import axios from "axios";
 
 export default function ForgotPassword() {
-    const { addMessage } = useUser();
+    const { addMessage } = useContext(GlobalContext);
 
     const handleChange = e => {
         setValues(oldValues => ({
@@ -48,7 +48,7 @@ export default function ForgotPassword() {
                     </div>
                     <form onSubmit={handleSubmit} className="needs-validation">
                         <div className="mb-4">
-                            <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" reqired="required"></InputField>
+                            <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required={true} />
                         </div>
 
                         <div className="d-grid gap-2">

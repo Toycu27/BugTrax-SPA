@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { GlobalContext } from '../Auth';
 import axios from "axios";
 
-export default function Logout({ deleteUser }) {
+export default function Logout() {
+    const { deleteUser } = useContext(GlobalContext);
     let navigate = useNavigate();
 
     useEffect(() => {

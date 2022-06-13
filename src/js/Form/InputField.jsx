@@ -1,4 +1,4 @@
-export default function InputField({name, value = "", setValue, errorValue = "", title, type = 'text', required = '', disabled = ''}) {
+export default function InputField({type = 'text', title, name, value, setValue, errorValue, required = false, disabled = false}) {
     let feedbackId = name + '_feedback';
     let inputId = name + '_id';
 
@@ -6,18 +6,20 @@ export default function InputField({name, value = "", setValue, errorValue = "",
         <input 
             id={inputId}
             className={"form-control " + (errorValue ? "is-invalid" : "")}
-            name={ name }
-            type={type} 
             placeholder={title} 
+            type={type} 
+            name={ name }
             value={value}
             onChange={setValue}
             aria-describedby={feedbackId}
-            required={ required ? true : false }
-            disabled={ disabled ? true : false }
+            required={ required }
+            disabled={ disabled }
         />
         <div id={feedbackId} className="invalid-feedback">
             {errorValue}
         </div>
-        <label className="text-muted" htmlFor={inputId}>{title}</label>
+        <label className="text-muted" htmlFor={inputId}>
+            {title}
+        </label>
     </div>);
 }

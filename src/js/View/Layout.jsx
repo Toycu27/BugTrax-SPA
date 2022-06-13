@@ -1,13 +1,16 @@
-import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { useContext } from "react";
+import { GlobalContext } from "../Auth";
 import { SearchBar } from '../Form';
 import axios from "axios";
 
-export default function App({ user }) {
+export default function App() {
+    const GLOBALS = useContext(GlobalContext);
+
     let links, searchBar, authLinks;
 
-    if (user) {
-        axios.defaults.headers['Authorization'] = 'Bearer ' + user.token;
+    if (GLOBALS.user) {
+        axios.defaults.headers['Authorization'] = 'Bearer ' + GLOBALS.user.token;
 
         links = (<>
             <li className="nav-item">

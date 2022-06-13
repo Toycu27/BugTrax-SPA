@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useUser } from '../Auth';
+import { useState, useEffect, useContext } from "react";
+import { GlobalContext } from '../Auth';
 import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from "../Form";
 import axios from "axios";
 
 export default function BugForm({ id, bug }) {
-    const { addMessage, hasRole } = useUser();
+    const { addMessage, hasRole } = useContext(GlobalContext);
+
     const navigate = useNavigate();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
@@ -21,9 +22,9 @@ export default function BugForm({ id, bug }) {
     const [projects, setProjects] = useState();
     const [milestones, setMilestones] = useState();
     const [users, setUsers] = useState();
-    const statusOpts = {1: 'New', 2: 'Progress', 3: 'Review', 4: 'Done'};
-    const priorityOpts = {1: 'Low', 2: 'Normal', 3: 'High'};
-    const difficultyOpts = {1: 'Easy', 2: 'Medium', 3: 'Hard'};
+    const statusOpts = { 1: 'New', 2: 'Progress', 3: 'Review', 4: 'Done' };
+    const priorityOpts = { 1: 'Low', 2: 'Normal', 3: 'High' };
+    const difficultyOpts = { 1: 'Easy', 2: 'Medium', 3: 'Hard' };
     const deviceTypeOpts = ['Desktop', 'Tablet', 'Mobile'];
     const deviceOsOpts = ['Windows', 'Mac', 'Linux'];
 
@@ -110,6 +111,7 @@ export default function BugForm({ id, bug }) {
             addMessage(response.message, "danger");
         } else {
             addMessage(response.message);
+            navigate(-1);
         }
 
         window.scrollTo(0, 0);
@@ -129,17 +131,17 @@ export default function BugForm({ id, bug }) {
             <AlertBox />
             <form onSubmit={handleSubmit} className="needs-validation">
                 <div className="mb-3">
-                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required="required" />
+                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required={true} />
                 </div>
                 <div className="mb-3">
-                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required="required" />
+                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required={true} />
                 </div>
                 <div className="mb-5">
                     <TextareaField type="text" name="solution_desc" value={values.solution_desc} errorValue={errors.solution_desc} setValue={handleChange} title="Solution" />
                 </div>
                 <div className="row mb-3">
                     <div className="col-4">
-                        <SelectField name="project_id" value={values.project_id} errorValue={errors.project_id} setValue={handleChange} options={projects} title="Project" required="required" />
+                        <SelectField name="project_id" value={values.project_id} errorValue={errors.project_id} setValue={handleChange} options={projects} title="Project" required={true} />
                     </div>
                     <div className="col-4">
                         <SelectField name="milestone_id" value={values.milestone_id} errorValue={errors.milestone_id} setValue={handleChange} options={milestones} title="Milestone" />
@@ -150,13 +152,13 @@ export default function BugForm({ id, bug }) {
                 </div>
                 <div className="row mb-5">
                     <div className="col-4">
-                        <SelectField name="status_id" value={values.status_id} errorValue={errors.status_id} setValue={handleChange} options={statusOpts} title="Status" required="required" />
+                        <SelectField name="status_id" value={values.status_id} errorValue={errors.status_id} setValue={handleChange} options={statusOpts} title="Status" required={true} />
                     </div>
                     <div className="col-4">
-                        <SelectField name="priority_id" value={values.priority_id} errorValue={errors.priority_id} setValue={handleChange} options={priorityOpts} title="Priority" required="required" />
+                        <SelectField name="priority_id" value={values.priority_id} errorValue={errors.priority_id} setValue={handleChange} options={priorityOpts} title="Priority" required={true} />
                     </div>
                     <div className="col-4">
-                        <SelectField name="difficulty_id" value={values.difficulty_id} errorValue={errors.difficulty_id} setValue={handleChange} options={difficultyOpts} title="Difficulty" required="required" />
+                        <SelectField name="difficulty_id" value={values.difficulty_id} errorValue={errors.difficulty_id} setValue={handleChange} options={difficultyOpts} title="Difficulty" required={true} />
                     </div>
                 </div>
                 <div className="row mb-3">
@@ -178,10 +180,10 @@ export default function BugForm({ id, bug }) {
                         <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Deadline" />
                     </div>
                     <div className="col-4">
-                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled="true" />
+                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled={true} />
                     </div>
                     <div className="col-4">
-                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled="true" />
+                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled={true} />
                     </div>
                 </div>
                 <div className="row">

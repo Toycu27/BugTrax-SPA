@@ -1,7 +1,7 @@
-import { useMemo, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { BoardBug } from '../View';
+import { useMemo, useEffect, useState } from "react";
 import { SelectField } from '../Form';
+import { BoardBug } from '../View';
 import axios from "axios";
 
 export default function Board() {

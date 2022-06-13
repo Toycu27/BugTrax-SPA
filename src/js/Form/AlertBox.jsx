@@ -1,26 +1,21 @@
-import { useEffect, useState } from 'react';
-import { useUser } from '../Auth';
+import { useEffect, useContext } from 'react';
+import { GlobalContext } from '../Auth';
 
 export default function AlertBox() {
-    const { getMessage } = useUser();
-    const [ message, setMessage ] = useState();
+    const { messages, getMessages } = useContext(GlobalContext);
 
     useEffect(() => {
-        const refreshMessage = function () {
-            let msgTmp = getMessage();
-            if (msgTmp) setMessage(msgTmp);
-            setTimeout(refreshMessage, 1000);
-        }
+        getMessages();
+    }, [messages]);
 
-        setTimeout(refreshMessage, 1000);
-    }, []);
-
-    if (message) {
-        return (
-            <div className={"alert alert-" + message.type} role="alert">
-                {message.message}
-            </div>
-        );
+    if (messages) {
+        return (<>
+            { messages.map((message, index) => 
+                <div key={index} className={"alert alert-" + message.type} role="alert">
+                    {message.message}
+                </div>
+            )}
+        </>);
     } else {
         return;
     }

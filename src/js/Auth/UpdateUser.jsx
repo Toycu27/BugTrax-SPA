@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useUser, UpdateUserAvatar } from '../Auth';
+import { useContext } from "react";
+import { GlobalContext, UpdateUserAvatar } from '../Auth';
 import { InputField, AlertBox, SelectField } from "../Form";
 import axios from "axios";
 
 export default function UpdateUser() {
-    const { user, setUser, addMessage } = useUser();
+    const { user, setUser, addMessage } = useContext(GlobalContext);
 
     const handleChange = e => {
         setValues(oldValues => ({
@@ -66,13 +67,13 @@ export default function UpdateUser() {
                 </div>
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="mb-3">
-                        <SelectField name="timezone" value={values.timezone} errorValue={errors.timezone} setValue={handleChange} options={Intl.supportedValuesOf('timeZone')} title="Timezone" required="required" />
+                        <SelectField name="timezone" value={values.timezone} errorValue={errors.timezone} setValue={handleChange} options={Intl.supportedValuesOf('timeZone')} title="Timezone" required={true} />
                     </div>
                     <div className="mb-3">
-                        <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required="required" />
+                        <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required={true} />
                     </div>
                     <div className="mb-3">
-                        <InputField type="password" name="password_current" value={values.password_current} errorValue={errors.password_current} setValue={handleChange} title="Current Password" required="required" />
+                        <InputField type="password" name="password_current" value={values.password_current} errorValue={errors.password_current} setValue={handleChange} title="Current Password" required={true} />
                     </div>
                     <div className="mb-3">
                         <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="New Password" />

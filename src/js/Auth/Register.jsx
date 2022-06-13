@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useUser } from '../Auth';
+import { useState, useContext } from "react";
+import { GlobalContext } from '../Auth';
 import { AlertBox, InputField } from "../Form";
 import axios from "axios";
 
 export default function Register() {
-    const { addMessage } = useUser();
+    const { addMessage } = useContext(GlobalContext);
+
     let navigate = useNavigate();
 
     const handleChange = e => {
@@ -59,18 +60,18 @@ export default function Register() {
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className="needs-validation">
-                    <InputField type="hidden" name="timezone" value={values.timezone} errorValue={errors.timezone} setValue={handleChange} title="Timezone" required="required" />
+                    <InputField type="hidden" name="timezone" value={values.timezone} errorValue={errors.timezone} setValue={handleChange} title="Timezone" required={true} />
                     <div className="mb-3">
-                        <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required="required" />
+                        <InputField type="text" name="name" value={values.name} errorValue={errors.name} setValue={handleChange} title="Username" required={true} />
                     </div>
                     <div className="mb-3">
-                        <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required="required" />
+                        <InputField type="text" name="email" value={values.email} errorValue={errors.email} setValue={handleChange} title="Email Address" required={true} />
                     </div>
                     <div className="mb-3">
-                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
+                        <InputField type="password" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required={true} />
                     </div>
                     <div className="mb-4">
-                        <InputField type="password" name="password_confirmation" value={values.password_confirmation} errorValue={errors.password_confirmation} setValue={handleChange} title="Retype Password" required="required" />
+                        <InputField type="password" name="password_confirmation" value={values.password_confirmation} errorValue={errors.password_confirmation} setValue={handleChange} title="Retype Password" required={true} />
                     </div>
 
                     <div className="d-grid gap-2">

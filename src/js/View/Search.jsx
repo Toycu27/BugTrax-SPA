@@ -1,6 +1,5 @@
-import React from "react";
 import { useParams } from "react-router-dom";
-import { Projects, Milestones, Bugs } from "./";
+import { Projects, Milestones, Bugs } from "../View";
 
 export default function Search() {
     let urlParams = useParams();

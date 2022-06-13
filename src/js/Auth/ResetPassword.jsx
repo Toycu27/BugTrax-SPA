@@ -1,11 +1,12 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useState } from "react";
-import { useUser } from '../Auth';
+import { useState, useContext } from "react";
+import { GlobalContext } from '../Auth';
 import { InputField, AlertBox } from "../Form";
 import axios from "axios";
 
 export default function ResetPassword() {
-    const { addMessage } = useUser();
+    const { addMessage } = useContext(GlobalContext);
+
     let navigate = useNavigate();
     let urlParams = useParams();
     let [searchParams] = useSearchParams();
@@ -59,7 +60,7 @@ export default function ResetPassword() {
                         <InputField type="text" name="password_confirmation" value={values.password_confirmation} errorValue={errors.password_confirmation} setValue={handleChange} title="Retype Password" />
                     </div>
                     <div className="mb-4">
-                        <InputField type="text" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required="required" />
+                        <InputField type="text" name="password" value={values.password} errorValue={errors.password} setValue={handleChange} title="Password" required={true} />
                     </div>
                     <div className="d-grid gap-2">
                         <button className="btn btn-primary btn-lg" type="submit">Reset Password</button>

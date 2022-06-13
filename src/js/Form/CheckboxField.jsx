@@ -1,4 +1,4 @@
-export default function CheckboxField({name, value, setValue, errorValue, title, required = ''}) {
+export default function CheckboxField({title, name, value, setValue, errorValue, required = false}) {
     let feedbackId = name + '_feedback';
     let inputId = name + '_id';
 
@@ -8,10 +8,11 @@ export default function CheckboxField({name, value, setValue, errorValue, title,
                 id={inputId}
                 className={"form-check-input " + (errorValue ? "is-invalid" : "")}
                 type="checkbox" 
+                name={ name }
                 value={value}
-                onChange={setValue}
+                onChange={ setValue }
                 aria-describedby={feedbackId}
-                required={ required ? true : false }
+                required={ required }
             />
             <label className="form-check-label" htmlFor={inputId}>
                 { title }

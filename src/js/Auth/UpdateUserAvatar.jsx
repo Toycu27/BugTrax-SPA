@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { useUser } from '../Auth';
+import { useState, useContext } from "react";
+import { GlobalContext } from '../Auth';
 import { AlertBox } from "../Form";
 import { Avatar } from "../View";
 import axios from "axios";
 
 export default function UpdateUserAvatar() {
-    const { user, setUser, addMessage } = useUser();
+    const { user, setUser, addMessage } = useContext(GlobalContext);
 
     const handleChange = e => {
         setValues(oldValues => ({
-          ...oldValues,
-          [e.target.name]: e.target.files[0]
+            ...oldValues,
+            [e.target.name]: e.target.files[0]
         }));
     }
 
@@ -27,14 +27,14 @@ export default function UpdateUserAvatar() {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        const formData = new FormData(); 
+        const formData = new FormData();
         formData.append(
-            "avatar", 
+            "avatar",
             values.avatar
-        ); 
-     
+        );
+
         const response = await axios.postRequestWithFile(
-            'api/users/' + user.id + '/avatar', 
+            'api/users/' + user.id + '/avatar',
             formData
         );
 
@@ -49,23 +49,23 @@ export default function UpdateUserAvatar() {
     }
 
     return (<div className="row">
-            <div className="col-12">
-                <AlertBox />
-                <form onSubmit={handleSubmit} className="needs-validation">
-                    <div className="row align-items-center">
-                        <div className="col-md-auto">
-                            <Avatar user={user} size="100" />
-                        </div>
-                        <div className="col-md-auto">
-                                <input aria-describedby="userAvatarFile" className={"form-control " + (errors.avatar ? "is-invalid" : "")}
-                                onChange={handleChange} name="avatar" type="file" accept="image/*" />
-                                <button className="btn btn-primary" type="submit" disabled={values.avatar ? false : true}>Upload</button>
-                                <div id="userAvatarFile" className="invalid-feedback">
-                                    {errors.avatar}
-                                </div>
+        <div className="col-12">
+            <AlertBox />
+            <form onSubmit={handleSubmit} className="needs-validation">
+                <div className="row align-items-center">
+                    <div className="col-md-auto">
+                        <Avatar user={user} size="100" />
+                    </div>
+                    <div className="col-md-auto">
+                        <input aria-describedby="userAvatarFile" className={"form-control " + (errors.avatar ? "is-invalid" : "")}
+                            onChange={handleChange} name="avatar" type="file" accept="image/*" />
+                        <button className="btn btn-primary" type="submit" disabled={values.avatar ? false : true}>Upload</button>
+                        <div id="userAvatarFile" className="invalid-feedback">
+                            {errors.avatar}
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
     </div>);
 }

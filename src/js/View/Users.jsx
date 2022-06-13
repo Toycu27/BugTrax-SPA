@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { SelectField, AlertBox, InputField } from "../Form";
+import { useEffect, useState } from "react";
 import { UpdateUserRole } from "../Auth";
-import { Avatar } from './';
+import { SelectField, AlertBox, InputField } from "../Form";
+import { Avatar } from '../View';
 import axios from "axios";
 
 export default function Users() {

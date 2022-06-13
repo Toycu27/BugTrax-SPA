@@ -1,9 +1,10 @@
-import { useUser } from '../Auth';
+import { useContext } from 'react';
+import { GlobalContext } from '../Auth';
 import { AlertBox } from '../Form';
 import axios from "axios";
 
 export default function Verfiy() {
-    const { addMessage } = useUser();
+    const { addMessage } = useContext(GlobalContext);
 
     const handleClick = async e => {
         e.preventDefault();
