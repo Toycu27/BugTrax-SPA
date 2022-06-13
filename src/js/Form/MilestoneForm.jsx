@@ -1,8 +1,8 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import { GlobalContext } from '../Auth';
-import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from "../Form";
-import axios from "axios";
+import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from '../Form';
 
 export default function MilestoneForm({ id, milestone }) {
     const { addMessage, hasRole } = useContext(GlobalContext);
@@ -11,17 +11,10 @@ export default function MilestoneForm({ id, milestone }) {
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
 
-    const handleChange = e => {
-        setValues(oldValues => ({
-            ...oldValues,
-            [e.target.name]: e.target.value
-        }));
-    }
-
-    //Select options
+    // Select options
     const [projects, setProjects] = useState();
 
-    //Form values
+    // Form values
     const defaultValues = {
         project_id: '',
         title: '',
@@ -39,26 +32,33 @@ export default function MilestoneForm({ id, milestone }) {
     const [values, setValues] = useState(defaultValues);
     const [errors, setErrors] = useState(defaultErrors);
 
+    const handleChange = (e) => {
+        setValues((oldValues) => ({
+            ...oldValues,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     useEffect(() => {
-        if (id && !milestone) axios.getRequest('api/milestones/' + urlParams.id, (r) => {
-            setValues({ ...r.data.data });
-        });
-        else if (milestone) setValues(milestone);
+        if (id && !milestone) {
+            axios.getRequest(`api/milestones/${urlParams.id}`, (r) => {
+                setValues({ ...r.data.data });
+            });
+        } else if (milestone) setValues(milestone);
 
-        axios.getRequest('api/projects', (r) => { setProjects(r.data.data) });
+        axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
     }, []);
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         let response;
 
-        if (id) response = await axios.patchRequest('api/milestones/' + id, values);
+        if (id) response = await axios.patchRequest(`api/milestones/${id}`, values);
         else response = await axios.postRequest('api/milestones', values);
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, "danger");
+            addMessage(response.message, 'danger');
         } else {
             setErrors({ ...defaultErrors });
             if (id) {
@@ -69,80 +69,135 @@ export default function MilestoneForm({ id, milestone }) {
 
             await addMessage(response.message);
         }
-    }
+    };
 
-    const handleDelete = async e => {
+    const handleDelete = async (e) => {
         e.preventDefault();
-        let response;
-
-        response = await axios.deleteRequest('api/milestones/' + id);
+        const response = await axios.deleteRequest(`api/milestones/${id}`);
 
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, "danger");
+            addMessage(response.message, 'danger');
         } else {
             addMessage(response.message);
             navigate(-1);
         }
-    }
-
+    };
 
     if (projects) {
-        return (<div className="container">
-            <div className="row mb-4 mt-1">
-                <div className="col-auto">
-                    <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
-                        <i className="bi bi-arrow-left fs-4"></i>
-                    </button>
+        return (
+            <div className="container">
+                <div className="row mb-4 mt-1">
+                    <div className="col-auto">
+                        <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
+                            <i className="bi bi-arrow-left fs-4" />
+                        </button>
+                    </div>
+                    <div className="col-auto"><h1>Milestone</h1></div>
                 </div>
-                <div className="col-auto"><h1>Milestone</h1></div>
-            </div>
-            <AlertBox />
-            <form onSubmit={handleSubmit} className="needs-validation">
-                <div className="mb-3">
-                    <SelectField name="project_id" value={values.project_id} errorValue={errors.project_id} setValue={handleChange} options={projects} title="Project" required={true} />
-                </div>
-                <div className="mb-3">
-                    <InputField type="text" name="title" value={values.title} errorValue={errors.title} setValue={handleChange} title="Title" required={true} />
-                </div>
-                <div className="mb-3">
-                    <TextareaField type="text" name="desc" value={values.desc} errorValue={errors.desc} setValue={handleChange} title="Description" required={true} />
-                </div>
+                <AlertBox />
+                <form onSubmit={handleSubmit} className="needs-validation">
+                    <div className="mb-3">
+                        <SelectField
+                            name="project_id"
+                            value={values.project_id}
+                            errorValue={errors.project_id}
+                            setValue={handleChange}
+                            options={projects}
+                            title="Project"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <InputField
+                            type="text"
+                            name="title"
+                            value={values.title}
+                            errorValue={errors.title}
+                            setValue={handleChange}
+                            title="Title"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <TextareaField
+                            type="text"
+                            name="desc"
+                            value={values.desc}
+                            errorValue={errors.desc}
+                            setValue={handleChange}
+                            title="Description"
+                            required
+                        />
+                    </div>
 
-                <div className="row mb-5 g-3">
-                    <div className="col-6 col-lg-3">
-                        <InputField type="datetime-local" name="start_date" value={values.start_date} errorValue={errors.start_date} setValue={handleChange} title="Start Date" />
-                    </div>
-                    <div className="col-6 col-lg-3">
-                        <InputField type="datetime-local" name="end_date" value={values.end_date} errorValue={errors.end_date} setValue={handleChange} title="Deadline" />
-                    </div>
-                    <div className="col-6 col-lg-3">
-                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled={true} />
-                    </div>
-                    <div className="col-6 col-lg-3">
-                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled={true} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className={"col-" + (id ? 8 : 12) + " d-grid gap-2"}>
-                        <button className="btn btn-primary btn-lg" type="submit">{id ? "Update" : "Create"}</button>
-                    </div>
-                    {id &&
-                        <div className="col-4 d-grid gap-2">
-                            <button className="btn btn-danger btn-lg" onClick={handleDelete} type="button"
-                                disabled={hasRole(['Admin', 'Manager']) ? false : true}>Delete</button>
+                    <div className="row mb-5 g-3">
+                        <div className="col-6 col-lg-3">
+                            <InputField
+                                type="datetime-local"
+                                name="start_date"
+                                value={values.start_date}
+                                errorValue={errors.start_date}
+                                setValue={handleChange}
+                                title="Start Date"
+                            />
                         </div>
-                    }
-                </div>
+                        <div className="col-6 col-lg-3">
+                            <InputField
+                                type="datetime-local"
+                                name="end_date"
+                                value={values.end_date}
+                                errorValue={errors.end_date}
+                                setValue={handleChange}
+                                title="Deadline"
+                            />
+                        </div>
+                        <div className="col-6 col-lg-3">
+                            <InputField
+                                type="datetime-local"
+                                name="created_at"
+                                value={values.created_at}
+                                title="Created"
+                                disabled
+                            />
+                        </div>
+                        <div className="col-6 col-lg-3">
+                            <InputField
+                                type="datetime-local"
+                                name="modified_at"
+                                value={values.updated_at}
+                                title="Modified"
+                                disabled
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className={`col-${id ? 8 : 12} d-grid gap-2`}>
+                            <button className="btn btn-primary btn-lg" type="submit">{id ? 'Update' : 'Create'}</button>
+                        </div>
+                        {id && (
+                            <div className="col-4 d-grid gap-2">
+                                <button
+                                    className="btn btn-danger btn-lg"
+                                    onClick={handleDelete}
+                                    type="button"
+                                    disabled={!hasRole(['Admin', 'Manager'])}
+                                >
+                                    Delete
 
-            </form>
-            {id &&
-                <CommentForm milestone_id={id} />
-            }
-        </div>);
-    } else {
-        return (<div className="container">
-            Loading Button
-        </div>);
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                </form>
+                {id && <CommentForm milestone_id={id} />}
+            </div>
+        );
     }
+    return (
+        <div className="container">
+            Loading Button
+        </div>
+    );
 }

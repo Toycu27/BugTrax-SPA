@@ -11,13 +11,13 @@ import Statistics from './Statistics';
 import Users from './Users';
 import Avatar from './Avatar';
 
-export { 
-    Home, 
-    Layout, 
-    PageNotFound, 
-    Search, 
-    Projects, 
-    Milestones, 
+export {
+    Home,
+    Layout,
+    PageNotFound,
+    Search,
+    Projects,
+    Milestones,
     Bugs,
     Board,
     BoardBug,

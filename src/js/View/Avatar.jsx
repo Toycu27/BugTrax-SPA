@@ -1,13 +1,14 @@
-import { fileStoragePath } from '../../App.js';
+import React from 'react';
+import { fileStoragePath } from '../../App';
 
-export default function Avatar ({user, size}) {
+export default function Avatar({ user, size }) {
     return (
-        <img 
+        <img
             className="rounded-circle border border-1"
-            height={size + 'px'}
-            width={size + 'px'}
-            src={user.avatar_path ? fileStoragePath + user.avatar_path : "https://i.pravatar.cc/" + size + "?img=" + user.id} 
-            alt={"Profile picture of " + user.name} 
+            height={`${size}px`}
+            width={`${size}px`}
+            src={user.avatar_path ? fileStoragePath + user.avatar_path : `https://i.pravatar.cc/${size}?img=${user.id}`}
+            alt={user.name}
         />
     );
 }

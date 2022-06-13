@@ -1,5 +1,5 @@
-import { useLocation, Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useLocation, Navigate } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { GlobalContext } from './';
 
 export default function ProtectedRoute({ role = null, children }) {

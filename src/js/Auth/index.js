@@ -11,17 +11,17 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import VerfiyResend from './VerfiyResend';
 
-export { 
+export {
     GlobalContext,
-    useGlobals, 
-    ProtectedRoute, 
-    Login, 
-    Logout, 
-    Register, 
-    UpdateUser, 
-    UpdateUserAvatar, 
-    UpdateUserRole, 
-    ForgotPassword, 
-    ResetPassword, 
-    VerfiyResend 
+    useGlobals,
+    ProtectedRoute,
+    Login,
+    Logout,
+    Register,
+    UpdateUser,
+    UpdateUserAvatar,
+    UpdateUserRole,
+    ForgotPassword,
+    ResetPassword,
+    VerfiyResend,
 };

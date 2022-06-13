@@ -1,15 +1,15 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 const GlobalContext = createContext({
     user: {},
-    setUser: () => {},
-    deleteUser: () => {},
-    hasRole: () => {},
+    setUser: () => { },
+    deleteUser: () => { },
+    hasRole: () => { },
     messages: {},
-    addMessage: () => {},
-    getMessages: () => {},
-    setLastLocation: () => {},
-    getLastLocation: () => {},
+    addMessage: () => { },
+    getMessages: () => { },
+    setLastLocation: () => { },
+    getLastLocation: () => { },
 });
 
 export default GlobalContext;

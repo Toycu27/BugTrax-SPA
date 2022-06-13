@@ -10,16 +10,16 @@ import BugForm from './BugForm';
 import CommentForm from './CommentForm';
 import SearchBar from './SearchBar';
 
-export { 
-    InputField, 
-    TextareaField, 
-    SelectField, 
-    CheckboxField, 
-    AlertBox, 
-    ModalBox, 
-    ProjectForm, 
-    MilestoneForm, 
-    BugForm, 
-    CommentForm, 
-    SearchBar 
+export {
+    InputField,
+    TextareaField,
+    SelectField,
+    CheckboxField,
+    AlertBox,
+    ModalBox,
+    ProjectForm,
+    MilestoneForm,
+    BugForm,
+    CommentForm,
+    SearchBar,
 };

@@ -1,25 +1,27 @@
-export default function CheckboxField({title, name, value, setValue, errorValue, required = false}) {
-    let feedbackId = name + '_feedback';
-    let inputId = name + '_id';
+import React from 'react';
 
-    return (<>
+export default function CheckboxField({ title, name, value, setValue, errorValue, required = false }) {
+    const feedbackId = `${name}_feedback`;
+    const inputId = `${name}_id`;
+
+    return (
         <div className="form-check">
-            <input 
+            <input
                 id={inputId}
-                className={"form-check-input " + (errorValue ? "is-invalid" : "")}
-                type="checkbox" 
-                name={ name }
+                className={`form-check-input ${errorValue ? 'is-invalid' : ''}`}
+                type="checkbox"
+                name={name}
                 value={value}
-                onChange={ setValue }
+                onChange={setValue}
                 aria-describedby={feedbackId}
-                required={ required }
+                required={required}
             />
             <label className="form-check-label" htmlFor={inputId}>
-                { title }
+                {title}
             </label>
             <div id={feedbackId} className="invalid-feedback">
                 {errorValue}
             </div>
         </div>
-    </>);
+    );
 }
