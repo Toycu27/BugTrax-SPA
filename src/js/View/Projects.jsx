@@ -4,10 +4,13 @@ import axios from 'axios';
 import { AlertBox } from '../Form';
 
 export default function Projects({ search, title }) {
+    // 0 = No Result, 1 = Success, 2 = Fetch, 3 = Fetch More
+    const [resultStatus, setResultStatus] = useState(0);
     const [projects, setProjects] = useState();
     const [pagination, setPagination] = useState([]);
 
     const getProjects = (nextPage = false) => {
+        if (!nextPage) setResultStatus(2);
         const requestUrl = nextPage ? pagination.next_page_url : 'api/projects?paginate=6';
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += `&title=${title}`;
@@ -15,6 +18,7 @@ export default function Projects({ search, title }) {
             if (nextPage) setProjects([...projects, ...r.data.data]);
             else setProjects([...r.data.data]);
             setPagination(r.data);
+            setResultStatus(r.data.data.length > 0 ? 1 : 0);
         });
     };
 
@@ -43,7 +47,7 @@ export default function Projects({ search, title }) {
 
             <AlertBox />
 
-            {projects && projects.length ? (
+            {(resultStatus === 1 || resultStatus === 3) && projects && projects.length && (
                 <div className="projs row mb-4 g-4">
                     {projects.map((item) => (
                         <div key={item.id} className="col-12 col-lg-6">
@@ -74,13 +78,20 @@ export default function Projects({ search, title }) {
                         </div>
                     ))}
                 </div>
-            ) : (
+            )}
+            {resultStatus === 0 && (
                 <div className="row mb-4">
-                    <p>No Results found...</p>
+                    <h2>
+                        <i className="bi bi-exclamation-diamond-fill color-text-main pe-2 fs-1" />
+                        No Results found...
+                    </h2>
                 </div>
             )}
+            {resultStatus > 1 && (
+                <div className="loader" />
+            )}
 
-            {pagination.next_page_url && (
+            {resultStatus < 2 && pagination.next_page_url && (
                 <div className="row justify-content-center">
                     <div className="col text-center">
                         <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more projects">

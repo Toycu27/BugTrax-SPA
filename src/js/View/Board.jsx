@@ -5,6 +5,8 @@ import { SelectField } from '../Form';
 import { BoardBug } from '../View';
 
 export default function Board() {
+    // 0 = No Result, 1 = Success, 2 = Fetch, 3 = Fetch More
+    const [resultStatus, setResultStatus] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [bugs, setBugs] = useState([]);
@@ -26,12 +28,14 @@ export default function Board() {
     };
 
     const getBugs = () => {
+        setResultStatus(2);
         let requestUrlParams = '';
         if (selectedProject > 0) requestUrlParams += `&project_id=${selectedProject}`;
         if (selectedMilestone > 0) requestUrlParams += `&milestone_id=${selectedMilestone}`;
         if (selectedAssignee > 0) requestUrlParams += `&assigned_to=${selectedAssignee}`;
         axios.getRequest(`api/bugs?sort[priority_id]=ASC&sort[difficulty_id]=ASC&with=assignedTo${requestUrlParams}`, (r) => {
             setBugs(r.data.data);
+            setResultStatus(r.data.data.length > 0 ? 1 : 0);
         });
     };
 
@@ -95,44 +99,56 @@ export default function Board() {
         Done: 'bg-success bg-opacity-25',
     };
 
-    if (Object.keys(bugsMatrix).length > 0) {
-        return (
-            <>
-                <div className="container">
-                    <div className="row mb-4 mt-1">
-                        <div className="col-auto"><h1>Board</h1></div>
+    return (
+        <>
+            <div className="container">
+                <div className="row mb-4 mt-1">
+                    <div className="col-auto"><h1>Board</h1></div>
+                </div>
+                <div className="row mb-5 g-3">
+                    <div className="col-12 col-sm-4 col-lg-4">
+                        <SelectField
+                            name="selected_project"
+                            value={selectedProject}
+                            setValue={(e) => { setSelectedProject(e.target.value); setSelectedMilestone(null); }}
+                            title="Project"
+                            options={projects}
+                        />
                     </div>
-                    <div className="row mb-5 g-3">
-                        <div className="col-12 col-sm-4 col-lg-4">
-                            <SelectField
-                                name="selected_project"
-                                value={selectedProject}
-                                setValue={(e) => { setSelectedProject(e.target.value); setSelectedMilestone(null); }}
-                                title="Project"
-                                options={projects}
-                            />
-                        </div>
-                        <div className="col-12 col-sm-4 col-lg-4">
-                            <SelectField
-                                name="selected_milestone"
-                                value={selectedMilestone}
-                                setValue={(e) => { setSelectedMilestone(e.target.value); }}
-                                title="Milestone"
-                                options={selectableMilestones}
-                            />
-                        </div>
-                        <div className="col-12 col-sm-4 col-lg-4">
-                            <SelectField
-                                name="selected_assignee"
-                                value={selectedAssignee}
-                                setValue={(e) => { setSelectedAssignee(e.target.value); }}
-                                title="Assignee"
-                                options={users}
-                            />
-                        </div>
+                    <div className="col-12 col-sm-4 col-lg-4">
+                        <SelectField
+                            name="selected_milestone"
+                            value={selectedMilestone}
+                            setValue={(e) => { setSelectedMilestone(e.target.value); }}
+                            title="Milestone"
+                            options={selectableMilestones}
+                        />
+                    </div>
+                    <div className="col-12 col-sm-4 col-lg-4">
+                        <SelectField
+                            name="selected_assignee"
+                            value={selectedAssignee}
+                            setValue={(e) => { setSelectedAssignee(e.target.value); }}
+                            title="Assignee"
+                            options={users}
+                        />
                     </div>
                 </div>
 
+                {resultStatus === 0 && (
+                    <div className="row mb-4">
+                        <h2>
+                            <i className="bi bi-exclamation-diamond-fill color-text-main pe-2 fs-1" />
+                            No Results found...
+                        </h2>
+                    </div>
+                )}
+                {resultStatus > 1 && (
+                    <div className="loader" />
+                )}
+            </div>
+
+            {(resultStatus === 1 || resultStatus === 3) && Object.keys(bugsMatrix).length > 0 && (
                 <div className="container-fluid">
                     <div className="row mb-4 mt-1">
                         <div className="table-responsive-lg">
@@ -157,7 +173,7 @@ export default function Board() {
                         </div>
                     </div>
                 </div>
-            </>
-        );
-    } return (<div className="container">Loading Data...</div>);
+            )}
+        </>
+    );
 }

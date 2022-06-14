@@ -5,6 +5,8 @@ import { AlertBox, SelectField } from '../Form';
 import { Avatar } from '../View';
 
 export default function Bugs({ search, title }) {
+    // 0 = Fetching, 1 = Success, 2 = No Result, 3 = Fetch Next Page
+    const [resultStatus, setResultStatus] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [bugs, setBugs] = useState([]);
@@ -44,6 +46,7 @@ export default function Bugs({ search, title }) {
     };
 
     const getBugs = (nextPage = false) => {
+        if (!nextPage) setResultStatus(2);
         const requestUrl = nextPage ? pagination.next_page_url
             : 'api/bugs?paginate=5&with=project,milestone,status,priority,difficulty,assignedTo';
         let requestUrlParams = '';
@@ -56,6 +59,7 @@ export default function Bugs({ search, title }) {
             if (nextPage) setBugs([...bugs, ...r.data.data]);
             else setBugs([...r.data.data]);
             setPagination(r.data);
+            setResultStatus(r.data.data.length > 0 ? 1 : 0);
         });
     };
 
@@ -83,9 +87,11 @@ export default function Bugs({ search, title }) {
     }, [selectedProject, selectedMilestone, selectedAssignee, selectedFilter]);
 
     useEffect(() => {
-        getBugs();
-        getProjects();
-        getMilestones();
+        if (!search) {
+            getBugs();
+            getProjects();
+            getMilestones();
+        }
         getUsers();
     }, [title]);
 
@@ -183,7 +189,7 @@ export default function Bugs({ search, title }) {
 
             <AlertBox />
 
-            {bugs && bugs.length ? (
+            {(resultStatus === 1 || resultStatus === 3) && bugs && bugs.length && (
                 <div className="bugs row mb-4 g-4">
                     {bugs.map((item) => (
                         <div key={item.id} className="col-12">
@@ -254,13 +260,20 @@ export default function Bugs({ search, title }) {
                         </div>
                     ))}
                 </div>
-            ) : (
+            )}
+            {resultStatus === 0 && (
                 <div className="row mb-4">
-                    <p>No Results found...</p>
+                    <h2>
+                        <i className="bi bi-exclamation-diamond-fill color-text-main pe-2 fs-1" />
+                        No Results found...
+                    </h2>
                 </div>
             )}
+            {resultStatus > 1 && (
+                <div className="loader" />
+            )}
 
-            {pagination.next_page_url && (
+            {resultStatus < 2 && pagination.next_page_url && (
                 <div className="row justify-content-center">
                     <div className="col-4 text-center">
                         <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more bugs">
