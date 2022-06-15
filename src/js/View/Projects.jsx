@@ -51,7 +51,7 @@ export default function Projects({ search, title }) {
                 <div className="projs row mb-4 g-4">
                     {projects.map((item) => (
                         <div key={item.id} className="col-12 col-lg-6">
-                            <div className="proj__item px-3 py-2 x-expand">
+                            <div className="proj__item px-3 py-3 x-expand">
                                 <div className="row">
                                     <div className="col-6">
                                         <div className="proj__label pb-0 text-muted">Project</div>
@@ -82,7 +82,7 @@ export default function Projects({ search, title }) {
             {resultStatus === 0 && (
                 <div className="row mb-4">
                     <h2>
-                        <i className="bi bi-exclamation-diamond-fill color-text-main pe-2 fs-1" />
+                        <i className="bi bi-exclamation-diamond-fill color-util pe-2 fs-1" />
                         No Results found...
                     </h2>
                 </div>

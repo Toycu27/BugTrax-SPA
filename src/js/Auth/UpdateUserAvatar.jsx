@@ -65,7 +65,13 @@ export default function UpdateUserAvatar() {
                                 type="file"
                                 accept="image/*"
                             />
-                            <button className="btn btn-primary" type="submit" disabled={!values.avatar}>Upload</button>
+                            <button
+                                className={`btn btn-primary y-expand ${!values.avatar ? 'invisible' : ''}`}
+                                type="submit"
+                                disabled={!values.avatar}
+                            >
+                                Upload
+                            </button>
                             <div id="userAvatarFile" className="invalid-feedback">
                                 {errors.avatar}
                             </div>

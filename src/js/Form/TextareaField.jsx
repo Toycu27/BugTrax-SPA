@@ -20,7 +20,7 @@ export default function TextareaField({ name, value, setValue, errorValue, title
             <div id={feedbackId} className="invalid-feedback">
                 {errorValue}
             </div>
-            <label className="text-muted" htmlFor={inputId}>
+            <label htmlFor={inputId}>
                 {title}
             </label>
         </div>

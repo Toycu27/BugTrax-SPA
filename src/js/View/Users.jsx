@@ -84,7 +84,7 @@ export default function Users() {
                 <div className="users row mb-4 g-4">
                     {users.map((item) => (
                         <div key={item.id} className="col-12">
-                            <div className="user__item px-3 py-2 x-expand">
+                            <div className="user__item px-3 py-3 x-expand">
                                 <div className="row">
 
                                     <div className="col-6">
@@ -139,7 +139,7 @@ export default function Users() {
             {resultStatus === 0 && (
                 <div className="row mb-4">
                     <h2>
-                        <i className="bi bi-exclamation-diamond-fill color-text-main pe-2 fs-1" />
+                        <i className="bi bi-exclamation-diamond-fill color-util pe-2 fs-1" />
                         No Results found...
                     </h2>
                 </div>

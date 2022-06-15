@@ -7,6 +7,8 @@ import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from '.
 export default function MilestoneForm({ id, milestone }) {
     const { addMessage, hasRole } = useContext(GlobalContext);
 
+    // 0 = Fetching, 1 = Done
+    const [resultStatus, setResultStatus] = useState(0);
     const navigate = useNavigate();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
@@ -41,11 +43,17 @@ export default function MilestoneForm({ id, milestone }) {
 
     useEffect(() => {
         if (id && !milestone) {
+            setResultStatus(0);
             axios.getRequest(`api/milestones/${urlParams.id}`, (r) => {
                 setValues({ ...r.data.data });
+                setResultStatus(1);
             });
-        } else if (milestone) setValues(milestone);
-
+        } else if (milestone) {
+            setValues(milestone);
+            setResultStatus(1);
+        } else {
+            setResultStatus(1);
+        }
         axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
     }, []);
 
@@ -84,18 +92,18 @@ export default function MilestoneForm({ id, milestone }) {
         }
     };
 
-    if (projects) {
-        return (
-            <div className="container">
-                <div className="row mb-4 mt-1">
-                    <div className="col-auto">
-                        <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
-                            <i className="bi bi-arrow-left fs-4" />
-                        </button>
-                    </div>
-                    <div className="col-auto"><h1>Milestone</h1></div>
+    return (
+        <div className="container">
+            <div className="row mb-4 mt-1">
+                <div className="col-auto">
+                    <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
+                        <i className="bi bi-arrow-left fs-4" />
+                    </button>
                 </div>
-                <AlertBox />
+                <div className="col-auto"><h1>Milestone</h1></div>
+            </div>
+            <AlertBox />
+            {(resultStatus && projects) ? (
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="mb-3">
                         <SelectField
@@ -191,13 +199,8 @@ export default function MilestoneForm({ id, milestone }) {
                     </div>
 
                 </form>
-                {id && <CommentForm milestone_id={id} />}
-            </div>
-        );
-    }
-    return (
-        <div className="container">
-            Loading Button
+            ) : <div className="loader" />}
+            {id && <CommentForm milestoneId={id} />}
         </div>
     );
 }

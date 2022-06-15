@@ -113,22 +113,22 @@ export default function Bugs({ search, title }) {
     }, [selectedProject, projects, milestones]);
 
     const statusClassMap = {
-        1: 'badge rounded-pill bg-primary',
-        2: 'badge rounded-pill bg-warning',
-        3: 'badge rounded-pill bg-info',
-        4: 'badge rounded-pill bg-success',
+        1: 'badge rounded-pill bg-primary bg-opacity-75',
+        2: 'badge rounded-pill bg-warning bg-opacity-75',
+        3: 'badge rounded-pill bg-info bg-opacity-75',
+        4: 'badge rounded-pill bg-success bg-opacity-75',
     };
 
     const priorityClassMap = {
-        1: 'badge bg-primary',
-        2: 'badge bg-warning',
-        3: 'badge bg-danger',
+        1: 'badge bg-primary bg-opacity-75',
+        2: 'badge bg-warning bg-opacity-75',
+        3: 'badge bg-danger bg-opacity-75',
     };
 
     const difficultyClassMap = {
-        1: 'badge rounded-pill bg-primary',
-        2: 'badge rounded-pill bg-warning',
-        3: 'badge rounded-pill bg-danger',
+        1: 'badge rounded-pill bg-primary bg-opacity-75',
+        2: 'badge rounded-pill bg-warning bg-opacity-75',
+        3: 'badge rounded-pill bg-danger bg-opacity-75',
     };
 
     return (
@@ -193,7 +193,7 @@ export default function Bugs({ search, title }) {
                 <div className="bugs row mb-4 g-4">
                     {bugs.map((item) => (
                         <div key={item.id} className="col-12">
-                            <div className="bug__item px-3 py-2">
+                            <div className="bug__item px-3 py-3">
                                 <div className="row">
                                     <div className="col-5 col-lg-4">
                                         <div className="bug__label pb-0 text-muted">Bug</div>
@@ -264,7 +264,7 @@ export default function Bugs({ search, title }) {
             {resultStatus === 0 && (
                 <div className="row mb-4">
                     <h2>
-                        <i className="bi bi-exclamation-diamond-fill color-text-main pe-2 fs-1" />
+                        <i className="bi bi-exclamation-diamond-fill color-util pe-2 fs-1" />
                         No Results found...
                     </h2>
                 </div>

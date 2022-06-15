@@ -70,6 +70,9 @@ export default function Statistics() {
         BarElement,
     );
 
+    const textColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-text-secondary');
+
     return (
         <div className="container">
             <div className="row mb-4 mt-1">
@@ -77,7 +80,7 @@ export default function Statistics() {
             </div>
             <div className="row g-4 mb-4">
                 <div className="col-12 col-lg-8">
-                    <div className="p-3 bg-opacity-50 bg-light x-expand">
+                    <div className="statistic__item p-3 x-expand">
                         <span className="fw-normal mb-4 fs-5">Bugs per Priority and Difficulty</span>
                         <Line
                             data={
@@ -87,15 +90,15 @@ export default function Statistics() {
                                         {
                                             label: 'Priority',
                                             data: data1a,
-                                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                                            borderColor: 'rgba(255, 99, 132, 0.5)',
+                                            backgroundColor: 'rgba(255, 99, 132, 0.75)',
+                                            borderColor: 'rgba(255, 99, 132, 0.75)',
                                             borderWidth: 2,
                                         },
                                         {
                                             label: 'Difficulty',
                                             data: data1b,
-                                            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                                            borderColor: 'rgba(53, 162, 235, 0.5)',
+                                            backgroundColor: 'rgba(53, 162, 235, 0.75)',
+                                            borderColor: 'rgba(53, 162, 235, 0.75)',
                                             borderWidth: 2,
                                         },
                                     ],
@@ -103,10 +106,19 @@ export default function Statistics() {
                             }
                             options={
                                 {
+                                    color: textColor,
                                     responsive: true,
                                     interaction: {
                                         mode: 'index',
                                         intersect: false,
+                                    },
+                                    scales: {
+                                        y: {
+                                            ticks: { color: textColor, beginAtZero: true },
+                                        },
+                                        x: {
+                                            ticks: { color: textColor, beginAtZero: true },
+                                        },
                                     },
                                 }
                             }
@@ -115,27 +127,32 @@ export default function Statistics() {
                 </div>
 
                 <div className="col-8 col-lg-4">
-                    <div className="p-3 bg-opacity-50 bg-light x-expand">
+                    <div className="statistic__item p-3 x-expand">
                         <span className="fw-normal mb-4 fs-5">Bugs per Status</span>
-                        <Doughnut data={
-                            {
-                                labels: ['New', 'Progress', 'Review', 'Done'],
-                                datasets: [
-                                    {
-                                        label: '%',
-                                        data: data2,
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.5)',
-                                            'rgba(75, 192, 192, 0.5)',
-                                            'rgba(255, 205, 86, 0.5)',
-                                            'rgba(201, 203, 207, 0.5)',
-                                            'rgba(54, 162, 235, 0.5)',
-                                        ],
-                                        borderWidth: 0,
-                                    },
-                                ],
+                        <Doughnut
+                            data={
+                                {
+                                    labels: ['New', 'Progress', 'Review', 'Done'],
+                                    datasets: [
+                                        {
+                                            label: '%',
+                                            data: data2,
+                                            backgroundColor: [
+                                                'rgba(13, 110, 253, 0.75)',
+                                                'rgba(255, 193, 6, 0.75)',
+                                                'rgba(10, 202, 240, 0.75)',
+                                                'rgba(25, 135, 84, 0.75)',
+                                            ],
+                                            borderWidth: 0,
+                                        },
+                                    ],
+                                }
                             }
-                        }
+                            options={
+                                {
+                                    color: textColor,
+                                }
+                            }
                         />
                     </div>
                 </div>
@@ -143,7 +160,7 @@ export default function Statistics() {
 
             <div className="row g-4 mb-4">
                 <div className="col-12 col-lg-8">
-                    <div className="p-3 bg-opacity-50 bg-light x-expand">
+                    <div className="statistic__item p-3 x-expand">
                         <span className="fw-normal mb-4 fs-5">Client Device and Bugs</span>
                         <Bar
                             data={
@@ -154,12 +171,12 @@ export default function Statistics() {
                                             label: 'Bugs',
                                             data: data3,
                                             backgroundColor: [
-                                                'rgba(255, 99, 132, 0.5)',
-                                                'rgba(255, 99, 132, 0.5)',
-                                                'rgba(255, 99, 132, 0.5)',
-                                                'rgba(53, 162, 235, 0.5)',
-                                                'rgba(53, 162, 235, 0.5)',
-                                                'rgba(54, 162, 235, 0.5)',
+                                                'rgba(255, 99, 132, 0.75)',
+                                                'rgba(255, 99, 132, 0.75)',
+                                                'rgba(255, 99, 132, 0.75)',
+                                                'rgba(53, 162, 235, 0.75)',
+                                                'rgba(53, 162, 235, 0.75)',
+                                                'rgba(54, 162, 235, 0.75)',
                                             ],
                                             borderWidth: 0,
                                         },
@@ -168,10 +185,19 @@ export default function Statistics() {
                             }
                             options={
                                 {
+                                    color: textColor,
                                     responsive: true,
                                     plugins: {
                                         legend: {
                                             position: 'top',
+                                        },
+                                    },
+                                    scales: {
+                                        y: {
+                                            ticks: { color: textColor, beginAtZero: true },
+                                        },
+                                        x: {
+                                            ticks: { color: textColor, beginAtZero: true },
                                         },
                                     },
                                 }

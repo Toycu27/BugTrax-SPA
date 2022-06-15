@@ -10,6 +10,7 @@ import BoardBug from './BoardBug';
 import Statistics from './Statistics';
 import Users from './Users';
 import Avatar from './Avatar';
+import ThemeSwitch from './ThemeSwitch';
 
 export {
     Home,
@@ -24,4 +25,5 @@ export {
     Statistics,
     Users,
     Avatar,
+    ThemeSwitch,
 };

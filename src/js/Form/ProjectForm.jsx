@@ -7,6 +7,8 @@ import { CommentForm, InputField, TextareaField, AlertBox } from '../Form';
 export default function ProjectForm({ id, project }) {
     const { addMessage, hasRole } = useContext(GlobalContext);
 
+    // 0 = Fetching, 1 = Done
+    const [resultStatus, setResultStatus] = useState(0);
     const navigate = useNavigate();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
@@ -31,10 +33,17 @@ export default function ProjectForm({ id, project }) {
 
     useEffect(() => {
         if (id && !project) {
+            setResultStatus(0);
             axios.getRequest(`api/projects/${urlParams.id}`, (r) => {
                 setValues({ ...r.data.data });
+                setResultStatus(1);
             });
-        } else if (project) setValues(project);
+        } else if (project) {
+            setValues(project);
+            setResultStatus(1);
+        } else {
+            setResultStatus(1);
+        }
     }, []);
 
     const handleSubmit = async (e) => {
@@ -80,64 +89,66 @@ export default function ProjectForm({ id, project }) {
                 <div className="col-auto"><h1>Project</h1></div>
             </div>
             <AlertBox />
-            <form onSubmit={handleSubmit} className="needs-validation">
-                <div className="row mb-3">
-                    <div className="col-12">
-                        <InputField
-                            type="text"
-                            name="title"
-                            value={values.title}
-                            errorValue={errors.title}
-                            setValue={handleChange}
-                            title="Title"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div className="row mb-3">
-                    <div className="col-12">
-                        <TextareaField
-                            type="text"
-                            name="desc"
-                            value={values.desc}
-                            errorValue={errors.desc}
-                            setValue={handleChange}
-                            title="Description"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div className="row mb-5">
-                    <div className="col-4">
-                        <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled />
-                    </div>
-                    <div className="col-4">
-                        <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled />
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className={`col-${id ? 8 : 12} d-grid gap-2`}>
-                        <button className="btn btn-primary btn-lg" type="submit">{id ? 'Update' : 'Create'}</button>
-                    </div>
-                    {id && (
-                        <div className="col-4 d-grid gap-2">
-                            <button
-                                className="btn btn-danger btn-lg"
-                                onClick={handleDelete}
-                                type="button"
-                                disabled={!hasRole(['Admin', 'Manager'])}
-                            >
-                                Delete
-
-                            </button>
+            {resultStatus ? (
+                <form onSubmit={handleSubmit} className="needs-validation">
+                    <div className="row mb-3">
+                        <div className="col-12">
+                            <InputField
+                                type="text"
+                                name="title"
+                                value={values.title}
+                                errorValue={errors.title}
+                                setValue={handleChange}
+                                title="Title"
+                                required
+                            />
                         </div>
-                    )}
-                </div>
-            </form>
-            {id && <CommentForm project_id={id} />}
+                    </div>
+
+                    <div className="row mb-3">
+                        <div className="col-12">
+                            <TextareaField
+                                type="text"
+                                name="desc"
+                                value={values.desc}
+                                errorValue={errors.desc}
+                                setValue={handleChange}
+                                title="Description"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="row mb-5">
+                        <div className="col-4">
+                            <InputField type="datetime-local" name="created_at" value={values.created_at} title="Created" disabled />
+                        </div>
+                        <div className="col-4">
+                            <InputField type="datetime-local" name="modified_at" value={values.updated_at} title="Modified" disabled />
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className={`col-${id ? 8 : 12} d-grid gap-2`}>
+                            <button className="btn btn-primary btn-lg" type="submit">{id ? 'Update' : 'Create'}</button>
+                        </div>
+                        {id && (
+                            <div className="col-4 d-grid gap-2">
+                                <button
+                                    className="btn btn-danger btn-lg"
+                                    onClick={handleDelete}
+                                    type="button"
+                                    disabled={!hasRole(['Admin', 'Manager'])}
+                                >
+                                    Delete
+
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </form>
+            ) : <div className="loader" />}
+            {id && <CommentForm projectId={id} />}
         </div>
     );
 }

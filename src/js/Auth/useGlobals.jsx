@@ -69,6 +69,23 @@ export default function useGlobals() {
         return location !== null ? location : '/';
     };
 
+    // Theme Functions
+    const setThemeMode = (mode) => {
+        localStorage.setItem('themeMode', mode);
+    };
+
+    const getThemeMode = () => {
+        let mode = localStorage.getItem('themeMode');
+        if (mode === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                mode = 'light';
+            } else {
+                mode = 'dark';
+            }
+        }
+        return mode;
+    };
+
     return {
         user,
         setUser: saveUser,
@@ -79,5 +96,7 @@ export default function useGlobals() {
         getMessages,
         setLastLocation,
         getLastLocation,
+        setThemeMode,
+        getThemeMode,
     };
 }

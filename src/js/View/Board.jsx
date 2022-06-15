@@ -93,10 +93,10 @@ export default function Board() {
     }, [selectedProject, projects, milestones]);
 
     const statusClassMap = {
-        New: 'bg-primary bg-opacity-25',
-        Progress: 'bg-warning bg-opacity-25',
-        Review: 'bg-info bg-opacity-25',
-        Done: 'bg-success bg-opacity-25',
+        New: 'bg-primary',
+        Progress: 'bg-warning',
+        Review: 'bg-info',
+        Done: 'bg-success',
     };
 
     return (
@@ -138,7 +138,7 @@ export default function Board() {
                 {resultStatus === 0 && (
                     <div className="row mb-4">
                         <h2>
-                            <i className="bi bi-exclamation-diamond-fill color-text-main pe-2 fs-1" />
+                            <i className="bi bi-exclamation-diamond-fill color-util pe-2 fs-1" />
                             No Results found...
                         </h2>
                     </div>
@@ -155,18 +155,26 @@ export default function Board() {
                             <table id="board" className="table text-center table-borderless table-fixed" style={{ tableLayout: 'fixed' }}>
                                 <thead>
                                     <tr>
-                                        <th scope="col" className={statusClassMap.New}>New</th>
-                                        <th scope="col" className={statusClassMap.Progress}>Progress</th>
-                                        <th scope="col" className={statusClassMap.Review}>Review</th>
-                                        <th scope="col" className={statusClassMap.Done}>Done</th>
+                                        <th scope="col" className={`${statusClassMap.New} bg-opacity-50`}>New</th>
+                                        <th scope="col" className={`${statusClassMap.Progress} bg-opacity-50`}>Progress</th>
+                                        <th scope="col" className={`${statusClassMap.Review} bg-opacity-50`}>Review</th>
+                                        <th scope="col" className={`${statusClassMap.Done} bg-opacity-50`}>Done</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{bugsMatrix[1].map((bug) => <BoardBug key={bug.id} bug={bug} />)}</td>
-                                        <td>{bugsMatrix[2].map((bug) => <BoardBug key={bug.id} bug={bug} />)}</td>
-                                        <td>{bugsMatrix[3].map((bug) => <BoardBug key={bug.id} bug={bug} />)}</td>
-                                        <td>{bugsMatrix[4].map((bug) => <BoardBug key={bug.id} bug={bug} />)}</td>
+                                        <td>
+                                            {bugsMatrix[1].map((bug) => <BoardBug key={bug.id} bug={bug} />)}
+                                        </td>
+                                        <td>
+                                            {bugsMatrix[2].map((bug) => <BoardBug key={bug.id} bug={bug} />)}
+                                        </td>
+                                        <td>
+                                            {bugsMatrix[3].map((bug) => <BoardBug key={bug.id} bug={bug} />)}
+                                        </td>
+                                        <td>
+                                            {bugsMatrix[4].map((bug) => <BoardBug key={bug.id} bug={bug} />)}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

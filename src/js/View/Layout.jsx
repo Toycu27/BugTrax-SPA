@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import axios from 'axios';
 import { GlobalContext } from '../Auth';
 import { SearchBar } from '../Form';
+import { ThemeSwitch } from '../View';
 
 export default function App() {
     const GLOBALS = useContext(GlobalContext);
@@ -65,11 +66,10 @@ export default function App() {
     return (
         <>
             <header className="mb-6">
-                <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+                <nav className="navbar navbar-expand-lg fixed-top">
                     <div className="container col-12">
                         <Link className="navbar-brand fs-3" to="/" aria-label="Brand Logo">
                             <i className="bi bi-bug-fill" />
-                            Bx
                         </Link>
                         <button
                             className="navbar-toggler"
@@ -84,7 +84,8 @@ export default function App() {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav justify-content-start me-auto fs-6">{links}</ul>
-                            <ul className="navbar-nav justify-content-end me-3">{searchBar}</ul>
+                            <ul className="navbar-nav justify-content-end me-3"><ThemeSwitch /></ul>
+                            <ul className="navbar-nav justify-content-end me-2">{searchBar}</ul>
                             <ul className="navbar-nav justify-content-end fs-4">{authLinks}</ul>
                         </div>
                     </div>
@@ -96,7 +97,7 @@ export default function App() {
             </main>
 
             <footer className="row justify-content-center p-2">
-                <div className="col-12 text-dark text-center">
+                <div className="col-12 text-center">
                     <span>© 2022 Onur Toycu Development & Design</span>
                 </div>
             </footer>

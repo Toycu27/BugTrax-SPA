@@ -10,6 +10,8 @@ const GlobalContext = createContext({
     getMessages: () => { },
     setLastLocation: () => { },
     getLastLocation: () => { },
+    setThemeMode: () => { },
+    getThemeMode: () => { },
 });
 
 export default GlobalContext;

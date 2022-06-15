@@ -21,7 +21,7 @@ export default function InputField({ type = 'text', title, name, value, setValue
             <div id={feedbackId} className="invalid-feedback">
                 {errorValue}
             </div>
-            <label className="text-muted" htmlFor={inputId}>
+            <label htmlFor={inputId}>
                 {title}
             </label>
         </div>

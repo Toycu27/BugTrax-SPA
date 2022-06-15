@@ -42,7 +42,7 @@ export default function SelectField({ name, value, setValue, errorValue, title, 
                     {errorValue}
                 </div>
             )}
-            <label className="text-muted" htmlFor={inputId}>
+            <label htmlFor={inputId}>
                 {title}
             </label>
         </div>

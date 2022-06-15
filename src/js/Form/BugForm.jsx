@@ -7,6 +7,8 @@ import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from '.
 export default function BugForm({ id, bug }) {
     const { addMessage, hasRole } = useContext(GlobalContext);
 
+    // 0 = Fetching, 1 = Done
+    const [resultStatus, setResultStatus] = useState(0);
     const navigate = useNavigate();
     const urlParams = useParams();
     if (urlParams.id) id = urlParams.id;
@@ -66,10 +68,17 @@ export default function BugForm({ id, bug }) {
 
     useEffect(() => {
         if (id && !bug) {
+            setResultStatus(0);
             axios.getRequest(`api/bugs/${urlParams.id}`, (r) => {
                 setValues({ ...r.data.data });
+                setResultStatus(1);
             });
-        } else if (bug) setValues(bug);
+        } else if (bug) {
+            setValues(bug);
+            setResultStatus(1);
+        } else {
+            setResultStatus(1);
+        }
 
         axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
         axios.getRequest('api/milestones', (r) => { setMilestones(r.data.data); });
@@ -114,18 +123,18 @@ export default function BugForm({ id, bug }) {
         window.scrollTo(0, 0);
     };
 
-    if (projects && milestones && users) {
-        return (
-            <div className="container">
-                <div className="row mb-4 mt-1">
-                    <div className="col-auto">
-                        <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
-                            <i className="bi bi-arrow-left fs-4" />
-                        </button>
-                    </div>
-                    <div className="col-auto"><h1>Bug</h1></div>
+    return (
+        <div className="container">
+            <div className="row mb-4 mt-1">
+                <div className="col-auto">
+                    <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
+                        <i className="bi bi-arrow-left fs-4" />
+                    </button>
                 </div>
-                <AlertBox />
+                <div className="col-auto"><h1>Bug</h1></div>
+            </div>
+            <AlertBox />
+            {(resultStatus && projects && milestones && users) ? (
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="mb-3">
                         <InputField
@@ -317,13 +326,8 @@ export default function BugForm({ id, bug }) {
                         )}
                     </div>
                 </form>
-                {id && <CommentForm bug_id={id} />}
-            </div>
-        );
-    }
-    return (
-        <div className="container">
-            Loading Button
+            ) : <div className="loader" />}
+            {id && <CommentForm bugId={id} />}
         </div>
     );
 }

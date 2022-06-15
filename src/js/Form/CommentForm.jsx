@@ -111,9 +111,9 @@ export default function CommentForm({ bugId, milestoneId, projectId }) {
                                 <div className="col-auto">
                                     <Avatar user={item.user} size="100" />
                                 </div>
-                                <div className="col ms-2 pt-2 bg-light bg-opacity-50 x-expand">
+                                <div className="comment__item col ms-2 pt-2 bg-light bg-opacity-50 x-expand">
                                     <figure>
-                                        <figcaption className="blockquote-footer text-dark">
+                                        <figcaption className="blockquote-footer text-muted">
                                             {new Date(item.created_at).toLocaleDateString()}
                                             {' '}
                                             {item.user.name}
