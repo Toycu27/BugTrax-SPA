@@ -37,6 +37,10 @@
 }
 
 /* Colors */
+.bg-secondary {
+  background-color: var(--color-form-secondary);
+}
+
 .bg-form-main {
   background-color: var(--color-form-main);
 }
@@ -90,6 +94,10 @@ footer {
 
 .navbar-brand {
   color: var(--color-util-main) !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: unset;
 }
 
 /* Heading */
@@ -375,6 +383,7 @@ textarea:focus {
 
 /* Theme Switch */
 .theme-switch {
+  width: 60px;
   border: 2px solid var(--color-form-main);
   border-radius: 100px;
   background-color: var(--color-form-main);

@@ -102,7 +102,7 @@ export default function Board() {
     return (
         <>
             <div className="container">
-                <div className="row mb-4 mt-1">
+                <div className="row mb-3 mt-1">
                     <div className="col-auto"><h1>Board</h1></div>
                 </div>
                 <div className="row mb-5 g-3">
@@ -150,7 +150,7 @@ export default function Board() {
 
             {(resultStatus === 1 || resultStatus === 3) && Object.keys(bugsMatrix).length > 0 && (
                 <div className="container-fluid">
-                    <div className="row mb-4 mt-1">
+                    <div className="row mb-3 mt-1">
                         <div className="table-responsive-lg">
                             <table id="board" className="table text-center table-borderless table-fixed" style={{ tableLayout: 'fixed' }}>
                                 <thead>

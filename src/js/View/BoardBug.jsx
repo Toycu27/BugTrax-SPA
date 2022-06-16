@@ -16,7 +16,7 @@ export default function BoardBug({ bug }) {
     };
 
     return (
-        <div className="board__bug p-2 pt-1 mb-2 text-start">
+        <div className="board__bug p-2 pt-1 mx-1 my-3 mb-4 text-start">
             <div className="row gx-1">
                 <div className="col-auto">
                     <div className="bug__value">

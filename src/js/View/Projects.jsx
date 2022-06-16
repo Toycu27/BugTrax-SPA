@@ -32,7 +32,7 @@ export default function Projects({ search, title }) {
 
     return (
         <div className="container">
-            <div className="row mb-4 mt-1">
+            <div className="row mb-3 mt-1">
                 {!search && (
                     <div className="col-auto">
                         <Link to="/project">
@@ -48,7 +48,7 @@ export default function Projects({ search, title }) {
             <AlertBox />
 
             {(resultStatus === 1 || resultStatus === 3) && projects && projects.length && (
-                <div className="projs row mb-4 g-4">
+                <div className="projs row mb-4 g-3">
                     {projects.map((item) => (
                         <div key={item.id} className="col-12 col-lg-6">
                             <div className="proj__item px-3 py-3 x-expand">

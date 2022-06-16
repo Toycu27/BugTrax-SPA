@@ -59,7 +59,7 @@ export default function Users() {
 
     return (
         <div className="container">
-            <div className="row mb-4 mt-1">
+            <div className="row mb-3 mt-1">
                 <div className="col-auto"><h1>Users</h1></div>
             </div>
 
@@ -81,7 +81,7 @@ export default function Users() {
             <AlertBox />
 
             {(resultStatus === 1 || resultStatus === 3) && users && users.length && (
-                <div className="users row mb-4 g-4">
+                <div className="users row mb-4 g-3">
                     {users.map((item) => (
                         <div key={item.id} className="col-12">
                             <div className="user__item px-3 py-3 x-expand">
@@ -95,7 +95,7 @@ export default function Users() {
                                             </div>
 
                                             <div className="col">
-                                                <div className="user__value mb-2"><UpdateUserRole item={item} /></div>
+                                                <div className="user__value mb-0"><UpdateUserRole item={item} /></div>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@ export default function Users() {
 
                                             <div className="col">
                                                 <div className="user__label pb-0 text-muted">Verified</div>
-                                                <div className="user__value mb-2">{new Date(item.email_verified_at).toLocaleDateString()}</div>
+                                                <div className="user__value mb-0">{new Date(item.email_verified_at).toLocaleDateString()}</div>
                                             </div>
 
                                         </div>
@@ -124,7 +124,7 @@ export default function Users() {
 
                                             <div className="col">
                                                 <div className="user__label pb-0 text-muted">Modified</div>
-                                                <div className="user__value mb-2">{new Date(item.updated_at).toLocaleDateString()}</div>
+                                                <div className="user__value mb-0">{new Date(item.updated_at).toLocaleDateString()}</div>
                                             </div>
                                         </div>
                                     </div>

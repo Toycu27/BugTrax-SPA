@@ -65,7 +65,7 @@ export default function App() {
 
     return (
         <>
-            <header className="mb-6">
+            <header className="mb-5">
                 <nav className="navbar navbar-expand-lg fixed-top">
                     <div className="container col-12">
                         <Link className="navbar-brand fs-3" to="/" aria-label="Brand Logo">
@@ -80,11 +80,11 @@ export default function App() {
                             aria-expanded="false"
                             aria-label="Toggle navigation"
                         >
-                            <span className="navbar-toggler-icon" />
+                            <i className="bi bi-list color-text-secondary fs-2" />
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav justify-content-start me-auto fs-6">{links}</ul>
-                            <ul className="navbar-nav justify-content-end me-3"><ThemeSwitch /></ul>
+                            <ul className="navbar-nav justify-content-end me-3 my-2"><ThemeSwitch /></ul>
                             <ul className="navbar-nav justify-content-end me-2">{searchBar}</ul>
                             <ul className="navbar-nav justify-content-end fs-4">{authLinks}</ul>
                         </div>
@@ -96,7 +96,7 @@ export default function App() {
                 <Outlet />
             </main>
 
-            <footer className="row justify-content-center p-2">
+            <footer className="container justify-content-center py-2">
                 <div className="col-12 text-center">
                     <span>© 2022 Onur Toycu Development & Design</span>
                 </div>

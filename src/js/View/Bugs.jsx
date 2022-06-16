@@ -133,7 +133,7 @@ export default function Bugs({ search, title }) {
 
     return (
         <div className="container">
-            <div className="row mb-4 mt-1">
+            <div className="row mb-3 mt-1">
                 {!search && (
                     <div className="col-auto">
                         <Link to="/bug">
@@ -190,7 +190,7 @@ export default function Bugs({ search, title }) {
             <AlertBox />
 
             {(resultStatus === 1 || resultStatus === 3) && bugs && bugs.length && (
-                <div className="bugs row mb-4 g-4">
+                <div className="bugs row mb-4 g-3">
                     {bugs.map((item) => (
                         <div key={item.id} className="col-12">
                             <div className="bug__item px-3 py-3">

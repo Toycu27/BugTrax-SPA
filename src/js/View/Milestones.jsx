@@ -11,6 +11,7 @@ export default function Milestones({ search, title }) {
     const [projects, setProjects] = useState();
     const [pagination, setPagination] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState('');
+    const [selectedProject, setSelectedProject] = useState(searchParams.get('project'));
     const filterOpts = {
         start_asc: 'Start ASC',
         start_desc: 'Start DESC',
@@ -23,7 +24,6 @@ export default function Milestones({ search, title }) {
         end_asc: '&sort[end_date]=ASC',
         end_desc: '&sort[end_date]=DESC',
     };
-    const [selectedProject, setSelectedProject] = useState(searchParams.get('project'));
 
     const updateSearchParams = () => {
         const tmpSearchParams = {};
@@ -70,7 +70,7 @@ export default function Milestones({ search, title }) {
 
     return (
         <div className="container">
-            <div className="row mb-4 mt-1">
+            <div className="row mb-3 mt-1">
                 {!search && (
                     <div className="col-auto">
                         <Link to="/milestone">
@@ -80,7 +80,7 @@ export default function Milestones({ search, title }) {
                         </Link>
                     </div>
                 )}
-                <div className="col-auto"><h2>Milestones</h2></div>
+                <div className="col-auto"><h1>Milestones</h1></div>
             </div>
 
             {!search && (
@@ -109,7 +109,7 @@ export default function Milestones({ search, title }) {
             <AlertBox />
 
             {(resultStatus === 1 || resultStatus === 3) && milestones && milestones.length && (
-                <div className="milestones row mb-4 g-4">
+                <div className="milestones row mb-4 g-3">
                     {milestones.map((item) => (
                         <div key={item.id} className="col-12">
                             <div className="milestone__item px-3 py-3">

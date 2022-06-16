@@ -5,8 +5,14 @@ import {
     Chart as ChartJS, Title, Tooltip, Legend, Filler, ArcElement, LinearScale,
     RadialLinearScale, PointElement, LineElement, CategoryScale, BarElement,
 } from 'chart.js';
+import { useSearchParams } from 'react-router-dom';
+import { SelectField } from '../Form';
 
 export default function Statistics() {
+    const [projects, setProjects] = useState();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [selectedProject, setSelectedProject] = useState(searchParams.get('project'));
+
     const [bugs, setBugs] = useState();
     const [data0Labels, setData0Labels] = useState([]);
     const [data0a, setData0a] = useState([]);
@@ -17,13 +23,27 @@ export default function Statistics() {
     const [data2, setData2] = useState([]);
     const [data3, setData3] = useState([]);
 
+    const updateSearchParams = () => {
+        const tmpSearchParams = {};
+        if (selectedProject > 0) tmpSearchParams.project = selectedProject;
+        setSearchParams(tmpSearchParams);
+    };
+
     const getBugs = () => {
-        axios.getRequest('api/bugs', (r) => { setBugs(r.data.data); });
+        let requestUrlParams = '';
+        if (selectedProject > 0) requestUrlParams += `?project_id=${selectedProject}`;
+        axios.getRequest(`api/bugs${requestUrlParams}`, (r) => { setBugs(r.data.data); });
+    };
+
+    const getProjects = () => {
+        axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
     };
 
     useEffect(() => {
         getBugs();
-    }, []);
+        getProjects();
+        updateSearchParams();
+    }, [selectedProject]);
 
     function getWeekNumber(date = new Date()) {
         const startDate = new Date(date.getFullYear(), 0, 1);
@@ -114,9 +134,22 @@ export default function Statistics() {
 
     return (
         <div className="container">
-            <div className="row mb-4 mt-1">
+            <div className="row mb-3 mt-1">
                 <div className="col-auto"><h1>Statistics</h1></div>
             </div>
+
+            <div className="row mb-5 g-3">
+                <div className="col-12 col-sm-6 col-lg-3">
+                    <SelectField
+                        name="selected_project"
+                        value={selectedProject}
+                        setValue={(e) => { setSelectedProject(e.target.value); }}
+                        title="Project"
+                        options={projects}
+                    />
+                </div>
+            </div>
+
             <div className="row g-4 mb-4">
                 <div className="col-12 col-lg-8">
                     <div className="statistic__item p-3 x-expand">

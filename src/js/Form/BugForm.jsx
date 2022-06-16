@@ -127,7 +127,7 @@ export default function BugForm({ id, bug }) {
 
     return (
         <div className="container">
-            <div className="row mb-4 mt-1">
+            <div className="row mb-3 mt-1">
                 <div className="col-auto">
                     <button onClick={() => navigate(-1)} type="button" className="btn btn-primary btn-sm" aria-label="Previous Page">
                         <i className="bi bi-arrow-left fs-4" />
