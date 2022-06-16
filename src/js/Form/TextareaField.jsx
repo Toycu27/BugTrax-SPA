@@ -15,7 +15,7 @@ export default function TextareaField({ name, value, setValue, errorValue, title
                 onChange={setValue}
                 aria-describedby={feedbackId}
                 required={required}
-                style={{ height: '100px' }}
+                style={{ height: '80px' }}
             />
             <div id={feedbackId} className="invalid-feedback">
                 {errorValue}

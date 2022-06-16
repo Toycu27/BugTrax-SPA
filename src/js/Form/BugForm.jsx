@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { GlobalContext } from '../Auth';
 import { CommentForm, InputField, TextareaField, SelectField, AlertBox } from '../Form';
+import { Avatar } from '../View';
 
 export default function BugForm({ id, bug }) {
     const { addMessage, hasRole } = useContext(GlobalContext);
@@ -28,6 +29,7 @@ export default function BugForm({ id, bug }) {
         project_id: '',
         milestone_id: '',
         assigned_to: '',
+        created_by: '',
         status_id: 'New',
         priority_id: '',
         difficulty_id: '',
@@ -190,50 +192,68 @@ export default function BugForm({ id, bug }) {
                                 title="Milestone"
                             />
                         </div>
-                        <div className="col-4">
-                            <SelectField
-                                name="assigned_to"
-                                value={values.assigned_to}
-                                errorValue={errors.assigned_to}
-                                setValue={handleChange}
-                                options={users}
-                                title="Assignee"
-                            />
-                        </div>
                     </div>
                     <div className="row mb-5">
                         <div className="col-4">
-                            <SelectField
-                                name="status_id"
-                                value={values.status_id}
-                                errorValue={errors.status_id}
-                                setValue={handleChange}
-                                options={statusOpts}
-                                title="Status"
-                                required
-                            />
+                            <div className="row">
+                                <div className="col">
+                                    <SelectField
+                                        name="assigned_to"
+                                        value={values.assigned_to}
+                                        errorValue={errors.assigned_to}
+                                        setValue={handleChange}
+                                        options={users}
+                                        title="Assignee"
+                                    />
+                                </div>
+                                <div className="col-auto ps-0">
+                                    {values.assigned_to > 0
+                                        // eslint-disable-next-line eqeqeq
+                                        ? <Avatar user={users.find((user) => user.id == values.assigned_to)} size={58} />
+                                        : (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="58"
+                                                height="58"
+                                                fill="currentColor"
+                                                className="bi bi-person-fill bg-form-main color-text-secondary rounded-circle"
+                                                viewBox="0 0 16 12"
+                                            >
+                                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        )}
+                                </div>
+                            </div>
                         </div>
                         <div className="col-4">
-                            <SelectField
-                                name="priority_id"
-                                value={values.priority_id}
-                                errorValue={errors.priority_id}
-                                setValue={handleChange}
-                                options={priorityOpts}
-                                title="Priority"
-                                required
-                            />
-                        </div>
-                        <div className="col-4">
-                            <SelectField
-                                name="difficulty_id"
-                                value={values.difficulty_id}
-                                errorValue={errors.difficulty_id}
-                                setValue={handleChange}
-                                options={difficultyOpts}
-                                title="Difficulty"
-                                required
-                            />
+                            <div className="row">
+                                <div className="col">
+                                    <SelectField
+                                        name="created_by"
+                                        value={values.created_by}
+                                        options={users}
+                                        title="Creator"
+                                        disabled
+                                    />
+                                </div>
+                                <div className="col-auto ps-0">
+                                    {values.created_by > 0
+                                        // eslint-disable-next-line eqeqeq
+                                        ? <Avatar user={users.find((user) => user.id == values.created_by)} size={58} />
+                                        : (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="58"
+                                                height="58"
+                                                fill="currentColor"
+                                                className="bi bi-person-fill bg-form-main color-text-secondary rounded-circle"
+                                                viewBox="0 0 16 12"
+                                            >
+                                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="row mb-3">
@@ -268,7 +288,7 @@ export default function BugForm({ id, bug }) {
                             />
                         </div>
                     </div>
-                    <div className="mb-3">
+                    <div className="mb-5">
                         <TextareaField
                             type="text"
                             name="browser_info"
@@ -277,6 +297,41 @@ export default function BugForm({ id, bug }) {
                             setValue={handleChange}
                             title="Browser Information"
                         />
+                    </div>
+                    <div className="row mb-3">
+                        <div className="col-4">
+                            <SelectField
+                                name="status_id"
+                                value={values.status_id}
+                                errorValue={errors.status_id}
+                                setValue={handleChange}
+                                options={statusOpts}
+                                title="Status"
+                                required
+                            />
+                        </div>
+                        <div className="col-4">
+                            <SelectField
+                                name="priority_id"
+                                value={values.priority_id}
+                                errorValue={errors.priority_id}
+                                setValue={handleChange}
+                                options={priorityOpts}
+                                title="Priority"
+                                required
+                            />
+                        </div>
+                        <div className="col-4">
+                            <SelectField
+                                name="difficulty_id"
+                                value={values.difficulty_id}
+                                errorValue={errors.difficulty_id}
+                                setValue={handleChange}
+                                options={difficultyOpts}
+                                title="Difficulty"
+                                required
+                            />
+                        </div>
                     </div>
                     <div className="row mb-5">
                         <div className="col-4">
