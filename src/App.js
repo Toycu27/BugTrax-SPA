@@ -8,7 +8,7 @@ import { BugForm, MilestoneForm, ProjectForm } from './js/Form';
 
 // Settings
 export const backendPathDev = 'http://localhost:8000/';
-export const backendPathProd = 'http://www.bugtrax.de/';
+export const backendPathProd = 'https://api.bugtrax.de/';
 export const backendPath = backendPathDev;
 export const fileStoragePath = `${backendPath}storage/`;
 
