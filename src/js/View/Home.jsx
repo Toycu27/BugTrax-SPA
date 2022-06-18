@@ -8,22 +8,30 @@ export default function Home() {
             </div>
 
             <div className="row g-4 mb-4">
-                <h2 className="fw-normal mb-0">
-                    Bug Tracking Software
+                <p className="fw-normal mb-3 fs-4">
+                    Bug Tracking Software Designed for the Web
                     <br />
-                    Spezialized for the Web
-                </h2>
-                <ul className="ms-5">
-                    <li>Login and Registration</li>
-                    <li>Full Responsive Design</li>
-                    <li>Auto Light and Dark Mode</li>
-                    <li>Bug Form is Web specific</li>
-                    <li>Entity Pages with Filters</li>
-                    <li>Comment Function</li>
-                    <li>Project Statistics</li>
-                    <li>Kanban Board with Filters</li>
-                    <li>Navigation Searchbar</li>
-                </ul>
+                    Make it easy for Developers to locate information to fix Bugs
+                </p>
+                <div className="row">
+                    <div className="col-auto">
+                        <ul className="ms-5">
+                            <li>Bug Form is web specific</li>
+                            <li>Entity Pages with filters</li>
+                            <li>Kanban Board with filters</li>
+                            <li>Navigation searchbar</li>
+                            <li>Project statistics</li>
+                            <li>Comment function</li>
+                        </ul>
+                    </div>
+                    <div className="col-auto">
+                        <ul className="ms-5">
+                            <li>Login and registration</li>
+                            <li>Full responsive design</li>
+                            <li>Auto light and dark mode</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <div className="row g-4 mb-4">
@@ -60,11 +68,11 @@ export default function Home() {
                                 <img src="/screenshot_05.webp" className="d-block w-100" alt="..." />
                             </div>
                         </div>
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
+                        <button className="carousel-control-prev bg-secondary" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
                             <span className="carousel-control-prev-icon" aria-hidden="true" />
                             <span className="visually-hidden">Previous</span>
                         </button>
-                        <button className="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
+                        <button className="carousel-control-next bg-secondary" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
                             <span className="carousel-control-next-icon" aria-hidden="true" />
                             <span className="visually-hidden">Next</span>
                         </button>
