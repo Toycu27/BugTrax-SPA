@@ -5,7 +5,7 @@ import { GlobalContext } from '../Auth';
 import { InputField, AlertBox } from '../Form';
 
 export default function Login() {
-    const { setUser, getLastLocation } = useContext(GlobalContext);
+    const { setUser, getLastLocation, addMessage } = useContext(GlobalContext);
     const navigate = useNavigate();
 
     // Form values
@@ -35,6 +35,7 @@ export default function Login() {
         });
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
+            addMessage(response.message);
         } else {
             setErrors({ ...defaultErrors });
             setValues({ ...defaultValues });
@@ -56,6 +57,7 @@ export default function Login() {
                             <Link className="" to="/register">Sign Up</Link>
                         </div>
                     </div>
+                    <AlertBox />
                     <form onSubmit={handleSubmit} className="needs-validation">
                         <div className="mb-3">
                             <InputField
@@ -85,7 +87,6 @@ export default function Login() {
                             <button className="btn btn-primary btn-lg" type="submit">Login</button>
                         </div>
                     </form>
-                    <AlertBox />
                 </div>
             </div>
         </div>

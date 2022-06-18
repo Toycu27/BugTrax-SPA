@@ -58,6 +58,7 @@ export default function Register() {
                             <Link className="" to="/login">Login</Link>
                         </div>
                     </div>
+                    <AlertBox />
                     <form onSubmit={handleSubmit} className="needs-validation">
                         <InputField
                             type="hidden"
@@ -117,7 +118,6 @@ export default function Register() {
                             <button className="btn btn-primary btn-lg" type="submit">Sign Up</button>
                         </div>
                     </form>
-                    <AlertBox />
                 </div>
             </div>
         </div>

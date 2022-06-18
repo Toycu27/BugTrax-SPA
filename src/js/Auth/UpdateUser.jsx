@@ -118,12 +118,10 @@ export default function UpdateUser() {
                                 title="Retype Password"
                             />
                         </div>
-
                         <div className="d-grid gap-2">
                             <button className="btn btn-primary btn-lg" type="submit">Submit</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

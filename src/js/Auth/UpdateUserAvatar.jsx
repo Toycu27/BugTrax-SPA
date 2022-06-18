@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { GlobalContext } from '../Auth';
-import { AlertBox } from '../Form';
 import { Avatar } from '../View';
 
 export default function UpdateUserAvatar() {
@@ -50,7 +49,6 @@ export default function UpdateUserAvatar() {
     return (
         <div className="row">
             <div className="col-12">
-                <AlertBox />
                 <form onSubmit={handleSubmit} className="needs-validation">
                     <div className="row align-items-center">
                         <div className="col-md-auto">

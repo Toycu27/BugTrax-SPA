@@ -54,7 +54,7 @@ export default function ResetPassword() {
                         <h1>Reset your Password</h1>
                         <p>Set a new Password for your Account</p>
                     </div>
-
+                    <AlertBox />
                     <form onSubmit={handleSubmit} className="needs-validation">
                         <div className="mb-3">
                             <InputField
@@ -81,7 +81,6 @@ export default function ResetPassword() {
                             <button className="btn btn-primary btn-lg" type="submit">Reset Password</button>
                         </div>
                     </form>
-                    <AlertBox />
                 </div>
             </div>
         </div>

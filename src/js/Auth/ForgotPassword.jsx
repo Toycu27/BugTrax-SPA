@@ -46,6 +46,7 @@ export default function ForgotPassword() {
                             <h1>Forgot your Password?</h1>
                             <p className="text-muted">We will send a Password reset link to your Email</p>
                         </div>
+                        <AlertBox />
                         <form onSubmit={handleSubmit} className="needs-validation">
                             <div className="mb-4">
                                 <InputField
@@ -64,7 +65,6 @@ export default function ForgotPassword() {
                             </div>
                         </form>
                     </div>
-                    <AlertBox />
                 </div>
             </div>
         </div>

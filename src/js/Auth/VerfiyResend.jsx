@@ -24,11 +24,11 @@ export default function Verfiy() {
                     <div className="mb-3">
                         <h1>E-Mail Verification</h1>
                     </div>
+                    <AlertBox />
                     <div className="row">
                         <p className="mb-4">
                             Please Verify your E-Mail Adress by clicking the Link we send to your E-Mail.
                         </p>
-                        <AlertBox />
                         <div className="d-grid">
                             <button type="button" onClick={handleClick} className="btn btn-primary btn-lg">Resend Verification</button>
                         </div>
