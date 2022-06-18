@@ -51,6 +51,7 @@
 
 /* Main Tags */
 body {
+  font-family: 'Ubuntu', 'Helvetica';
   overflow-y: scroll;
   color: var(--color-text-main);
 }
@@ -383,7 +384,7 @@ textarea:focus {
 
 /* Theme Switch */
 .theme-switch {
-  width: 60px;
+  width: 61px;
   border: 2px solid var(--color-form-main);
   border-radius: 100px;
   background-color: var(--color-form-main);
