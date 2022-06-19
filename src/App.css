@@ -400,7 +400,7 @@ textarea:focus {
 }
 
 .theme-switch__toggle--light {
-  margin-left: 24px;
+  margin-left: 26px;
   animation: switchMoveRight 0.25s linear;
 }
 
@@ -415,13 +415,13 @@ textarea:focus {
   }
 
   100% {
-    margin-right: 24px;
+    margin-right: 26px;
   }
 }
 
 @keyframes switchMoveLeft {
   0% {
-    margin-left: 24px;
+    margin-left: 26px;
   }
 
   100% {

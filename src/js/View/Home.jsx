@@ -37,20 +37,6 @@ export default function Home() {
             <div className="row g-4 mb-4">
                 <div className="col-12 col-lg-10 p-1 bg-secondary">
                     <div id="carouselCaptions" className="carousel carousel-fade carousel-dark slide" data-bs-ride="carousel">
-                        <div className="carousel-indicators">
-                            <button
-                                type="button"
-                                data-bs-target="#carouselCaptions"
-                                data-bs-slide-to="0"
-                                className="active"
-                                aria-current="true"
-                                aria-label="Slide 1"
-                            />
-                            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" aria-label="Slide 2" />
-                            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3" />
-                            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="3" aria-label="Slide 4" />
-                            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="4" aria-label="Slide 5" />
-                        </div>
                         <div className="carousel-inner">
                             <div className="carousel-item active">
                                 <img src="/screenshot_01.webp" className="d-block w-100" alt="..." />
