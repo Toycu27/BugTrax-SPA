@@ -4,8 +4,8 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './css/Fonts.css';
-import './css/App.css';
+import './css/fonts.css';
+import './css/app.css';
 import reportWebVitals from './reportWebVitals';
 
 const root = createRoot(document.getElementById('root'));

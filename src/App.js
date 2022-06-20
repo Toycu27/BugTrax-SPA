@@ -1,10 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
-import { useGlobals, GlobalContext, ProtectedRoute as Protected,
-    Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/Auth';
-import { Home, Layout, PageNotFound, Projects, Milestones, Bugs, Search, Statistics, Board, Users } from './js/View';
-import { BugForm, MilestoneForm, ProjectForm } from './js/Form';
+import { ProtectedRoute as Protected,
+    Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/auth';
+import { Home, PageNotFound, BugForm, MilestoneForm, ProjectForm,
+    Projects, Milestones, Bugs, Search, Statistics, Board, Users } from './js/pages';
+import Layout from './Layout';
+import { useGlobals, GlobalContext } from './js';
 
 // Settings
 export const backendPathDev = 'http://localhost:8000/';
