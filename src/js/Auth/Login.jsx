@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
-import React, { useState, useContext } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { GlobalContext } from '../Auth';
 import { InputField, AlertBox } from '../Form';
@@ -7,6 +7,7 @@ import { InputField, AlertBox } from '../Form';
 export default function Login() {
     const { setUser, getLastLocation, addMessage } = useContext(GlobalContext);
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     // Form values
     const defaultValues = {
@@ -19,6 +20,13 @@ export default function Login() {
     };
     const [values, setValues] = useState(defaultValues);
     const [errors, setErrors] = useState(defaultErrors);
+
+    useEffect(() => {
+        if (searchParams.get('verified')) {
+            addMessage('Your Account has been verified!');
+            setSearchParams({});
+        }
+    }, []);
 
     const handleChange = (e) => {
         setValues((oldValues) => ({
@@ -35,7 +43,7 @@ export default function Login() {
         });
         if (response.errors) {
             setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message);
+            addMessage(response.message, 'warning');
         } else {
             setErrors({ ...defaultErrors });
             setValues({ ...defaultValues });
