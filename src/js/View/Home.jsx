@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
     return (
@@ -11,7 +12,7 @@ export default function Home() {
                 <p className="fw-normal mb-3 fs-4">
                     Bug Tracking Software Designed for the Web
                     <br />
-                    Make it easy for Developers to locate information to fix Bugs
+                    Make it easy for Developers to locate critical information
                 </p>
                 <div className="row">
                     <div className="col-auto">
@@ -31,6 +32,14 @@ export default function Home() {
                             <li>Auto light and dark mode</li>
                         </ul>
                     </div>
+                </div>
+            </div>
+
+            <div className="row mb-4">
+                <div className="col">
+                    <Link data-title="Demo Login" to="/demo/login">
+                        <button className="btn btn-primary fs-6 px-5" type="button">Demo Login</button>
+                    </Link>
                 </div>
             </div>
 

@@ -115,7 +115,8 @@ export default function App() {
                         <Route index element={<Home />} />
 
                         {/* Auth Routes */}
-                        <Route path="/login" element={<Login />} />
+                        <Route path="/login" element={<Login key={1} />} />
+                        <Route path="/demo/login" element={<Login demoLogin key={2} />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/verify" element={<VerfiyResend />} />

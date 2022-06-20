@@ -4,7 +4,7 @@ import axios from 'axios';
 import { GlobalContext } from '../Auth';
 import { InputField, AlertBox } from '../Form';
 
-export default function Login() {
+export default function Login({ demoLogin }) {
     const { setUser, getLastLocation, addMessage } = useContext(GlobalContext);
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +25,12 @@ export default function Login() {
         if (searchParams.get('verified')) {
             addMessage('Your Account has been verified!');
             setSearchParams({});
+        }
+        if (demoLogin) {
+            setValues({
+                email: 'demo@bugtrax.de',
+                password: 'demo1234',
+            });
         }
     }, []);
 

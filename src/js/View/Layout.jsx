@@ -54,6 +54,9 @@ export default function App() {
         authLinks = (
             <>
                 <li className="nav-item">
+                    <NavLink className="nav-link fs-6" data-title="Login" to="/demo/login">Demo</NavLink>
+                </li>
+                <li className="nav-item">
                     <NavLink className="nav-link fs-6" data-title="Login" to="/login">Login</NavLink>
                 </li>
                 <li className="nav-item">
