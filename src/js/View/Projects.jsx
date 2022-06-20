@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AlertBox } from '../Form';
+import { LoadMoreButton } from '../View';
 
 export default function Projects({ search, title }) {
     // 0 = No Result, 1 = Success, 2 = Fetch, 3 = Fetch More
@@ -92,13 +93,7 @@ export default function Projects({ search, title }) {
             )}
 
             {resultStatus < 2 && pagination.next_page_url && (
-                <div className="row justify-content-center">
-                    <div className="col text-center">
-                        <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more projects">
-                            <i className="bi bi-chevron-compact-down fs-4 mx-5" />
-                        </button>
-                    </div>
-                </div>
+                <LoadMoreButton onClick={handleLoadMore} title="Load more projects" />
             )}
         </div>
     );

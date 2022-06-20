@@ -11,6 +11,7 @@ import Statistics from './Statistics';
 import Users from './Users';
 import Avatar from './Avatar';
 import ThemeSwitch from './ThemeSwitch';
+import LoadMoreButton from './LoadMoreButton';
 
 export {
     Home,
@@ -26,4 +27,5 @@ export {
     Users,
     Avatar,
     ThemeSwitch,
+    LoadMoreButton,
 };

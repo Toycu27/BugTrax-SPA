@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { UpdateUserRole } from '../Auth';
 import { SelectField, AlertBox, InputField } from '../Form';
-import { Avatar } from '../View';
+import { Avatar, LoadMoreButton } from '../View';
 
 export default function Users() {
     // 0 = No Result, 1 = Success, 2 = Fetch, 3 = Fetch More
@@ -149,13 +149,7 @@ export default function Users() {
             )}
 
             {resultStatus < 2 && pagination.next_page_url && (
-                <div className="row justify-content-center">
-                    <div className="col text-center">
-                        <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more users">
-                            <i className="bi bi-chevron-compact-down fs-4 mx-5" />
-                        </button>
-                    </div>
-                </div>
+                <LoadMoreButton onClick={handleLoadMore} title="Load more users" />
             )}
         </div>
     );

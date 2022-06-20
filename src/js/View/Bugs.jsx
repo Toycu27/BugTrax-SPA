@@ -2,7 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { AlertBox, SelectField } from '../Form';
-import { Avatar } from '../View';
+import { Avatar, LoadMoreButton } from '../View';
 
 export default function Bugs({ search, title }) {
     // 0 = Fetching, 1 = Success, 2 = No Result, 3 = Fetch Next Page
@@ -274,13 +274,7 @@ export default function Bugs({ search, title }) {
             )}
 
             {resultStatus < 2 && pagination.next_page_url && (
-                <div className="row justify-content-center">
-                    <div className="col-4 text-center">
-                        <button type="button" className="btn btn-primary" onClick={handleLoadMore} aria-label="Load more bugs">
-                            <i className="bi bi-chevron-compact-down fs-4 mx-5" />
-                        </button>
-                    </div>
-                </div>
+                <LoadMoreButton onClick={handleLoadMore} title="Load more bugs" />
             )}
         </div>
     );
