@@ -12,7 +12,6 @@ import { useGlobals, GlobalContext } from './js';
 export const backendPathDev = 'http://localhost:8000/';
 export const backendPathProd = 'https://api.bugtrax.de/';
 export const backendPath = backendPathDev;
-export const fileStoragePath = `${backendPath}storage/`;
 
 // Axios Settings START
 axios.defaults.baseURL = backendPath;
@@ -102,7 +101,7 @@ axios.deleteRequest = async (path, callback = () => {}) => axios.delete(path)
 // Axios Settings END
 
 export default function App() {
-    const GLOBALS = useGlobals();
+    const GLOBALS = useGlobals(`${backendPath}storage/`);
 
     if (GLOBALS.user) {
         axios.defaults.headers.Authorization = `Bearer ${GLOBALS.user.token}`;

@@ -12,6 +12,7 @@ const GlobalContext = createContext({
     getLastLocation: () => { },
     setThemeMode: () => { },
     getThemeMode: () => { },
+    fileStoragePath: '',
 });
 
 export default GlobalContext;

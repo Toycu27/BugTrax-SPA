@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function useGlobals() {
+export default function useGlobals(fileStoragePath) {
     // Create State
     const [user, setUser] = useState(() => {
         const userLocal = localStorage.getItem('user');
@@ -98,5 +98,6 @@ export default function useGlobals() {
         getLastLocation,
         setThemeMode,
         getThemeMode,
+        fileStoragePath,
     };
 }

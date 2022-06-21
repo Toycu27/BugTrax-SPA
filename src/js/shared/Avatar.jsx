@@ -1,7 +1,9 @@
-import React from 'react';
-import { fileStoragePath } from '../../App';
+import React, { useContext } from 'react';
+import { GlobalContext } from '../';
 
 export default function Avatar({ user, size }) {
+    const { fileStoragePath } = useContext(GlobalContext);
+
     return (
         <img
             className="rounded-circle"
