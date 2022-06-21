@@ -30,7 +30,7 @@ export default function Login({ demoLogin }) {
         if (demoLogin) {
             setValues({
                 email: 'demo@bugtrax.de',
-                password: 'demo1234',
+                password: '1D2e3M4o!!!???',
             });
         }
     }, []);
