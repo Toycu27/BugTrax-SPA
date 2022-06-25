@@ -46,7 +46,7 @@ export default function MilestoneForm({ id, milestone }) {
         if (id && !milestone) {
             setResultStatus(0);
             axios.getRequest(`api/milestones/${urlParams.id}`, (r) => {
-                setValues({ ...r.data.data });
+                setValues({ ...r.data });
                 setResultStatus(1);
             });
         } else if (milestone) {
@@ -55,42 +55,41 @@ export default function MilestoneForm({ id, milestone }) {
         } else {
             setResultStatus(1);
         }
-        axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
+        axios.getRequest('api/projects', (r) => { setProjects(r.data); });
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let response;
 
-        if (id) response = await axios.patchRequest(`api/milestones/${id}`, values);
-        else response = await axios.postRequest('api/milestones', values);
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
+        const callback = (r) => {
             setErrors({ ...defaultErrors });
             if (id) {
-                setValues({ ...defaultValues, ...response.data });
+                setValues({ ...defaultValues, ...r.data });
             } else {
                 setValues({ ...defaultValues });
             }
+            addMessage(r.message);
+            window.scrollTo(0, 0);
+        };
+        const callbackFail = (r) => {
+            setErrors({ ...defaultErrors, ...r.errors });
+            addMessage(r.message, 'danger');
+        };
 
-            await addMessage(response.message);
-        }
+        if (id) await axios.patchRequest(`api/milestones/${id}`, values, callback, callbackFail);
+        else await axios.postRequest('api/milestones', values, callback, callbackFail);
     };
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        const response = await axios.deleteRequest(`api/milestones/${id}`);
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
-            addMessage(response.message);
+        await axios.deleteRequest(`api/milestones/${id}`, (r) => {
+            addMessage(r.message);
             navigate(-1);
-        }
+        }, (r) => {
+            setErrors({ ...defaultErrors, ...r.errors });
+            addMessage(r.message, 'danger');
+            window.scrollTo(0, 0);
+        });
     };
 
     return (

@@ -44,21 +44,25 @@ export default function Login({ demoLogin }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.postRequest('sanctum/token', {
-            ...values,
-            device_name: 'SPA',
-        });
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'warning');
-        } else {
-            setErrors({ ...defaultErrors });
-            setValues({ ...defaultValues });
-            axios.defaults.headers.Authorization = `Bearer ${response.data.token}`;
-            response.data.user.token = response.data.token;
-            setUser(response.data.user);
-            navigate(getLastLocation());
-        }
+        await axios.postRequest(
+            'sanctum/token',
+            {
+                ...values,
+                device_name: 'SPA',
+            },
+            (r) => {
+                setErrors({ ...defaultErrors });
+                setValues({ ...defaultValues });
+                axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
+                r.data.user.token = r.data.token;
+                setUser(r.data.user);
+                navigate(getLastLocation());
+            },
+            (r) => {
+                setErrors({ ...defaultErrors, ...r.errors });
+                addMessage(r.message, 'danger');
+            },
+        );
     };
 
     return (

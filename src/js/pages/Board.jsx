@@ -34,21 +34,21 @@ export default function Board() {
         if (selectedMilestone > 0) requestUrlParams += `&milestone_id=${selectedMilestone}`;
         if (selectedAssignee > 0) requestUrlParams += `&assigned_to=${selectedAssignee}`;
         axios.getRequest(`api/bugs?sort[priority_id]=ASC&sort[difficulty_id]=ASC&with=assignedTo${requestUrlParams}`, (r) => {
-            setBugs(r.data.data);
-            setResultStatus(r.data.data.length > 0 ? 1 : 0);
+            setBugs(r.data);
+            setResultStatus(r.data.length > 0 ? 1 : 0);
         });
     };
 
     const getProjects = () => {
-        axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
+        axios.getRequest('api/projects', (r) => { setProjects(r.data); });
     };
 
     const getMilestones = () => {
-        axios.getRequest('api/milestones', (r) => { setMilestones(r.data.data); });
+        axios.getRequest('api/milestones', (r) => { setMilestones(r.data); });
     };
 
     const getUsers = () => {
-        axios.getRequest('api/users', (r) => { setUsers(r.data.data); });
+        axios.getRequest('api/users', (r) => { setUsers(r.data); });
     };
 
     useEffect(() => {

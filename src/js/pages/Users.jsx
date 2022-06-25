@@ -36,10 +36,10 @@ export default function Users() {
         if (search.length > 2 && nextPage === false) requestUrlParams += `&name=${search}`;
         if (selectedFilter.length > 4) requestUrlParams += filterQuerys[selectedFilter];
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
-            if (nextPage) setUsers([...users, ...r.data.data]);
-            else setUsers([...r.data.data]);
-            setPagination(r.data);
-            setResultStatus(r.data.data.length > 0 ? 1 : 0);
+            if (nextPage) setUsers([...users, ...r.data]);
+            else setUsers([...r.data]);
+            setPagination(r);
+            setResultStatus(r.data.length > 0 ? 1 : 0);
         });
     };
 

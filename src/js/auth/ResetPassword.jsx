@@ -32,19 +32,22 @@ export default function ResetPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.postRequest('reset-password', {
-            ...values,
-            email: searchParams.get('email'),
-            token: urlParams.token,
-        });
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
-            addMessage('Your Password has been reset.');
-            navigate('/login');
-        }
+        await axios.postRequest(
+            'reset-password',
+            {
+                ...values,
+                email: searchParams.get('email'),
+                token: urlParams.token,
+            },
+            () => {
+                addMessage('Your Password has been reset.');
+                navigate('/login');
+            },
+            (r) => {
+                setErrors({ ...defaultErrors, ...r.errors });
+                addMessage(r.message, 'danger');
+            },
+        );
     };
 
     return (

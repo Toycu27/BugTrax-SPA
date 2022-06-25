@@ -14,6 +14,9 @@
   --color-form-secondary: #d2d2d7;
   --color-form-disabled: #e9ecef;
   --color-form-text: #212529;
+
+  --color-alert-success: #75b798;
+  --color-alert-danger: #ea868f;
 }
 
 :root.dark-mode {
@@ -30,6 +33,9 @@
   --color-form-secondary: #545661;
   --color-form-disabled: #2f3136;
   --color-form-text: #e3e5e8;
+
+  --color-alert-success: #198754;
+  --color-alert-danger: #dc3545;
 }
 
 :root.dark-mode .text-muted {
@@ -266,6 +272,27 @@ input[type="search"]:-ms-input-placeholder {
 
 textarea:focus {
   min-height: 200px !important;
+}
+
+.alert {
+  color: var(--color-form-text);
+  margin-top: 0;
+  padding: 1em;
+}
+
+.alert-danger {
+  background-color: var(--color-alert-danger);
+}
+
+.alert-success {
+  background-color: var(--color-alert-success);
+}
+
+.invalid-feedback {
+  background-color: var(--color-alert-danger);
+  color: var(--color-form-text);
+  margin-top: 0;
+  padding: 0.8em;
 }
 
 /* Modal Box */

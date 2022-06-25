@@ -8,13 +8,12 @@ export default function Verfiy() {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        const response = await axios.postRequest('email/verification-notification');
-
-        if (response.errors) {
-            addMessage(response.message, 'danger');
-        } else {
-            addMessage(response.message);
-        }
+        await axios.postRequest(
+            'email/verification-notification',
+            null,
+            (r) => { addMessage(r.message); },
+            (r) => { addMessage(r.message, 'danger'); },
+        );
     };
 
     return (

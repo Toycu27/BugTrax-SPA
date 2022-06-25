@@ -37,20 +37,20 @@ export default function UpdateUser() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await axios.patchRequest(
+        await axios.patchRequest(
             `api/users/${user.id}`,
             { ...values },
+            (r) => {
+                setErrors({ ...defaultErrors });
+                setValues({ ...defaultValues, timezone: values.timezone, name: values.name });
+                setUser(r.data);
+                addMessage(r.message);
+            },
+            (r) => {
+                setErrors({ ...defaultErrors, ...r.errors });
+                addMessage(r.message, 'danger');
+            },
         );
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
-            setErrors({ ...defaultErrors });
-            setValues({ ...defaultValues, timezone: values.timezone, name: values.name });
-            setUser(response.data);
-            addMessage(response.message);
-        }
     };
 
     return (

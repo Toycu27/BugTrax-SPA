@@ -11,6 +11,9 @@ export default function Logout() {
         axios.deleteRequest('sanctum/token', () => {
             deleteUser();
             navigate('/');
+        }, () => {
+            deleteUser();
+            navigate('/');
         });
     }, []);
 

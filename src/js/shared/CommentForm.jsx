@@ -38,7 +38,7 @@ export default function CommentForm({ bugId, milestoneId, projectId }) {
         if (bugId) addParams += `bug_id=${bugId}`;
         if (milestoneId) addParams += `milestone_id=${milestoneId}`;
         if (projectId) addParams += `project_id=${projectId}`;
-        axios.getRequest(`api/comments?with=user&${addParams}`, (r) => { setComments(r.data.data); });
+        axios.getRequest(`api/comments?with=user&${addParams}`, (r) => { setComments(r.data); });
     };
 
     useEffect(() => {
@@ -52,15 +52,13 @@ export default function CommentForm({ bugId, milestoneId, projectId }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.postRequest('api/comments/', values);
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-        } else {
+        await axios.postRequest('api/comments/', values, () => {
             fetchComments();
             setErrors({ ...defaultErrors });
             setValues({ ...defaultValues });
-        }
+        }, (r) => {
+            setErrors({ ...defaultErrors, ...r.errors });
+        });
     };
 
     return (

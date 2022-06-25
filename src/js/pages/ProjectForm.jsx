@@ -36,7 +36,7 @@ export default function ProjectForm({ id, project }) {
         if (id && !project) {
             setResultStatus(0);
             axios.getRequest(`api/projects/${urlParams.id}`, (r) => {
-                setValues({ ...r.data.data });
+                setValues({ ...r.data });
                 setResultStatus(1);
             });
         } else if (project) {
@@ -49,34 +49,34 @@ export default function ProjectForm({ id, project }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let response;
 
-        if (id) response = await axios.patchRequest(`api/projects/${id}`, values);
-        else response = await axios.postRequest('api/projects', values);
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
+        const callback = (r) => {
             setErrors({ ...defaultErrors });
-            if (id) setValues({ ...defaultValues, ...response.data });
+            if (id) setValues({ ...defaultValues, ...r.data });
             else setValues({ ...defaultValues });
 
-            addMessage(response.message);
-        }
+            addMessage(r.message);
+            window.scrollTo(0, 0);
+        };
+        const callbackFail = (r) => {
+            setErrors({ ...defaultErrors, ...r.errors });
+            addMessage(r.message, 'danger');
+        };
+
+        if (id) await axios.patchRequest(`api/projects/${id}`, values, callback, callbackFail);
+        else await axios.postRequest('api/projects', values, callback, callbackFail);
     };
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        const response = await axios.deleteRequest(`api/projects/${id}`);
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
-            addMessage(response.message);
+        await axios.deleteRequest(`api/projects/${id}`, (r) => {
+            addMessage(r.message);
             navigate(-1);
-        }
+        }, (r) => {
+            setErrors({ ...defaultErrors, ...r.errors });
+            addMessage(r.message, 'danger');
+            window.scrollTo(0, 0);
+        });
     };
 
     return (

@@ -15,10 +15,10 @@ export default function Projects({ search, title }) {
         let requestUrlParams = '';
         if (title && nextPage === false) requestUrlParams += `&title=${title}`;
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
-            if (nextPage) setProjects([...projects, ...r.data.data]);
-            else setProjects([...r.data.data]);
-            setPagination(r.data);
-            setResultStatus(r.data.data.length > 0 ? 1 : 0);
+            if (nextPage) setProjects([...projects, ...r.data]);
+            else setProjects([...r.data]);
+            setPagination(r);
+            setResultStatus(r.data.length > 0 ? 1 : 0);
         });
     };
 

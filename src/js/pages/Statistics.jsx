@@ -32,11 +32,11 @@ export default function Statistics() {
     const getBugs = () => {
         let requestUrlParams = '';
         if (selectedProject > 0) requestUrlParams += `?project_id=${selectedProject}`;
-        axios.getRequest(`api/bugs${requestUrlParams}`, (r) => { setBugs(r.data.data); });
+        axios.getRequest(`api/bugs${requestUrlParams}`, (r) => { setBugs(r.data); });
     };
 
     const getProjects = () => {
-        axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
+        axios.getRequest('api/projects', (r) => { setProjects(r.data); });
     };
 
     useEffect(() => {

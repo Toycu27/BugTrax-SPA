@@ -42,10 +42,10 @@ export default function Milestones({ search, title }) {
         if (selectedProject > 0 && nextPage === false) requestUrlParams += `&project_id=${selectedProject}`;
         if (selectedFilter.length > 4) requestUrlParams += filterQuerys[selectedFilter];
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
-            if (nextPage) setMilestones([...milestones, ...r.data.data]);
-            else setMilestones([...r.data.data]);
-            setPagination(r.data);
-            setResultStatus(r.data.data.length > 0 ? 1 : 0);
+            if (nextPage) setMilestones([...milestones, ...r.data]);
+            else setMilestones([...r.data]);
+            setPagination(r);
+            setResultStatus(r.data.length > 0 ? 1 : 0);
         });
     };
 
@@ -54,7 +54,7 @@ export default function Milestones({ search, title }) {
     };
 
     const getProjects = () => {
-        axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
+        axios.getRequest('api/projects', (r) => { setProjects(r.data); });
     };
 
     useEffect(() => {

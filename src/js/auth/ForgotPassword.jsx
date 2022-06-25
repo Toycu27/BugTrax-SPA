@@ -26,16 +26,19 @@ export default function ForgotPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.postRequest('forgot-password', values);
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
-            setErrors({ ...defaultErrors });
-            setValues({ ...defaultValues });
-            addMessage(response.message);
-        }
+        await axios.postRequest(
+            'forgot-password',
+            values,
+            (r) => {
+                setErrors({ ...defaultErrors });
+                setValues({ ...defaultValues });
+                addMessage(r.message);
+            },
+            (r) => {
+                setErrors({ ...defaultErrors, ...r.errors });
+                addMessage(r.message, 'danger');
+            },
+        );
     };
 
     return (

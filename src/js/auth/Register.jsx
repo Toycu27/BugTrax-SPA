@@ -35,17 +35,20 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.postRequest('register', values);
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
-            setErrors({ ...defaultErrors });
-            setValues({ ...defaultValues });
-            addMessage(response.message);
-            navigate('/verify');
-        }
+        await axios.postRequest(
+            'register',
+            values,
+            (r) => {
+                setErrors({ ...defaultErrors });
+                setValues({ ...defaultValues });
+                addMessage(r.message);
+                navigate('/verify');
+            },
+            (r) => {
+                setErrors({ ...defaultErrors, ...r.errors });
+                addMessage(r.message, 'danger');
+            },
+        );
     };
 
     return (

@@ -56,10 +56,10 @@ export default function Bugs({ search, title }) {
         if (selectedAssignee > 0 && nextPage === false) requestUrlParams += `&assigned_to=${selectedAssignee}`;
         if (selectedFilter.length > 4) requestUrlParams += filterQuerys[selectedFilter];
         axios.getRequest(requestUrl + requestUrlParams, (r) => {
-            if (nextPage) setBugs([...bugs, ...r.data.data]);
-            else setBugs([...r.data.data]);
-            setPagination(r.data);
-            setResultStatus(r.data.data.length > 0 ? 1 : 0);
+            if (nextPage) setBugs([...bugs, ...r.data]);
+            else setBugs([...r.data]);
+            setPagination(r);
+            setResultStatus(r.data.length > 0 ? 1 : 0);
         });
     };
 
@@ -68,15 +68,15 @@ export default function Bugs({ search, title }) {
     };
 
     const getProjects = () => {
-        axios.getRequest('api/projects', (r) => { setProjects(r.data.data); });
+        axios.getRequest('api/projects', (r) => { setProjects(r.data); });
     };
 
     const getMilestones = () => {
-        axios.getRequest('api/milestones', (r) => { setMilestones(r.data.data); });
+        axios.getRequest('api/milestones', (r) => { setMilestones(r.data); });
     };
 
     const getUsers = () => {
-        axios.getRequest('api/users', (r) => { setUsers(r.data.data); });
+        axios.getRequest('api/users', (r) => { setUsers(r.data); });
     };
 
     useEffect(() => {

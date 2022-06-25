@@ -51,7 +51,7 @@ export default function useGlobals(fileStoragePath) {
 
         const currentTimestamp = Math.floor(Date.now() / 1000);
         const filteredMessages = messagesLocal.filter(
-            (message) => message.timestamp + 10 > currentTimestamp,
+            (message) => message.timestamp + 14 > currentTimestamp,
         );
 
         localStorage.setItem('messages', JSON.stringify(filteredMessages));

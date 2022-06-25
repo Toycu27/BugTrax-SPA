@@ -12,16 +12,16 @@ export default function UpdateUserRole({ item }) {
     const handleChange = async (e) => {
         setRole(e.target.value);
 
-        const response = await axios.patchRequest(
+        await axios.patchRequest(
             `api/users/${item.id}`,
             { role: e.target.value },
+            (r) => {
+                addMessage(r.message);
+            },
+            (r) => {
+                addMessage(r.message, 'danger');
+            },
         );
-
-        if (response.errors) {
-            addMessage(response.message, 'danger');
-        } else {
-            addMessage(response.message);
-        }
     };
 
     return (

@@ -1,10 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
-import { ProtectedRoute as Protected,
-    Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend } from './js/auth';
-import { Home, PageNotFound, BugForm, MilestoneForm, ProjectForm,
-    Projects, Milestones, Bugs, Search, Statistics, Board, Users } from './js/pages';
+import {
+    ProtectedRoute as Protected,
+    Login, Logout, Register, UpdateUser, ForgotPassword, ResetPassword, VerfiyResend,
+} from './js/auth';
+import {
+    Home, PageNotFound, BugForm, MilestoneForm, ProjectForm,
+    Projects, Milestones, Bugs, Search, Statistics, Board, Users,
+} from './js/pages';
 import Layout from './Layout';
 import { useGlobals, GlobalContext } from './js';
 
@@ -38,28 +42,23 @@ axios.interceptors.request.use((config) => {
     return config;
 }, (error) => Promise.reject(error));
 
-axios.getRequest = async (path, callback = () => {}) => axios.get(path)
+axios.getRequest = async (path, callback = () => {}, callbackFail = () => {}) => axios.get(path)
     .then((response) => {
-        callback(response);
-        response.data.success = true;
-        return response.data;
+        callback(response.data);
     })
     .catch((error) => {
-        error.response.data.success = false;
-        return error.response.data;
+        callbackFail(error.response.data);
     });
 
-axios.postRequest = async (path, body) => axios.post(path, JSON.stringify(body))
+axios.postRequest = async (path, body, callback = () => {}, callbackFail = () => {}) => axios.post(path, JSON.stringify(body))
     .then((response) => {
-        response.data.success = true;
-        return response.data;
+        callback(response.data);
     })
     .catch((error) => {
-        error.response.data.success = false;
-        return error.response.data;
+        callbackFail(error.response.data);
     });
 
-axios.postRequestWithFile = async (path, file) => {
+axios.postRequestWithFile = async (path, file, callback = () => {}, callbackFail = () => {}) => {
     const settings = { ...axios.defaults };
     settings.headers = {
         ...axios.defaults.headers,
@@ -68,35 +67,27 @@ axios.postRequestWithFile = async (path, file) => {
 
     return axios.post(path, file, settings)
         .then((response) => {
-            response.data.success = true;
-            return response.data;
+            callback(response.data);
         })
         .catch((error) => {
-            error.response.data.success = false;
-            return error.response.data;
+            callbackFail(error.response.data);
         });
 };
 
-axios.patchRequest = async (path, body) => axios.patch(path, JSON.stringify(body))
+axios.patchRequest = async (path, body, callback = () => {}, callbackFail = () => {}) => axios.patch(path, JSON.stringify(body))
     .then((response) => {
-        response.data.success = true;
-        return response.data;
+        callback(response.data);
     })
     .catch((error) => {
-        error.response.data.success = false;
-        return error.response.data;
+        callbackFail(error.response.data);
     });
 
-axios.deleteRequest = async (path, callback = () => {}) => axios.delete(path)
+axios.deleteRequest = async (path, callback = () => {}, callbackFail = () => {}) => axios.delete(path)
     .then((response) => {
-        callback(response);
-        response.data.success = true;
-        return response.data;
+        callback(response.data);
     })
     .catch((error) => {
-        callback(error);
-        error.response.data.success = false;
-        return error.response.data;
+        callbackFail(error.response.data);
     });
 // Axios Settings END
 

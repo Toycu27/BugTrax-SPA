@@ -31,19 +31,19 @@ export default function UpdateUserAvatar() {
             values.avatar,
         );
 
-        const response = await axios.postRequestWithFile(
+        await axios.postRequestWithFile(
             `api/users/${user.id}/avatar`,
             formData,
+            (r) => {
+                setErrors({ ...defaultErrors });
+                setUser(r.data);
+                addMessage(r.message);
+            },
+            (r) => {
+                setErrors({ ...defaultErrors, ...r.errors });
+                addMessage(r.message, 'danger');
+            },
         );
-
-        if (response.errors) {
-            setErrors({ ...defaultErrors, ...response.errors });
-            addMessage(response.message, 'danger');
-        } else {
-            setErrors({ ...defaultErrors });
-            setUser(response.data);
-            addMessage(response.message);
-        }
     };
 
     return (
