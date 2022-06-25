@@ -11,16 +11,11 @@ import {
 import Layout from './Layout';
 import { useGlobals, GlobalContext, setAxiosDefaults } from './js';
 
-// Settings
-export const backendPathDev = 'http://localhost:8000/';
-export const backendPathProd = 'https://api.bugtrax.de/';
-export const backendPath = backendPathDev;
-
 const { axios } = setAxiosDefaults();
-axios.defaults.baseURL = backendPath;
+axios.defaults.baseURL = (process.env.REACT_APP_BACKEND_PATH);
 
 export default function App() {
-    const GLOBALS = useGlobals(`${backendPath}storage/`);
+    const GLOBALS = useGlobals(process.env.REACT_APP_STORAGE_PATH);
 
     if (GLOBALS.user) {
         axios.defaults.headers.Authorization = `Bearer ${GLOBALS.user.token}`;
