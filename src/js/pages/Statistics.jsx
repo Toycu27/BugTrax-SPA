@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Doughnut, Line, Bar } from 'react-chartjs-2';
 import {
@@ -6,6 +5,7 @@ import {
     RadialLinearScale, PointElement, LineElement, CategoryScale, BarElement,
 } from 'chart.js';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 import { SelectField } from '../form';
 
 export default function Statistics() {
