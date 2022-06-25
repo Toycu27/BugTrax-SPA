@@ -3,6 +3,7 @@ SHELL := /bin/bash
 
 install:
 	git clone --depth=1 --branch=develop https://github.com/Toycu27/BugTrax-SPA.git &&
+	cp .env BugTrax-SPA/
 	cd BugTrax-SPA &&
 	npm install --only-prod &&
 	npm run build &&
